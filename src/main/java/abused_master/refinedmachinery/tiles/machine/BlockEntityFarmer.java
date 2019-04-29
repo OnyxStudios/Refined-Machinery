@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.tiles.machine;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.abusedlib.utils.InventoryHelper;
+import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
@@ -37,7 +38,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
     public int[] seedsSlot = new int[] {1, 2, 3, 4};
     public int farmerRange = 3;
     public int timer = 0;
-    public int costPerBlock = 200;
+    public int costPerBlock = RefinedMachinery.config.getInt("farmerCostPerBlock");
     public int timerCounter = 20;
 
     public BlockEntityFarmer() {

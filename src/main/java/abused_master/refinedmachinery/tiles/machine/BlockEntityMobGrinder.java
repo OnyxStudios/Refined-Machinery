@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.tiles.machine;
 
 import abused_master.abusedlib.client.render.hud.IHudSupport;
 import abused_master.abusedlib.tiles.BlockEntityBase;
+import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.blocks.machines.BlockMobGrinder;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
@@ -25,7 +26,7 @@ public class BlockEntityMobGrinder extends BlockEntityBase implements IEnergyHan
     public EnergyStorage storage = new EnergyStorage(100000);
     public BoundingBox mobKillBox = null;
     public int killTimer = 0;
-    public int costPerHeart = 50;
+    public int costPerHeart = RefinedMachinery.config.getInt("grinderCostPerHeart");
 
     public BlockEntityMobGrinder() {
         super(ModBlockEntities.MOB_GRINDER);

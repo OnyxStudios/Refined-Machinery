@@ -1,9 +1,11 @@
 package abused_master.refinedmachinery.blocks.generators;
 
+import abused_master.refinedmachinery.RefinedMachinery;
+
 public enum EnumSolarPanelTypes {
-    SOLAR_PANEL_MK1(16, 10000),
-    SOLAR_PANEL_MK2(256, 100000),
-    SOLAR_PANEL_MK3(1024, 1000000);
+    SOLAR_PANEL_MK1(RefinedMachinery.config.getInt("solarPanelMK1_Generation"), 10000),
+    SOLAR_PANEL_MK2(RefinedMachinery.config.getInt("solarPanelMK2_Generation"), 100000),
+    SOLAR_PANEL_MK3(RefinedMachinery.config.getInt("solarPanelMK3_Generation"), 1000000);
 
     private BlockSolarPanel solarPanel;
     private int generationPerTick, energyStorage;

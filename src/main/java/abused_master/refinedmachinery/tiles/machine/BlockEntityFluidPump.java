@@ -34,7 +34,7 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     public List<BlockPos> cachedDrainingPos = new ArrayList<>();
     public int pumpRage = RefinedMachinery.config.getInt("pumpRange");
     public BlockPos drainingPos = null;
-    public int drainPerBlock = 250;
+    public int drainPerBlock = RefinedMachinery.config.getInt("pumpCostPerBlock");
     public int drainingSpeed = 0;
 
     public BlockEntityFluidPump() {

@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.tiles.machine;
 import abused_master.abusedlib.client.render.hud.IHudSupport;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.abusedlib.utils.InventoryHelper;
+import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
@@ -32,7 +33,7 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     public EnergyStorage storage = new EnergyStorage(100000);
     public List<BlockPos> cachedAreaPos = new ArrayList<>();
     public BlockPos miningPos = null, firstCorner = null, secondCorner = null;
-    public int energyUsagePerBlock = 500, miningSpeed = 0;
+    public int energyUsagePerBlock = RefinedMachinery.config.getInt("quarryUsagePerBlock"), miningSpeed = 0;
     public BlockState miningBlock = null;
     public boolean miningError = false, hasQuarryRecorder = false, running = false;
 

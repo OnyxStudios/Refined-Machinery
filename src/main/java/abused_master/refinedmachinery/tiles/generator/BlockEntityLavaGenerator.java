@@ -5,6 +5,7 @@ import abused_master.abusedlib.fluid.FluidStack;
 import abused_master.abusedlib.fluid.FluidContainer;
 import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.abusedlib.tiles.BlockEntityBase;
+import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -20,7 +21,7 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
 
     public EnergyStorage storage = new EnergyStorage(100000);
     public int sendPerTick = 500;
-    public int generatePer10 = 100;
+    public int generatePer10 = RefinedMachinery.config.getInt("lavaGen_Generation");
     public FluidContainer tank = new FluidContainer(8000);
 
     public BlockEntityLavaGenerator() {

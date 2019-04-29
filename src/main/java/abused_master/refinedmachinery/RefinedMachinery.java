@@ -44,16 +44,22 @@ public class RefinedMachinery implements ModInitializer {
 
     public Map<String, Object> loadConfig() {
         Map<String, Object> configOptions = new HashMap<>();
-        configOptions.put("_comment1", "Refined Machinery Mod Config");
-        configOptions.put("_comment2", "Disable or enable generation of the ores in the mod");
         configOptions.put("generateCopper", true);
         configOptions.put("generateTin", true);
         configOptions.put("generateLead", true);
         configOptions.put("generateSilver", true);
         configOptions.put("generateNickel", true);
-        configOptions.put("_comment3", "The range in blocks that the pump will work in");
         configOptions.put("pumpRange", 32);
-
+        configOptions.put("pumpCostPerBlock", 250);
+        configOptions.put("solarPanelMK1_Generation", 16);
+        configOptions.put("solarPanelMK2_Generation", 256);
+        configOptions.put("solarPanelMK2_Generation", 1024);
+        configOptions.put("lavaGen_Generation", 100);
+        configOptions.put("quarryUsagePerBlock", 500);
+        configOptions.put("phaseCellStorage", 1000000);
+        configOptions.put("grinderCostPerHeart", 50);
+        configOptions.put("farmerCostPerBlock", 200);
+        
         return configOptions;
     }
 }
