@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "refinedmachinery:block/energy_cell" }
+  }
+}

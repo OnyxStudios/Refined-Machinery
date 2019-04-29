@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "refinedmachinery:blocks/glass/black_glass0"
+    }
+}

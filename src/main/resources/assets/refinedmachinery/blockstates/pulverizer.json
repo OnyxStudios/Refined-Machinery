@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "refinedmachinery:block/pulverizer" },
+        "facing=south": { "model": "refinedmachinery:block/pulverizer", "y": 180 },
+        "facing=west":  { "model": "refinedmachinery:block/pulverizer", "y": 270 },
+        "facing=east":  { "model": "refinedmachinery:block/pulverizer", "y": 90 }
+    }
+}

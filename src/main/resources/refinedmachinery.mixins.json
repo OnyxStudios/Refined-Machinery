@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "abused_master.refinedmachinery.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinRecipeManager"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

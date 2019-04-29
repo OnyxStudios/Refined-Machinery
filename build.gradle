@@ -1,0 +1,96 @@
+plugins {
+	id 'fabric-loom' version '0.2.1-SNAPSHOT'
+	id 'maven-publish'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "abused_master.refinedmachinery"
+archivesBaseName = "RefinedMachinery"
+version = "${mod_version}"
+
+minecraft {
+}
+
+repositories {
+	jcenter()
+    maven { url = "https://jitpack.io/" }
+	maven { url = "https://oss.sonatype.org/content/repositories/releases/" }
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${mc_version}"
+	mappings "net.fabricmc:yarn:${yarn_mappings}"
+	modCompile "net.fabricmc:fabric-loader:${loader_version}"
+	modCompile "net.fabricmc:fabric:${fabric_version}"
+
+	modCompile "abused_master.abusedlib:AbusedLib:${abusedlib_version}"
+	modCompile "com.github.NerdHubMC:Cardinal-Energy:${cardinal_version}"
+	compileOnly "com.google.code.findbugs:jsr305:${findbugs_version}"
+}
+
+jar {
+	from "LICENSE.md"
+	manifest.mainAttributes(
+			"Implementation-Title": project.name,
+			"Implementation-Version": project.version,
+			"Maven-Artifact": "${project.group}:${project.archivesBaseName}:${project.version}".toLowerCase(Locale.ROOT),
+			"Built-On-Minecraft": "${mc_version}",
+			"Built-On-Java": "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})"
+	)
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
+
+artifacts {
+	archives sourcesJar
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifact jar
+			artifact sourcesJar
+			pom {
+				name = "Refined-Machinery"
+				url = "https://github.com/NerdHubMC/Refined-Machinery"
+				licenses {
+					license {
+						name = "MIT License"
+						url = "https://github.com/NerdHubMC/Refined-Machinery/blob/master/LICENSE.md"
+					}
+				}
+				scm {
+					url = "https://github.com/NerdHubMC/Refined-Machinery"
+					connection = "scm:git:git://github.com/NerdHubMC/Refined-Machinery.git"
+					developerConnection = "scm:git:git@github.com:NerdHubMC/Refined-Machinery.git"
+				}
+				issueManagement {
+					system = "github"
+					url = "https://github.com/NerdHubMC/Refined-Machinery/issues"
+				}
+			}
+		}
+	}
+
+	repositories {
+		if (project.hasProperty("maven_user") && project.hasProperty("maven_pass")) {
+			maven {
+				name = "Abused's Maven"
+				url = findProperty("maven_url")
+				credentials {
+					username = findProperty("maven_user")
+					password = findProperty("maven_pass")
+				}
+				authentication {
+					basic(BasicAuthentication)
+				}
+			}
+		}
+	}
+}
+tasks.publish.dependsOn build

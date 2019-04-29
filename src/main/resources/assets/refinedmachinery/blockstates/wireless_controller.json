@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "state=idle": { "model": "refinedmachinery:block/wireless_controller_idle" },
+        "state=running": { "model": "refinedmachinery:block/wireless_controller_rotate" }
+    }
+}

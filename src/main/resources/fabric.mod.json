@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "refinedmachinery",
+  "version": "1.0.0",
+  "name": "Refined Machinery",
+  "description": "A tech based mod for 1.14",
+  "authors": [
+    "abused_master"
+  ],
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/Refined-Machinery",
+    "sources": "https://github.com/NerdHubMC/Refined-Machinery"
+  },
+  "license": "MIT",
+  "icon": "assets/refinedmachinery/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "abused_master.refinedmachinery.RefinedMachinery"
+    ],
+    "client": [
+      "abused_master.refinedmachinery.RefinedMachineryClient"
+    ]
+  },
+  "mixins": [
+    "refinedmachinery.mixins.json"
+  ],
+  "requires": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*",
+    "abusedlib": "*",
+    "cardinalenergy": "*"
+  }
+}

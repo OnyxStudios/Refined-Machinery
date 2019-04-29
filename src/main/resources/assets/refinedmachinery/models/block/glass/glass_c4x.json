@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+    "textures": {
+		"particle": "refinedmachinery:blocks/glass/glass0",
+        "down": "refinedmachinery:blocks/glass/glass15",
+		"up": "refinedmachinery:blocks/glass/glass15",
+		"north": "refinedmachinery:blocks/glass/glass15",
+		"south": "refinedmachinery:blocks/glass/glass15",
+		"west": "refinedmachinery:blocks/glass/glass15",
+		"east": "refinedmachinery:blocks/glass/glass15"
+    }
+}

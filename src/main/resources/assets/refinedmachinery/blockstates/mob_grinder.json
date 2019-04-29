@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "refinedmachinery:block/mob_grinder" },
+        "facing=south": { "model": "refinedmachinery:block/mob_grinder", "y": 180 },
+        "facing=west":  { "model": "refinedmachinery:block/mob_grinder", "y": 270 },
+        "facing=east":  { "model": "refinedmachinery:block/mob_grinder", "y": 90 }
+    }
+}

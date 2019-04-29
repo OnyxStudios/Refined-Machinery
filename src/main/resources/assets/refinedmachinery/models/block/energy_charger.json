@@ -1,0 +1,22 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "particle": "refinedmachinery:blocks/energy_charger_front",
+        "0": "refinedmachinery:blocks/energy_charger_front",
+        "1": "refinedmachinery:blocks/machine_side",
+        "2": "refinedmachinery:blocks/machine_top"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#2", "cullface": "down" },
+                "up":    { "texture": "#2", "cullface": "up"   },
+                "north": { "texture": "#0", "cullface": "north"   },
+                "south": { "texture": "#1", "cullface": "south"   },
+                "west":  { "texture": "#1", "cullface": "west"   },
+                "east":  { "texture": "#1", "cullface": "east"   }
+            }
+        }
+    ]
+}
