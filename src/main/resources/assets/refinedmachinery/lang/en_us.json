@@ -58,5 +58,8 @@
   "block.refinedmachinery.conveyor_belt" : "Conveyor Belt",
   "block.refinedmachinery.energy_cell" : "Cardinal Energy Cell",
   "block.refinedmachinery.machine_frame" : "Machine Frame",
-  "block.refinedmachinery.energy_cable" : "Energy Transfer Cable"
+  "block.refinedmachinery.energy_cable" : "Energy Transfer Cable",
+  "block.refinedmachinery.copper_tank" : "Copper Fluid Tank",
+  "block.refinedmachinery.silver_tank" : "Silver Fluid Tank",
+  "block.refinedmachinery.steel_tank" : "Steel Fluid Tank"
 }

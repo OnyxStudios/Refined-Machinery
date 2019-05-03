@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.registry;
 import abused_master.abusedlib.registry.RegistryHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.blocks.BlockResources;
+import abused_master.refinedmachinery.blocks.tanks.EnumTankTypes;
 import abused_master.refinedmachinery.blocks.transport.BlockEnergyCable;
 import abused_master.refinedmachinery.blocks.transport.BlockWirelessTransmitter;
 import abused_master.refinedmachinery.blocks.transport.BlockWirelessController;
@@ -56,6 +57,11 @@ public class ModBlocks {
         for (EnumSolarPanelTypes panel : EnumSolarPanelTypes.values()) {
             RegistryHelper.registerBlock(RefinedMachinery.MODID, panel.getBlockSolar());
         }
+
+        //TODO ADD TANKS BACK WHEN FABRIC PROPERLY SUPPORTS FLUIDS AND HAS A SOLID FLUID API
+        //for (EnumTankTypes tank : EnumTankTypes.values()) {
+        //    RegistryHelper.registerBlock(RefinedMachinery.MODID, tank.getTank());
+        //}
 
         for (BlockResources.EnumResourceOres ore : BlockResources.EnumResourceOres.values()) {
             RegistryHelper.registerBlock(RefinedMachinery.MODID, ore.getBlockOres());

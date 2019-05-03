@@ -59,7 +59,10 @@ public class RefinedMachinery implements ModInitializer {
         configOptions.put("phaseCellStorage", 1000000);
         configOptions.put("grinderCostPerHeart", 50);
         configOptions.put("farmerCostPerBlock", 200);
-        
+        configOptions.put("copperTankStorage", 8000);
+        configOptions.put("silverTankStorage", 16000);
+        configOptions.put("steelTankStorage", 32000);
+
         return configOptions;
     }
 }
