@@ -26,6 +26,8 @@ public class BlockEntityTank extends BlockEntityBase implements IHudSupport, IFl
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
+        tag.putInt("type", this.type.ordinal());
+
         if (this.tank != null && this.tank.getFluidStack() != null) {
             CompoundTag tankTag = new CompoundTag();
             this.tank.getFluidStack().toTag(tankTag);
@@ -39,15 +41,16 @@ public class BlockEntityTank extends BlockEntityBase implements IHudSupport, IFl
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        if(this.tank != null) {
-            this.tank.setBlockEntity(this);
-            if(this.tank.getFluidStack() != null) {
-                this.tank.readFromNBT(tag);
-            }
+        this.type = EnumTankTypes.values()[tag.getInt("type")];
 
-            if (tag.containsKey("FluidData")) {
-                this.tank.setFluidStack(FluidStack.fluidFromTag(tag.getCompound("FluidData")));
-            }
+        this.tank = new FluidContainer(type.getStorageCapacity());
+        this.tank.setBlockEntity(this);
+        if (this.tank.getFluidStack() != null) {
+            this.tank.readFromNBT(tag);
+        }
+
+        if (tag.containsKey("FluidData")) {
+            this.tank.setFluidStack(FluidStack.fluidFromTag(tag.getCompound("FluidData")));
         }
     }
 

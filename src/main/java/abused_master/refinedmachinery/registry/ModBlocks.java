@@ -58,10 +58,9 @@ public class ModBlocks {
             RegistryHelper.registerBlock(RefinedMachinery.MODID, panel.getBlockSolar());
         }
 
-        //TODO ADD TANKS BACK WHEN FABRIC PROPERLY SUPPORTS FLUIDS AND HAS A SOLID FLUID API
-        //for (EnumTankTypes tank : EnumTankTypes.values()) {
-        //    RegistryHelper.registerBlock(RefinedMachinery.MODID, tank.getTank());
-        //}
+        for (EnumTankTypes tank : EnumTankTypes.values()) {
+            RegistryHelper.registerBlock(RefinedMachinery.MODID, tank.getTank());
+        }
 
         for (BlockResources.EnumResourceOres ore : BlockResources.EnumResourceOres.values()) {
             RegistryHelper.registerBlock(RefinedMachinery.MODID, ore.getBlockOres());

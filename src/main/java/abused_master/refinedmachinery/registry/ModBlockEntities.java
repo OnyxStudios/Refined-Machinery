@@ -34,8 +34,7 @@ public class ModBlockEntities {
     public static BlockEntityType<BlockEntityVacuum> VACUUM;
     public static BlockEntityType<BlockEntityPhaseCell> PHASE_CELL;
     public static BlockEntityType<BlockEntityEnergyCable> ENERGY_CABLE;
-    //TODO ADD TANKS BACK WHEN FABRIC PROPERLY SUPPORTS FLUIDS AND HAS A SOLID FLUID API
-    //public static BlockEntityType<BlockEntityTank> TANK;
+    public static BlockEntityType<BlockEntityTank> TANK;
 
     //Container Identifiers
     public static final Identifier ENERGY_FURNACE_CONTAINER = new Identifier(RefinedMachinery.MODID, "energy_furnace_container");
@@ -59,8 +58,7 @@ public class ModBlockEntities {
         VACUUM = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "vacuum"), BlockEntityVacuum.class);
         PHASE_CELL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "phase_cell"), BlockEntityPhaseCell.class);
         ENERGY_CABLE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_cable"), BlockEntityEnergyCable.class);
-        //TODO ADD TANKS BACK WHEN FABRIC PROPERLY SUPPORTS FLUIDS AND HAS A SOLID FLUID API
-        //TANK = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "tank"), BlockEntityTank.class);
+        TANK = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "tank"), BlockEntityTank.class);
     }
 
     @Environment(EnvType.CLIENT)
@@ -72,8 +70,7 @@ public class ModBlockEntities {
         BlockEntityRendererRegistry.INSTANCE.register(BlockEntityFluidPump.class, new FluidPumpRenderer());
         BlockEntityRendererRegistry.INSTANCE.register(BlockEntityMobGrinder.class, new MobGrinderRenderer());
         BlockEntityRendererRegistry.INSTANCE.register(BlockEntityPhaseCell.class, new PhaseCellRenderer());
-        //TODO ADD TANKS BACK WHEN FABRIC PROPERLY SUPPORTS FLUIDS AND HAS A SOLID FLUID API
-        //BlockEntityRendererRegistry.INSTANCE.register(BlockEntityTank.class, new TankRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(BlockEntityTank.class, new TankRenderer());
     }
 
     public static void registerServerGUIs() {

@@ -30,9 +30,7 @@ public class BlockTank extends BlockWithEntityBase {
     @Override
     public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult) {
         BlockEntityTank tank = (BlockEntityTank) world.getBlockEntity(pos);
-        FluidHelper.fillFluidHandler(player.getMainHandStack(), tank, player);
-
-        return true;
+        return FluidHelper.fillFluidHandler(player.getMainHandStack(), tank, player);
     }
 
     @Override
