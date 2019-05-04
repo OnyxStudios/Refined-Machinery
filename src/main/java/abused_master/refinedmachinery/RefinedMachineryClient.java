@@ -3,6 +3,7 @@ package abused_master.refinedmachinery;
 import abused_master.refinedmachinery.client.gui.container.*;
 import abused_master.refinedmachinery.client.gui.gui.*;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
 import abused_master.refinedmachinery.tiles.machine.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
@@ -46,7 +47,13 @@ public class RefinedMachineryClient implements ClientModInitializer {
         ScreenProviderRegistry.INSTANCE.registerFactory(VACUUM_CONTAINER, ((syncid, identifier, player, buf) -> {
             BlockPos pos = buf.readBlockPos();
             BlockEntityVacuum vacuum = (BlockEntityVacuum) player.world.getBlockEntity(pos);
-            return new GuiVacuum(vacuum , new ContainerVacuum(syncid, player.inventory, vacuum ));
+            return new GuiVacuum(vacuum, new ContainerVacuum(syncid, player.inventory, vacuum));
+        }));
+
+        ScreenProviderRegistry.INSTANCE.registerFactory(COALGEN_CONTAINER, ((syncid, identifier, player, buf) -> {
+            BlockPos pos = buf.readBlockPos();
+            BlockEntityCoalGen coalGen = (BlockEntityCoalGen) player.world.getBlockEntity(pos);
+            return new GuiCoalGen(coalGen, new ContainerCoalGen(syncid, player.inventory, coalGen));
         }));
     }
 }

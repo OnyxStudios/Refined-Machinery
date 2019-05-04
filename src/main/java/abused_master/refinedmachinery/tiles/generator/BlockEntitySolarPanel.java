@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.tiles.generator;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.blocks.generators.EnumSolarPanelTypes;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.nbt.CompoundTag;
@@ -42,7 +43,8 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
             }
         }
 
-        sendEnergy();
+        EnergyHelper.sendEnergy(storage, world, pos, generationPerTick);
+        this.markDirty();
     }
 
     public void setType(EnumSolarPanelTypes type) {
@@ -54,14 +56,6 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
         }
         this.generationPerTick = type.getGenerationPerTick();
         markDirty();
-    }
-
-    public void sendEnergy() {
-        for (Direction direction : Direction.values()) {
-            BlockPos offsetPos = pos.offset(direction);
-            storage.sendEnergy(world, offsetPos, generationPerTick);
-            this.markDirty();
-        }
     }
 
     @Override

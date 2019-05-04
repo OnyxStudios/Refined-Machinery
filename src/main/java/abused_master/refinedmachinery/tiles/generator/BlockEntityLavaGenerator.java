@@ -7,6 +7,7 @@ import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.fluid.LavaFluid;
@@ -70,15 +71,8 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
             }
         }
 
-        sendEnergy();
-    }
-
-    public void sendEnergy() {
-        for (Direction direction : Direction.values()) {
-            BlockPos offsetPos = pos.offset(direction);
-            storage.sendEnergy(world, offsetPos, sendPerTick);
-            this.markDirty();
-        }
+        EnergyHelper.sendEnergy(storage, world, pos, sendPerTick);
+        this.markDirty();
     }
 
     @Override

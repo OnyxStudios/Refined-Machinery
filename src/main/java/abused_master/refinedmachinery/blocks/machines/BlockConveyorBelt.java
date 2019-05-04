@@ -2,8 +2,8 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockBase;
 import abused_master.refinedmachinery.RefinedMachinery;
-import abused_master.refinedmachinery.utils.IWrenchable;
-import abused_master.refinedmachinery.utils.WrenchHelper;
+import abused_master.refinedmachinery.utils.wrench.IWrenchable;
+import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.VerticalEntityPosition;

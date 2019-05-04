@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.registry;
 import abused_master.abusedlib.registry.RegistryHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.blocks.BlockResources;
+import abused_master.refinedmachinery.blocks.generators.BlockCoalGen;
 import abused_master.refinedmachinery.blocks.tanks.EnumTankTypes;
 import abused_master.refinedmachinery.blocks.transport.BlockEnergyCable;
 import abused_master.refinedmachinery.blocks.transport.BlockWirelessTransmitter;
@@ -29,6 +30,7 @@ public class ModBlocks {
     public static BlockEnergyCell PHASE_CELL = new BlockEnergyCell();
     public static BlockMachineFrame MACHINE_FRAME = new BlockMachineFrame();
     public static BlockEnergyCable ENERGY_CABLE = new BlockEnergyCable();
+    public static BlockCoalGen COAL_GENERATOR = new BlockCoalGen();
 
     //Decoration
     public static BlockGlassBase GLASS_BLOCK = new BlockGlassBase("glass_block");
@@ -50,6 +52,7 @@ public class ModBlocks {
         RegistryHelper.registerBlock(RefinedMachinery.MODID, PHASE_CELL);
         RegistryHelper.registerBlock(RefinedMachinery.MODID, MACHINE_FRAME);
         RegistryHelper.registerBlock(RefinedMachinery.MODID, ENERGY_CABLE);
+        RegistryHelper.registerBlock(RefinedMachinery.MODID, COAL_GENERATOR);
 
         RegistryHelper.registerBlock(RefinedMachinery.MODID, GLASS_BLOCK);
         RegistryHelper.registerBlock(RefinedMachinery.MODID, BLACK_GLASS_BLOCK);

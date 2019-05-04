@@ -2,7 +2,7 @@ package abused_master.refinedmachinery.items;
 
 import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
-import abused_master.refinedmachinery.utils.IWrenchable;
+import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;

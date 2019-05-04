@@ -1,4 +1,4 @@
-package abused_master.refinedmachinery.utils;
+package abused_master.refinedmachinery.utils.wrench;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,9 +1,9 @@
-package abused_master.refinedmachinery.blocks.machines;
+package abused_master.refinedmachinery.blocks.generators;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
-import abused_master.refinedmachinery.tiles.machine.BlockEntityPulverizer;
+import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
@@ -17,9 +17,9 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Property;
-import net.minecraft.util.Hand;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -29,19 +29,19 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable {
+public class BlockCoalGen extends BlockWithEntityBase implements IWrenchable {
 
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
-    public BlockPulverizer() {
-        super("pulverizer", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+    public BlockCoalGen() {
+        super("coalgen", Material.STONE, 1.5f, RefinedMachinery.modItemGroup);
         this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH));
     }
 
     @Override
     public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
         if (!world.isClient) {
-            ContainerProviderRegistry.INSTANCE.openContainer(ModBlockEntities.PULVERIZER_CONTAINER, player, buf -> buf.writeBlockPos(blockPos));
+            ContainerProviderRegistry.INSTANCE.openContainer(ModBlockEntities.COALGEN_CONTAINER, player, buf -> buf.writeBlockPos(blockPos));
         }
 
         return true;
@@ -51,8 +51,8 @@ public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable 
     public void onBlockRemoved(BlockState state, World world, BlockPos pos, BlockState state2, boolean boolean_1) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
-        if(state.getBlock() != state2.getBlock() && blockEntity instanceof BlockEntityPulverizer) {
-            ItemScatterer.spawn(world, pos, (BlockEntityPulverizer) blockEntity);
+        if(state.getBlock() != state2.getBlock() && blockEntity instanceof BlockEntityCoalGen) {
+            ItemScatterer.spawn(world, pos, (BlockEntityCoalGen) blockEntity);
             world.updateHorizontalAdjacent(pos, this);
         }
 
@@ -80,10 +80,9 @@ public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable 
         stateFactory$Builder_1.with(new Property[]{FACING});
     }
 
-    @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockView blockView) {
-        return new BlockEntityPulverizer();
+        return new BlockEntityCoalGen();
     }
 
     @Override
