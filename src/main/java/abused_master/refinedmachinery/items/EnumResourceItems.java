@@ -10,8 +10,6 @@ public enum EnumResourceItems {
     LEAD_INGOT,
     SILVER_INGOT,
     NICKEL_INGOT,
-    FLOW_INGOT,
-    FLOW_DUST,
     COAL_DUST,
     DIAMOND_DUST,
     IRON_DUST,
