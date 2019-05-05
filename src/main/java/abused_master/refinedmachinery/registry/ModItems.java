@@ -15,12 +15,14 @@ public class ModItems {
     public static ItemSteelIngot STEEL_INGOT = new ItemSteelIngot();
     public static ItemWrench WRENCH = new ItemWrench();
     public static ItemRoboticWings ROBOTIC_WINGS = new ItemRoboticWings();
+    public static ItemBlockExchanger EXCHANGER = new ItemBlockExchanger();
 
     public static void registerItems() {
         RegistryHelper.registerItem(RefinedMachinery.MODID, RECORDER);
         RegistryHelper.registerItem(RefinedMachinery.MODID, LINKER);
         RegistryHelper.registerItem(RefinedMachinery.MODID, STEEL_INGOT);
         RegistryHelper.registerItem(RefinedMachinery.MODID, WRENCH);
+        RegistryHelper.registerItem(RefinedMachinery.MODID, EXCHANGER);
 
         RegistryHelper.registerItem(new Identifier(RefinedMachinery.MODID, "energized_sword"), ENERGIZED_SWORD);
         RegistryHelper.registerItem(new Identifier(RefinedMachinery.MODID, "robotic_wings"), ROBOTIC_WINGS);

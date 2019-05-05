@@ -24,6 +24,7 @@
   "item.refinedmachinery.linker" : "Linker Tool",
   "item.refinedmachinery.wrench": "Utility Wrench",
   "item.refinedmachinery.robotic_wings": "Robo Wings",
+  "item.refinedmachinery.block_exchanger": "Block Exchanger",
 
   "__comment3": "Resource Blocks",
   "block.refinedmachinery.copper_block" : "Copper Block",
