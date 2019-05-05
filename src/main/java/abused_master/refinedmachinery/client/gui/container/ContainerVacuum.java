@@ -42,7 +42,7 @@ public class ContainerVacuum extends Container {
 
     @Override
     public boolean canUse(PlayerEntity playerEntity) {
-        return true;
+        return this.playerInventory.canPlayerUseInv(playerEntity);
     }
 
     @Override

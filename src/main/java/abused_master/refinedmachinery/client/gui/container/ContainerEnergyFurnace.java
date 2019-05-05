@@ -38,7 +38,7 @@ public class ContainerEnergyFurnace extends Container {
 
     @Override
     public boolean canUse(PlayerEntity playerEntity) {
-        return true;
+        return this.inventory.canPlayerUseInv(playerEntity);
     }
 
     @Override

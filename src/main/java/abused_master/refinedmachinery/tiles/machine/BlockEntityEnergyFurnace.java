@@ -160,7 +160,11 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
 
     @Override
     public boolean canPlayerUseInv(PlayerEntity playerEntity) {
-        return true;
+        if (this.world.getBlockEntity(this.pos) != this) {
+            return false;
+        } else {
+            return playerEntity.squaredDistanceTo((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+        }
     }
 
     @Override

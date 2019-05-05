@@ -44,8 +44,8 @@ public class ContainerDisenchanter extends Container {
     }
 
     @Override
-    public boolean canUse(PlayerEntity var1) {
-        return true;
+    public boolean canUse(PlayerEntity playerEntity) {
+        return this.inventory.canPlayerUseInv(playerEntity);
     }
 
     @Override
