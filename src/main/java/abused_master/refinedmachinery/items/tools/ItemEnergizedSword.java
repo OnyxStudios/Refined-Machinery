@@ -9,7 +9,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.Style;
 import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -44,6 +46,6 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler 
 
     @Override
     public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> list, TooltipContext tooltipOptions) {
-        list.add(new StringTextComponent("Energy: " + storage.getEnergyStored(stack) + " / " + storage.getEnergyCapacity(stack) + " CE"));
+        list.add(new StringTextComponent("Energy: " + storage.getEnergyStored(stack) + " / " + storage.getEnergyCapacity(stack) + " CE").setStyle(new Style().setColor(TextFormat.GOLD)));
     }
 }

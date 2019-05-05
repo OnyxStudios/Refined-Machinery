@@ -83,7 +83,7 @@ public class BlockWirelessTransmitter extends BlockWithEntityBase implements IWr
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder.with(WallMountedBlock.FACE, HorizontalFacingBlock.FACING));
+        super.appendProperties(builder.add(WallMountedBlock.FACE, HorizontalFacingBlock.FACING));
     }
 
     public Direction getDirection(BlockState state) {

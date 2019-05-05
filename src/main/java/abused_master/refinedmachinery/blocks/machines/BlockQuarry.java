@@ -75,7 +75,7 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
 
             quarry.setCorners(TagHelper.deserializeBlockPos(tag.getCompound("coordinates1")), TagHelper.deserializeBlockPos(tag.getCompound("coordinates2")));
             quarry.hasQuarryRecorder = true;
-            playerEntity.setStackInHand(Hand.MAIN, ItemStack.EMPTY);
+            playerEntity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
             playerEntity.addChatMessage(new StringTextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
         }
 

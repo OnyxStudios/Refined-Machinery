@@ -56,7 +56,7 @@ public class BlockWirelessController extends BlockWithEntityBase implements IWre
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder.with(STATE));
+        super.appendProperties(builder.add(STATE));
     }
 
     @Nullable

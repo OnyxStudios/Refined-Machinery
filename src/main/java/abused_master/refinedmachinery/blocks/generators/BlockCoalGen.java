@@ -77,7 +77,7 @@ public class BlockCoalGen extends BlockWithEntityBase implements IWrenchable {
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
-        stateFactory$Builder_1.with(new Property[]{FACING});
+        stateFactory$Builder_1.add(new Property[]{FACING});
     }
 
     @Override

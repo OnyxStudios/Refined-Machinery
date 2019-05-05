@@ -40,7 +40,7 @@ public class BlockGlassBase extends BlockBase {
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> stateBuilder) {
-        super.appendProperties(stateBuilder.with(PropertyBlockFacings.FACINGS));
+        super.appendProperties(stateBuilder.add(PropertyBlockFacings.FACINGS));
     }
 
     @Override

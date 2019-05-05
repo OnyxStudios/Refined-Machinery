@@ -63,7 +63,7 @@ public class BlockEnergyCable extends BlockWithEntityBase implements IWrenchable
 
     @Override
     public void appendProperties(StateFactory.Builder<Block, BlockState> stateBuilder) {
-        super.appendProperties(stateBuilder.with(PROPS));
+        super.appendProperties(stateBuilder.add(PROPS));
     }
 
     @Override
