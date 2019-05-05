@@ -48,14 +48,14 @@ public class GuiFarmer extends ContainerScreen {
         minecraft.getTextureManager().bindTexture(farmerGui);
         blit(guiLeft, guiTop, 0, 0, containerWidth, containerHeight);
 
-        renderEnergy(guiLeft, guiTop);
+        renderEnergy();
 
         if (this.isPointWithinBounds(10, 9, 20, 64, i, i1)) {
             this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", i, i1);
         }
     }
 
-    public void renderEnergy(int guiLeft, int guiTop) {
+    public void renderEnergy() {
         if (this.tile.storage.getEnergyStored() > 0) {
             int k = 62;
             int i = tile.storage.getEnergyStored() * k / tile.storage.getEnergyCapacity();

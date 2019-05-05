@@ -48,15 +48,15 @@ public class GuiPulverizer extends ContainerScreen {
         minecraft.getTextureManager().bindTexture(pulverizerGui);
         blit(guiLeft, guiTop, 0, 0, containerWidth, containerHeight);
 
-        renderEnergy(guiLeft, guiTop);
-        renderProgress(guiLeft, guiTop);
+        renderEnergy();
+        renderProgress();
 
         if(this.isPointWithinBounds(10, 9, 20, 64, i, i1)) {
             this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", i, i1);
         }
     }
 
-    public void renderEnergy(int guiLeft, int guiTop) {
+    public void renderEnergy() {
         if(this.tile.storage.getEnergyStored() > 0) {
             int k = 62;
             int i = tile.storage.getEnergyStored() * k / tile.storage.getEnergyCapacity();
@@ -64,7 +64,7 @@ public class GuiPulverizer extends ContainerScreen {
         }
     }
 
-    public void renderProgress(int guiLeft, int guiTop) {
+    public void renderProgress() {
         if(tile.getPulverizeTime() > 0) {
             int k = 22;
             int i = tile.getPulverizeTime() * k / tile.getTotalPulverizeTime();
