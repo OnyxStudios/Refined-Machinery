@@ -55,5 +55,11 @@ public class RefinedMachineryClient implements ClientModInitializer {
             BlockEntityCoalGen coalGen = (BlockEntityCoalGen) player.world.getBlockEntity(pos);
             return new GuiCoalGen(coalGen, new ContainerCoalGen(syncid, player.inventory, coalGen));
         }));
+
+        ScreenProviderRegistry.INSTANCE.registerFactory(DISENCHANTER_CONTAINER, ((syncid, identifier, player, buf) -> {
+            BlockPos pos = buf.readBlockPos();
+            BlockEntityDisenchanter disenchanter = (BlockEntityDisenchanter) player.world.getBlockEntity(pos);
+            return new GuiDisenchanter(disenchanter, new ContainerDisenchanter(syncid, player.inventory, disenchanter));
+        }));
     }
 }

@@ -37,6 +37,7 @@ public class ModBlockEntities {
     public static BlockEntityType<BlockEntityEnergyCable> ENERGY_CABLE;
     public static BlockEntityType<BlockEntityTank> TANK;
     public static BlockEntityType<BlockEntityCoalGen> COALGEN;
+    public static BlockEntityType<BlockEntityDisenchanter> DISENCHANTER;
 
     //Container Identifiers
     public static final Identifier ENERGY_FURNACE_CONTAINER = new Identifier(RefinedMachinery.MODID, "energy_furnace_container");
@@ -45,6 +46,7 @@ public class ModBlockEntities {
     public static final Identifier FARMER_CONTAINER = new Identifier(RefinedMachinery.MODID, "farmer_container");
     public static final Identifier VACUUM_CONTAINER = new Identifier(RefinedMachinery.MODID, "vacuum_container");
     public static final Identifier COALGEN_CONTAINER = new Identifier(RefinedMachinery.MODID, "coalgen");
+    public static final Identifier DISENCHANTER_CONTAINER = new Identifier(RefinedMachinery.MODID, "disenchanter");
 
     public static void registerBlockEntities() {
         ENERGY_FURNACE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_furnace"), BlockEntityEnergyFurnace.class);
@@ -63,6 +65,7 @@ public class ModBlockEntities {
         ENERGY_CABLE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_cable"), BlockEntityEnergyCable.class);
         TANK = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "tank"), BlockEntityTank.class);
         COALGEN = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "coalgen"), BlockEntityCoalGen.class);
+        DISENCHANTER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "disenchanter"), BlockEntityDisenchanter.class);
     }
 
     @Environment(EnvType.CLIENT)
@@ -84,5 +87,6 @@ public class ModBlockEntities {
         ContainerProviderRegistry.INSTANCE.registerFactory(FARMER_CONTAINER, (syncid, identifier, player, buf) -> new ContainerFarmer(syncid, player.inventory, (BlockEntityFarmer) player.world.getBlockEntity(buf.readBlockPos())));
         ContainerProviderRegistry.INSTANCE.registerFactory(VACUUM_CONTAINER, (syncid, identifier, player, buf) -> new ContainerVacuum(syncid, player.inventory, (BlockEntityVacuum) player.world.getBlockEntity(buf.readBlockPos())));
         ContainerProviderRegistry.INSTANCE.registerFactory(COALGEN_CONTAINER, (syncid, identifier, player, buf) -> new ContainerCoalGen(syncid, player.inventory, (BlockEntityCoalGen) player.world.getBlockEntity(buf.readBlockPos())));
+        ContainerProviderRegistry.INSTANCE.registerFactory(DISENCHANTER_CONTAINER, (syncid, identifier, player, buf) -> new ContainerDisenchanter(syncid, player.inventory, (BlockEntityDisenchanter) player.world.getBlockEntity(buf.readBlockPos())));
     }
 }

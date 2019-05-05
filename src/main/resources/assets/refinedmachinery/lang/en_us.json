@@ -63,5 +63,6 @@
   "block.refinedmachinery.copper_tank" : "Copper Fluid Tank",
   "block.refinedmachinery.silver_tank" : "Silver Fluid Tank",
   "block.refinedmachinery.steel_tank" : "Steel Fluid Tank",
-  "block.refinedmachinery.coalgen" : "Coal Generator"
+  "block.refinedmachinery.coalgen" : "Coal Generator",
+  "block.refinedmachinery.disenchanter" : "Disenchanter"
 }

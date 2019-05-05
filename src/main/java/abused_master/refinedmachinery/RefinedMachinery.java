@@ -63,6 +63,7 @@ public class RefinedMachinery implements ModInitializer {
         configOptions.put("silverTankStorage", 16000);
         configOptions.put("steelTankStorage", 32000);
         configOptions.put("coalGen_Generation", 10);
+        configOptions.put("disenchanter_cost", 2500);
 
         return configOptions;
     }

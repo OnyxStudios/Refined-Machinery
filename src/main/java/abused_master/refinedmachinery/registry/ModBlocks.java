@@ -31,6 +31,7 @@ public class ModBlocks {
     public static BlockMachineFrame MACHINE_FRAME = new BlockMachineFrame();
     public static BlockEnergyCable ENERGY_CABLE = new BlockEnergyCable();
     public static BlockCoalGen COAL_GENERATOR = new BlockCoalGen();
+    public static BlockDisenchanter DISENCHANTER = new BlockDisenchanter();
 
     //Decoration
     public static BlockGlassBase GLASS_BLOCK = new BlockGlassBase("glass_block");
@@ -53,6 +54,7 @@ public class ModBlocks {
         RegistryHelper.registerBlock(RefinedMachinery.MODID, MACHINE_FRAME);
         RegistryHelper.registerBlock(RefinedMachinery.MODID, ENERGY_CABLE);
         RegistryHelper.registerBlock(RefinedMachinery.MODID, COAL_GENERATOR);
+        RegistryHelper.registerBlock(RefinedMachinery.MODID, DISENCHANTER);
 
         RegistryHelper.registerBlock(RefinedMachinery.MODID, GLASS_BLOCK);
         RegistryHelper.registerBlock(RefinedMachinery.MODID, BLACK_GLASS_BLOCK);
