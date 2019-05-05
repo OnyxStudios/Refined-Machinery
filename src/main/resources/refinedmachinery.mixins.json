@@ -5,6 +5,9 @@
   "mixins": [
     "MixinRecipeManager"
   ],
+  "client": [
+    "MixinLivingEntityRenderer"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

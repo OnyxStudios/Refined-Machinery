@@ -25,6 +25,7 @@
   "item.refinedmachinery.energized_sword" : "Energized Sword",
   "item.refinedmachinery.linker" : "Linker Tool",
   "item.refinedmachinery.wrench": "Utility Wrench",
+  "item.refinedmachinery.robotic_wings": "Robo Wings",
 
   "__comment3": "Resource Blocks",
   "block.refinedmachinery.copper_block" : "Copper Block",
