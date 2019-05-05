@@ -23,6 +23,19 @@ public class ModRecipes {
             $.createFurnace(new ItemStack(EnumResourceItems.SILVER_INGOT.getItemIngot()), null, Ingredient.ofItems(BlockResources.EnumResourceOres.SILVER_ORE.getBlockOres()), 1.5f, 200);
             $.createFurnace(new ItemStack(EnumResourceItems.NICKEL_INGOT.getItemIngot()), null, Ingredient.ofItems(BlockResources.EnumResourceOres.NICKEL_ORE.getBlockOres()), 1.5f, 200);
 
+            //Ore Blocks Recipes
+            $.createShaped(new ItemStack(BlockResources.EnumResourceBlocks.COPPER_BLOCK.getBlockOres()), null, new RecipeGenerator.ShapedParser("XXX", "XXX", "XXX", 'X', EnumResourceItems.COPPER_INGOT.getItemIngot()));
+            $.createShaped(new ItemStack(BlockResources.EnumResourceBlocks.TIN_BLOCK.getBlockOres()), null, new RecipeGenerator.ShapedParser("XXX", "XXX", "XXX", 'X', EnumResourceItems.TIN_INGOT.getItemIngot()));
+            $.createShaped(new ItemStack(BlockResources.EnumResourceBlocks.LEAD_BLOCK.getBlockOres()), null, new RecipeGenerator.ShapedParser("XXX", "XXX", "XXX", 'X', EnumResourceItems.LEAD_INGOT.getItemIngot()));
+            $.createShaped(new ItemStack(BlockResources.EnumResourceBlocks.SILVER_BLOCK.getBlockOres()), null, new RecipeGenerator.ShapedParser("XXX", "XXX", "XXX", 'X', EnumResourceItems.SILVER_INGOT.getItemIngot()));
+            $.createShaped(new ItemStack(BlockResources.EnumResourceBlocks.NICKEL_BLOCK.getBlockOres()), null, new RecipeGenerator.ShapedParser("XXX", "XXX", "XXX", 'X', EnumResourceItems.NICKEL_INGOT.getItemIngot()));
+
+            $.createShapeless(new ItemStack(EnumResourceItems.COPPER_INGOT.getItemIngot(), 9), null, new RecipeGenerator.ShapelessParser(BlockResources.EnumResourceBlocks.COPPER_BLOCK.getBlockOres()));
+            $.createShapeless(new ItemStack(EnumResourceItems.TIN_INGOT.getItemIngot(), 9), null, new RecipeGenerator.ShapelessParser(BlockResources.EnumResourceBlocks.TIN_BLOCK.getBlockOres()));
+            $.createShapeless(new ItemStack(EnumResourceItems.LEAD_INGOT.getItemIngot(), 9), null, new RecipeGenerator.ShapelessParser(BlockResources.EnumResourceBlocks.LEAD_BLOCK.getBlockOres()));
+            $.createShapeless(new ItemStack(EnumResourceItems.SILVER_INGOT.getItemIngot(), 9), null, new RecipeGenerator.ShapelessParser(BlockResources.EnumResourceBlocks.SILVER_BLOCK.getBlockOres()));
+            $.createShapeless(new ItemStack(EnumResourceItems.NICKEL_INGOT.getItemIngot(), 9), null, new RecipeGenerator.ShapelessParser(BlockResources.EnumResourceBlocks.NICKEL_BLOCK.getBlockOres()));
+
             //Crafting Recipes
             $.createShaped(new ItemStack(ModBlocks.MACHINE_FRAME), null, new RecipeGenerator.ShapedParser("III", "IDI", "III", 'I', Items.IRON_INGOT, 'D', Items.DIAMOND));
             $.createShaped(new ItemStack(ModBlocks.PULVERIZER), null, new RecipeGenerator.ShapedParser("SFS", "SMS", "SFS", 'S', RMTags.STEEL_INGOT, 'F', Items.FLINT, 'M', ModBlocks.MACHINE_FRAME));
@@ -49,6 +62,12 @@ public class ModRecipes {
             $.createShaped(new ItemStack(ModItems.RECORDER), null, new RecipeGenerator.ShapedParser("RSR", "SLS", "RSR", 'S', RMTags.STEEL_INGOT, 'L', RMTags.LEAD_INGOT, 'R', Items.REDSTONE));
             $.createShaped(new ItemStack(ModBlocks.QUARRY), null, new RecipeGenerator.ShapedParser("SSS", "VFP", "SCS", 'S', RMTags.STEEL_INGOT, 'V', Items.DIAMOND_SHOVEL, 'F', ModBlocks.MACHINE_FRAME, 'P', Items.DIAMOND_PICKAXE, 'C', ModBlocks.PHASE_CELL));
             $.createShaped(new ItemStack(ModItems.EXCHANGER), null, new RecipeGenerator.ShapedParser("SDS", "EIE", "SDS", 'S', RMTags.STEEL_INGOT, 'D', Items.DIAMOND, 'E', Items.EMERALD, 'I', ModBlocks.MACHINE_FRAME));
+            $.createShaped(new ItemStack(ModItems.ROBOTIC_WINGS), null, new RecipeGenerator.ShapedParser("SES", " L ", "SDS", 'S', RMTags.STEEL_INGOT, 'E', EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot(), 'L', Items.ELYTRA, 'D', Items.DIAMOND_CHESTPLATE));
+            $.createShaped(new ItemStack(ModItems.LINKER), null, new RecipeGenerator.ShapedParser(" SD", " SS", "S  ", 'S', RMTags.STEEL_INGOT, 'D', Items.DIAMOND));
+            $.createShaped(new ItemStack(ModBlocks.WIRELESS_TRANSMITTER, 2), null, new RecipeGenerator.ShapedParser(" L ", "LVL", "SSS", 'S', RMTags.STEEL_INGOT, 'L', RMTags.LEAD_INGOT, 'V', RMTags.SILVER_INGOT));
+            $.createShaped(new ItemStack(ModBlocks.WIRELESS_CONTROLLER), null, new RecipeGenerator.ShapedParser("SSS", "FEF", "SSS", 'S', RMTags.STEEL_INGOT, 'F', ModBlocks.MACHINE_FRAME, 'E', EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot()));
+            $.createShapeless(new ItemStack(ModBlocks.GLASS_BLOCK, 8), null, new RecipeGenerator.ShapelessParser(new ItemStack(Blocks.GLASS_PANE), new ItemStack(Blocks.GLASS_PANE), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND)));
+            $.createShapeless(new ItemStack(ModBlocks.BLACK_GLASS_BLOCK, 8), null, new RecipeGenerator.ShapelessParser(new ItemStack(Blocks.BLACK_STAINED_GLASS_PANE), new ItemStack(Blocks.BLACK_STAINED_GLASS_PANE), new ItemStack(Blocks.SAND), new ItemStack(Blocks.SAND)));
         });
 
         generator.accept();
