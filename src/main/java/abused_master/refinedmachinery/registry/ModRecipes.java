@@ -1,11 +1,15 @@
 package abused_master.refinedmachinery.registry;
 
 import abused_master.abusedlib.registry.RecipeGenerator;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
 
 public class ModRecipes {
 
     public static RecipeGenerator registerRecipes() {
         RecipeGenerator generator =  new RecipeGenerator($ -> {
+            $.createBlasting(new ItemStack(ModItems.STEEL_INGOT), null, Ingredient.ofItems(Items.IRON_INGOT), 5, 1200);
             /**
              * TODO redo all these
             $.createShaped(new ItemStack(ModBlocks.ENERGY_FURNACE), null, new RecipeGenerator.ShapedParser("GFG", "PRP", "PCP", 'G', Blocks.GLASS, 'F', Blocks.FURNACE, 'P', EnumResourceItems.FLOW_INGOT.getItemIngot(), 'C', ModBlocks.PHASE_CELL, 'R', Items.REDSTONE));
