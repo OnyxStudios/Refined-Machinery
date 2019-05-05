@@ -14,6 +14,7 @@ public class RMTags {
     public static final Tag<Item> LEAD_INGOT = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "lead_ingot"));
     public static final Tag<Item> SILVER_INGOT = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "silver_ingot"));
     public static final Tag<Item> NICKEL_INGOT = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "nickel_ingot"));
+    public static final Tag<Item> STEEL_INGOT = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "steel_ingot"));
 
     public static final Tag<Item> COAL_DUST = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "coal_dust"));
     public static final Tag<Item> DIAMOND_DUST = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "diamond_dust"));
@@ -37,4 +38,5 @@ public class RMTags {
     public static final Tag<Item> LEAD_ORE = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "lead_ore"));
     public static final Tag<Item> SILVER_ORE = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "silver_ore"));
     public static final Tag<Item> NICKEL_ORE = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "nickel_ore"));
+    public static final Tag<Item> GLASS = TagRegistry.item(new Identifier(RefinedMachinery.RESOURCES_TAG, "glass"));
 }
