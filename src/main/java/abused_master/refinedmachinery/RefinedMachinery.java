@@ -53,7 +53,7 @@ public class RefinedMachinery implements ModInitializer {
         configOptions.put("pumpCostPerBlock", 250);
         configOptions.put("solarPanelMK1_Generation", 16);
         configOptions.put("solarPanelMK2_Generation", 256);
-        configOptions.put("solarPanelMK2_Generation", 1024);
+        configOptions.put("solarPanelMK3_Generation", 1024);
         configOptions.put("lavaGen_Generation", 100);
         configOptions.put("quarryUsagePerBlock", 500);
         configOptions.put("phaseCellStorage", 1000000);
