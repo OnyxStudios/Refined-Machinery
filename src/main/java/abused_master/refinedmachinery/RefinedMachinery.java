@@ -1,10 +1,14 @@
 package abused_master.refinedmachinery;
 
 import abused_master.abusedlib.utils.Config;
+import abused_master.refinedmachinery.items.tools.ItemEnergizedSword;
 import abused_master.refinedmachinery.registry.*;
+import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -38,6 +42,26 @@ public class RefinedMachinery implements ModInitializer {
             }
 
             return ActionResult.PASS;
+        });
+
+        AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+            if(entity instanceof LivingEntity) {
+                LivingEntity livingEntity = (LivingEntity) entity;
+                ItemStack stack = player.getStackInHand(hand);
+                int energyUsage = (int) (livingEntity.getHealth() * ModItems.ENERGIZED_SWORD.attackHeartCost);
+
+                if (stack.isEmpty() || stack.getItem() != ModItems.ENERGIZED_SWORD) {
+                    return ActionResult.PASS;
+                }
+
+                if (ModItems.ENERGIZED_SWORD.storage.getEnergyStored(stack) >= energyUsage) {
+                    return ActionResult.PASS;
+                }
+
+                return ActionResult.SUCCESS;
+            }else {
+                return ActionResult.PASS;
+            }
         });
     }
 

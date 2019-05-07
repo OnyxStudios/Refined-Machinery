@@ -20,6 +20,7 @@ import java.util.List;
 public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler {
 
     public ItemEnergyStorage storage = new ItemEnergyStorage(25000);
+    public int attackHeartCost = 50;
 
     public ItemEnergizedSword() {
         super(CustomToolMaterials.ENERGIZED_SWORD, 12, 0, new Settings().stackSize(1).itemGroup(RefinedMachinery.modItemGroup).durability(25000));
@@ -28,7 +29,7 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler 
     @Override
     public boolean onEntityDamaged(ItemStack stack, LivingEntity livingEntity, LivingEntity damagedEntity) {
         int damageAmount = (int) (damagedEntity.getHealthMaximum() - damagedEntity.getHealth());
-        int energyUsage = (damageAmount == 0 ? (int) damagedEntity.getHealthMaximum() : damageAmount) * 50;
+        int energyUsage = (damageAmount == 0 ? (int) damagedEntity.getHealthMaximum() : damageAmount) * attackHeartCost;
 
         if (storage.getEnergyStored(stack) >= energyUsage) {
             storage.extractEnergy(stack, energyUsage);
