@@ -112,7 +112,6 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
             drainingSpeed++;
             if (drainingSpeed >= 20) {
                 run();
-                this.updateEntity();
             }
         }
 
@@ -128,12 +127,12 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     }
 
     public void run() {
-        if(!cachedDrainingPos.isEmpty()) {
+        if (!cachedDrainingPos.isEmpty()) {
             BlockPos pos = null;
 
             for (Iterator<BlockPos> it = cachedDrainingPos.iterator(); it.hasNext(); ) {
                 BlockPos pos2 = it.next();
-                if (world.isAir(pos2) || world.getFluidState(pos2) == null || !(world.getBlockState(pos2).getBlock() instanceof FluidBlock) || world.isHeightInvalid(pos)) {
+                if (world.isAir(pos2) || world.getFluidState(pos2) == null || !(world.getBlockState(pos2).getBlock() instanceof FluidBlock) || world.isHeightInvalid(pos2)) {
                     it.remove();
                     continue;
                 }
@@ -156,6 +155,7 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
             }
 
             cachedDrainingPos.remove(pos);
+            this.updateEntity();
         }
     }
 
@@ -174,6 +174,7 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
                             tank.extractFluid(250);
                         }
 
+                        world.updateNeighbors(getPos(), this.getCachedState().getBlock());
                         this.updateEntity();
                     }
                 }
@@ -215,17 +216,9 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     @Override
     public List<String> getClientLog() {
         List<String> toDisplay = new ArrayList<>();
-        if(tank.getFluidStack() != null) {
-            toDisplay.add(I18n.translate(tank.getFluidStack().getFluid().getDefaultState().getBlockState().getBlock().getTranslationKey()) + ": " + tank.getFluidAmount() + " / " + tank.getFluidCapacity());
-        }else {
-            toDisplay.add("Internal Tank Empty");
-        }
+        toDisplay.add((tank.getFluidStack() != null ? I18n.translate(tank.getFluidStack().getFluid().getDefaultState().getBlockState().getBlock().getTranslationKey()) : "Empty") + ": " + tank.getFluidAmount() + " / " + tank.getFluidCapacity() + " MB");
         toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getEnergyCapacity() + " CE");
-        if(drainingPos != null) {
-            toDisplay.add("Draining: X: " + drainingPos.getX() + " Y: " + drainingPos.getY() + " Z: " + drainingPos.getZ());
-        }else {
-            toDisplay.add("Not currently working");
-        }
+        toDisplay.add(drainingPos != null ? "Draining: X: " + drainingPos.getX() + " Y: " + drainingPos.getY() + " Z: " + drainingPos.getZ() : "Not currently working");
         return toDisplay;
     }
 
