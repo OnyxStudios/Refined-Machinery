@@ -46,6 +46,7 @@ public class PulverizerRecipes {
         registerRecipe(RMTags.LEAD_ORE, RMTags.LEAD_DUST, 2, RMTags.SILVER_DUST, 1, 10);
         registerRecipe(RMTags.NICKEL_ORE, RMTags.NICKEL_DUST, 2, ItemStack.EMPTY, 1, 10);
 
+        registerRecipe(new ItemStack(Items.DIAMOND), RMTags.DIAMOND_DUST, 1, ItemStack.EMPTY, 0, 0);
         registerRecipe(RMTags.COPPER_INGOT, RMTags.COPPER_DUST, 1, ItemStack.EMPTY, 0, 0);
         registerRecipe(RMTags.TIN_INGOT, RMTags.TIN_DUST, 1, ItemStack.EMPTY, 0, 0);
         registerRecipe(RMTags.LEAD_INGOT, RMTags.LEAD_DUST, 1, ItemStack.EMPTY, 0, 0);
@@ -55,7 +56,7 @@ public class PulverizerRecipes {
         registerRecipe(new ItemStack(Blocks.COAL_ORE), new ItemStack(Items.COAL), 3, RMTags.COAL_DUST, 1, 25);
         registerRecipe(new ItemStack(Blocks.LAPIS_ORE), new ItemStack(Items.LAPIS_LAZULI), 8, ItemStack.EMPTY, 0, 0);
         registerRecipe(new ItemStack(Blocks.REDSTONE_ORE), new ItemStack(Items.REDSTONE), 6, ItemStack.EMPTY, 0, 0);
-        registerRecipe(new ItemStack(Blocks.DIAMOND_ORE), new ItemStack(Items.DIAMOND), 2, new ItemStack(Items.DIAMOND), 1, 10);
+        registerRecipe(new ItemStack(Blocks.DIAMOND_ORE), RMTags.DIAMOND_DUST, 2, new ItemStack(Items.DIAMOND), 1, 10);
         registerRecipe(new ItemStack(Blocks.EMERALD_ORE), new ItemStack(Items.EMERALD), 2, new ItemStack(Items.EMERALD), 1, 10);
         registerRecipe(new ItemStack(Blocks.NETHER_QUARTZ_ORE), new ItemStack(Items.QUARTZ), 6, ItemStack.EMPTY, 0, 0);
 
