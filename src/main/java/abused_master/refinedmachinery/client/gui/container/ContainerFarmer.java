@@ -31,14 +31,9 @@ public class ContainerFarmer extends Container {
         this.addSlot(new Slot(inventory, 3, 134, 27));
         this.addSlot(new Slot(inventory, 4, 152, 27));
 
-        //Output slots
-        this.addSlot(new OutputSlot(inventory, 5, 44, 55));
-        this.addSlot(new OutputSlot(inventory, 6, 62, 55));
-        this.addSlot(new OutputSlot(inventory, 7, 80, 55));
-        this.addSlot(new OutputSlot(inventory, 8, 98, 55));
-        this.addSlot(new OutputSlot(inventory, 9, 116, 55));
-        this.addSlot(new OutputSlot(inventory, 10, 134, 55));
-        this.addSlot(new OutputSlot(inventory, 11, 152, 55));
+        for(int i = 0; i < 7; ++i) {
+            this.addSlot(new OutputSlot(inventory, 5 + i, 44 + i * 18, 55));
+        }
 
         //Vanilla Slots
         int i;

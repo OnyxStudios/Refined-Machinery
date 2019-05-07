@@ -17,6 +17,7 @@ import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
+import java.util.Iterator;
 
 //TODO ADD UPGRADES
 public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
@@ -135,7 +136,29 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
 
     @Override
     public boolean isInvEmpty() {
-        return inventory.isEmpty();
+        Iterator var1 = this.inventory.iterator();
+
+        ItemStack itemStack_1;
+        do {
+            if (!var1.hasNext()) {
+                return true;
+            }
+
+            itemStack_1 = (ItemStack)var1.next();
+        } while(itemStack_1.isEmpty());
+
+        return false;
+    }
+
+    @Override
+    public void setInvStack(int i, ItemStack itemStack) {
+        inventory.set(i, itemStack);
+        this.markDirty();
+    }
+
+    @Override
+    public ItemStack takeInvStack(int i, int i1) {
+        return Inventories.splitStack(this.inventory, i, i1);
     }
 
     @Override
@@ -144,18 +167,8 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
     }
 
     @Override
-    public ItemStack takeInvStack(int i, int i1) {
-        return inventory.get(i);
-    }
-
-    @Override
     public ItemStack removeInvStack(int i) {
         return Inventories.removeStack(this.inventory, i);
-    }
-
-    @Override
-    public void setInvStack(int i, ItemStack itemStack) {
-        inventory.set(i, itemStack);
     }
 
     @Override

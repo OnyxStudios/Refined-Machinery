@@ -28,6 +28,7 @@ import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
@@ -236,17 +237,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
     }
 
     @Override
-    public boolean isInvEmpty() {
-        return inventory.isEmpty();
-    }
-
-    @Override
     public ItemStack getInvStack(int i) {
-        return inventory.get(i);
-    }
-
-    @Override
-    public ItemStack takeInvStack(int i, int i1) {
         return inventory.get(i);
     }
 
@@ -256,17 +247,39 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
     }
 
     @Override
-    public void setInvStack(int i, ItemStack itemStack) {
-        inventory.set(i, itemStack);
-    }
-
-    @Override
     public boolean canPlayerUseInv(PlayerEntity playerEntity) {
         if (this.world.getBlockEntity(this.pos) != this) {
             return false;
         } else {
             return playerEntity.squaredDistanceTo((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
         }
+    }
+
+    @Override
+    public boolean isInvEmpty() {
+        Iterator var1 = this.inventory.iterator();
+
+        ItemStack itemStack_1;
+        do {
+            if (!var1.hasNext()) {
+                return true;
+            }
+
+            itemStack_1 = (ItemStack)var1.next();
+        } while(itemStack_1.isEmpty());
+
+        return false;
+    }
+
+    @Override
+    public void setInvStack(int i, ItemStack itemStack) {
+        inventory.set(i, itemStack);
+        this.markDirty();
+    }
+
+    @Override
+    public ItemStack takeInvStack(int i, int i1) {
+        return Inventories.splitStack(this.inventory, i, i1);
     }
 
     @Override
