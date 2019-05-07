@@ -65,7 +65,8 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
             }else {
                if(storage.canExtract(chargePerTick)) {
                    storage.extractEnergy(energyItemHandler.getEnergyStorage().receiveEnergy(stack, chargePerTick));
-                   ItemHelper.updateItemDurability(stack, energyItemHandler.getEnergyStorage());
+                   if(stack.hasDurability())
+                       ItemHelper.updateItemDurability(stack, energyItemHandler.getEnergyStorage());
                }
             }
         }

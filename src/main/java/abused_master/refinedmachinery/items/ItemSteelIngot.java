@@ -23,7 +23,7 @@ public class ItemSteelIngot extends ItemBase implements IEnergyItemHandler {
     public ItemEnergyStorage storage = new ItemEnergyStorage(500000);
 
     public ItemSteelIngot() {
-        super("steel_ingot", new Settings().itemGroup(RefinedMachinery.modItemGroup).durability(500000));
+        super("steel_ingot", new Settings().itemGroup(RefinedMachinery.modItemGroup));
     }
 
     @Override
