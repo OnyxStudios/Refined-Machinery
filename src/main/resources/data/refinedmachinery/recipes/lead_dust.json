@@ -1,9 +1,9 @@
 {
   "type": "smelting",
   "ingredient": {
-    "item": "refinedmachinery:lead_ingot"
+    "item": "refinedmachinery:lead_dust"
   },
-  "result": "refinedmachinery:lead_dust",
+  "result": "refinedmachinery:lead_ingot",
   "experience": 1.5,
   "cookingtime": 200
 }

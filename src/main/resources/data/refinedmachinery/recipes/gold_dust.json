@@ -1,9 +1,9 @@
 {
   "type": "smelting",
   "ingredient": {
-    "item": "minecraft:gold_ingot"
+    "item": "refinedmachinery:gold_dust"
   },
-  "result": "refinedmachinery:gold_dust",
+  "result": "minecraft:gold_ingot",
   "experience": 1.5,
   "cookingtime": 200
 }
