@@ -10,7 +10,7 @@
       "item": "minecraft:book"
     },
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "E": {
       "item": "minecraft:emerald"

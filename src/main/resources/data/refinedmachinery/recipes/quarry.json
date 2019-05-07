@@ -10,7 +10,7 @@
       "item": "minecraft:diamond_pickaxe"
     },
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "C": {
       "item": "refinedmachinery:energy_cell"

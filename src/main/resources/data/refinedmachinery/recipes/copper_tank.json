@@ -10,10 +10,10 @@
       "item": "minecraft:bucket"
     },
     "G": {
-      "tag": "fabric:glass"
+      "tag": "c:glass"
     },
     "I": {
-      "tag": "fabric:copper_ingot"
+      "tag": "c:copper_ingot"
     }
   },
   "result": {

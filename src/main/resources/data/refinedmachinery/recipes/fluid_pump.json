@@ -10,7 +10,7 @@
       "item": "minecraft:bucket"
     },
     "C": {
-      "tag": "fabric:copper_ingot"
+      "tag": "c:copper_ingot"
     },
     "M": {
       "item": "refinedmachinery:machine_frame"

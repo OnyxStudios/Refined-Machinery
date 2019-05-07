@@ -7,10 +7,10 @@
   ],
   "key": {
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "D": {
-      "tag": "fabric:diamond_dust"
+      "tag": "c:diamond_dust"
     },
     "F": {
       "item": "refinedmachinery:machine_frame"

@@ -10,10 +10,10 @@
       "item": "minecraft:redstone"
     },
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "L": {
-      "tag": "fabric:lead_ingot"
+      "tag": "c:lead_ingot"
     }
   },
   "result": {

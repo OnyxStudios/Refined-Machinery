@@ -10,13 +10,13 @@
       "item": "refinedmachinery:solar_panel_mk1"
     },
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "G": {
-      "tag": "fabric:glass"
+      "tag": "c:glass"
     },
     "L": {
-      "tag": "fabric:lead_ingot"
+      "tag": "c:lead_ingot"
     }
   },
   "result": {

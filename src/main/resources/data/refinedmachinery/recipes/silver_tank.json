@@ -10,10 +10,10 @@
       "item": "refinedmachinery:copper_tank"
     },
     "G": {
-      "tag": "fabric:glass"
+      "tag": "c:glass"
     },
     "I": {
-      "tag": "fabric:silver_ingot"
+      "tag": "c:silver_ingot"
     }
   },
   "result": {

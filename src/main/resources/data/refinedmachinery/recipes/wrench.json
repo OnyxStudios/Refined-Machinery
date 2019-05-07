@@ -7,7 +7,7 @@
   ],
   "key": {
     "T": {
-      "tag": "fabric:silver_ingot"
+      "tag": "c:silver_ingot"
     },
     "I": {
       "item": "minecraft:iron_ingot"

@@ -7,7 +7,7 @@
   ],
   "key": {
     "C": {
-      "tag": "fabric:copper_ingot"
+      "tag": "c:copper_ingot"
     },
     "G": {
       "item": "minecraft:gold_ingot"
@@ -16,7 +16,7 @@
       "item": "refinedmachinery:machine_frame"
     },
     "N": {
-      "tag": "fabric:nickel_ingot"
+      "tag": "c:nickel_ingot"
     }
   },
   "result": {

@@ -13,7 +13,7 @@
       "item": "minecraft:sugar"
     },
     "T": {
-      "tag": "fabric:tin_ingot"
+      "tag": "c:tin_ingot"
     }
   },
   "result": {

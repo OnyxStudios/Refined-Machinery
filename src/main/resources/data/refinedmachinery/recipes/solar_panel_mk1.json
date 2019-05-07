@@ -7,10 +7,10 @@
   ],
   "key": {
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "G": {
-      "tag": "fabric:glass"
+      "tag": "c:glass"
     },
     "L": {
       "item": "minecraft:gold_ingot"

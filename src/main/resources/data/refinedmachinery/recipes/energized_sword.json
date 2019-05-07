@@ -7,7 +7,7 @@
   ],
   "key": {
     "R": {
-      "tag": "fabric:silver_ingot"
+      "tag": "c:silver_ingot"
     },
     "E": {
       "item": "refinedmachinery:energized_steel_ingot"

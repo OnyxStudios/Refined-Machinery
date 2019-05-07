@@ -7,13 +7,13 @@
   ],
   "key": {
     "S": {
-      "tag": "fabric:steel_ingot"
+      "tag": "c:steel_ingot"
     },
     "V": {
-      "tag": "fabric:silver_ingot"
+      "tag": "c:silver_ingot"
     },
     "L": {
-      "tag": "fabric:lead_ingot"
+      "tag": "c:lead_ingot"
     }
   },
   "result": {

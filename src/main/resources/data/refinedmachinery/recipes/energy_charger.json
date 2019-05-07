@@ -10,7 +10,7 @@
       "item": "minecraft:gold_ingot"
     },
     "L": {
-      "tag": "fabric:lead_ingot"
+      "tag": "c:lead_ingot"
     },
     "M": {
       "item": "refinedmachinery:machine_frame"
