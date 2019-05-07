@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "refinedmachinery:lead_ore"
+  },
+  "result": "refinedmachinery:lead_ingot",
+  "experience": 1.5,
+  "cookingtime": 200
+}

@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "IGI",
+    "GBG",
+    "IGI"
+  ],
+  "key": {
+    "B": {
+      "item": "refinedmachinery:copper_tank"
+    },
+    "G": {
+      "tag": "fabric:glass"
+    },
+    "I": {
+      "tag": "fabric:silver_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:silver_tank"
+  }
+}

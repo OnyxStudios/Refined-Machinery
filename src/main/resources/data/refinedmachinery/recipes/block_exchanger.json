@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SDS",
+    "EIE",
+    "SDS"
+  ],
+  "key": {
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "I": {
+      "item": "refinedmachinery:machine_frame"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:block_exchanger"
+  }
+}

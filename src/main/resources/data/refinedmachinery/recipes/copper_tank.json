@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "IGI",
+    "GBG",
+    "IGI"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "tag": "fabric:glass"
+    },
+    "I": {
+      "tag": "fabric:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:copper_tank"
+  }
+}

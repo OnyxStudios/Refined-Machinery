@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "  E",
+    " E ",
+    "R  "
+  ],
+  "key": {
+    "R": {
+      "tag": "fabric:silver_ingot"
+    },
+    "E": {
+      "item": "refinedmachinery:energized_steel_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:energized_sword"
+  }
+}

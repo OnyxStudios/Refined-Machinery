@@ -1,0 +1,23 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    " L ",
+    "LVL",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "V": {
+      "tag": "fabric:silver_ingot"
+    },
+    "L": {
+      "tag": "fabric:lead_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:wireless_transmitter",
+    "count": 2
+  }
+}

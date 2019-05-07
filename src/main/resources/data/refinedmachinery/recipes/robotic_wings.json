@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SES",
+    " L ",
+    "SDS"
+  ],
+  "key": {
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond_chestplate"
+    },
+    "E": {
+      "item": "refinedmachinery:energized_steel_ingot"
+    },
+    "L": {
+      "item": "minecraft:elytra"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:robotic_wings"
+  }
+}

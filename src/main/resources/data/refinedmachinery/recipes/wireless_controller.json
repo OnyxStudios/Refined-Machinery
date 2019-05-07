@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SSS",
+    "FEF",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "E": {
+      "item": "refinedmachinery:energized_steel_ingot"
+    },
+    "F": {
+      "item": "refinedmachinery:machine_frame"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:wireless_controller"
+  }
+}

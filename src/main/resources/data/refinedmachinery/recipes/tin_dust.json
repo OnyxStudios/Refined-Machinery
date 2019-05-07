@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "refinedmachinery:tin_ingot"
+  },
+  "result": "refinedmachinery:tin_dust",
+  "experience": 1.5,
+  "cookingtime": 200
+}

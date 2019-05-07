@@ -30,7 +30,6 @@ public class RefinedMachinery implements ModInitializer {
         WorldGenRegistry.generateOres();
         ModBlockEntities.registerBlockEntities();
         ModBlockEntities.registerServerGUIs();
-        ModRecipes.registerRecipes();
 
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if(player.getMainHandStack().getItem() == ModItems.WRENCH) {

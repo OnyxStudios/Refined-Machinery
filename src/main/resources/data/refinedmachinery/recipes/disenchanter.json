@@ -1,0 +1,28 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SBS",
+    "ETE",
+    "SMS"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "M": {
+      "item": "refinedmachinery:machine_frame"
+    },
+    "T": {
+      "item": "minecraft:enchanting_table"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:disenchanter"
+  }
+}

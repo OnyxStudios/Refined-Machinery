@@ -1,0 +1,28 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SSS",
+    "VFP",
+    "SCS"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "C": {
+      "item": "refinedmachinery:energy_cell"
+    },
+    "V": {
+      "item": "minecraft:diamond_shovel"
+    },
+    "F": {
+      "item": "refinedmachinery:machine_frame"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:quarry"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "refinedmachinery:nickel_ingot"
+  },
+  "result": "refinedmachinery:nickel_dust",
+  "experience": 1.5,
+  "cookingtime": 200
+}

@@ -1,0 +1,9 @@
+{
+  "type": "blasting",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": "refinedmachinery:steel_ingot",
+  "experience": 5.0,
+  "cookingtime": 1200
+}

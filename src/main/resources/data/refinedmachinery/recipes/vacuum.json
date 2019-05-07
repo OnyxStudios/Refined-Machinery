@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SES",
+    "OMO",
+    "SES"
+  ],
+  "key": {
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "M": {
+      "item": "refinedmachinery:machine_frame"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:vacuum"
+  }
+}

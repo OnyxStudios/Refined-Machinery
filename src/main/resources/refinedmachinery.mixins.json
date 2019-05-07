@@ -3,7 +3,6 @@
   "package": "abused_master.refinedmachinery.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinRecipeManager"
   ],
   "client": [
     "MixinLivingEntityRenderer",

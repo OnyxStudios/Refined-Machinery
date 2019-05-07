@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "LGL",
+    "GMG",
+    "LGL"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "tag": "fabric:lead_ingot"
+    },
+    "M": {
+      "item": "refinedmachinery:machine_frame"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:energy_charger"
+  }
+}

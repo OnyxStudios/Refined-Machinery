@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    " T ",
+    " IT",
+    "I  "
+  ],
+  "key": {
+    "T": {
+      "tag": "fabric:silver_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:wrench"
+  }
+}

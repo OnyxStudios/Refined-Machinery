@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "refinedmachinery:silver_ingot"
+  },
+  "result": "refinedmachinery:silver_dust",
+  "experience": 1.5,
+  "cookingtime": 200
+}

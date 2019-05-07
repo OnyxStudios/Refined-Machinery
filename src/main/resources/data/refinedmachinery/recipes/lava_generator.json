@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "NCN",
+    "GMG",
+    "NCN"
+  ],
+  "key": {
+    "C": {
+      "tag": "fabric:copper_ingot"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "refinedmachinery:machine_frame"
+    },
+    "N": {
+      "tag": "fabric:nickel_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:lava_generator"
+  }
+}

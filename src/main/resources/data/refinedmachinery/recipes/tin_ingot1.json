@@ -1,0 +1,12 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "refinedmachinery:tin_block"
+    }
+  ],
+  "result": {
+    "item": "refinedmachinery:tin_ingot",
+    "count": 9
+  }
+}

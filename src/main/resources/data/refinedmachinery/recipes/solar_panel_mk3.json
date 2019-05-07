@@ -1,0 +1,25 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "GGG",
+    "LPL",
+    "LSL"
+  ],
+  "key": {
+    "P": {
+      "item": "refinedmachinery:solar_panel_mk2"
+    },
+    "S": {
+      "item": "refinedmachinery:energized_steel_ingot"
+    },
+    "G": {
+      "tag": "fabric:glass"
+    },
+    "L": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:solar_panel_mk3"
+  }
+}

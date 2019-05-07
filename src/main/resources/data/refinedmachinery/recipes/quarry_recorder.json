@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "RSR",
+    "SLS",
+    "RSR"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "L": {
+      "tag": "fabric:lead_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:quarry_recorder"
+  }
+}

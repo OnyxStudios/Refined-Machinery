@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SCS",
+    "CMC",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "tag": "fabric:steel_ingot"
+    },
+    "C": {
+      "tag": "minecraft:coals"
+    },
+    "M": {
+      "item": "refinedmachinery:machine_frame"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:coalgen"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "refinedmachinery:nickel_ore"
+  },
+  "result": "refinedmachinery:nickel_ingot",
+  "experience": 1.5,
+  "cookingtime": 200
+}

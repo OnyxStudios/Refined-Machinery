@@ -1,0 +1,23 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "RL ",
+    "LGL",
+    " LR"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "tag": "fabric:glass"
+    },
+    "L": {
+      "tag": "fabric:lead_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:energy_cable",
+    "count": 8
+  }
+}

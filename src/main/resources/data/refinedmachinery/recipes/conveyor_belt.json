@@ -1,0 +1,23 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "SSS",
+    "TBT",
+    "   "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:slime_ball"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "T": {
+      "tag": "fabric:tin_ingot"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:conveyor_belt",
+    "count": 8
+  }
+}
