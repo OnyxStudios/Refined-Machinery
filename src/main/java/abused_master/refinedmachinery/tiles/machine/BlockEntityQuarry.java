@@ -104,19 +104,27 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
 
     @Override
     public void tick() {
-        if (running && canRun() && storage.getEnergyStored() >= energyUsagePerBlock) {
-            if (!miningError) {
+        if(!miningError) {
+            if(canRun() && running && storage.getEnergyStored() >= energyUsagePerBlock) {
                 miningSpeed++;
                 if (miningSpeed >= (20 / speedMultiplier)) {
                     Inventory inventory = InventoryHelper.getNearbyInventory(world, pos);
                     this.mineBlocks(inventory);
                 }
-            } else if (world.getBlockState(miningPos) != null && InventoryHelper.insertItemIfPossible(InventoryHelper.getNearbyInventory(world, pos), new ItemStack(world.getBlockState(miningPos).getBlock()), true)) {
-                this.setMiningError(false);
+            }else {
+                this.setMiningError(true);
             }
-        } else if (running && !canRun()) {
-            this.setRunning(false);
+        }else {
+            this.checkMiningError();
         }
+    }
+
+    public void checkMiningError() {
+        if(world.getBlockState(miningPos) == null || !InventoryHelper.insertItemIfPossible(InventoryHelper.getNearbyInventory(world, pos), new ItemStack(world.getBlockState(miningPos).getBlock()), true) || storage.getEnergyStored() < energyUsagePerBlock) {
+            return;
+        }
+
+        this.setMiningError(false);
     }
 
     public void mineBlocks(Inventory inventory) {

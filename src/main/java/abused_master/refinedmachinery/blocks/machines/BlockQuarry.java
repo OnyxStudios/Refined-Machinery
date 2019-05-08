@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
 
     public BlockQuarry() {
-        super("quarry", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("quarry", Material.STONE, 1.8f, RefinedMachinery.modItemGroup);
     }
 
     @Override
@@ -50,33 +50,35 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
             if (!quarry.isRunning() && quarry.blockPositionsActive()) {
                 quarry.setRunning(true);
                 quarry.cacheMiningArea();
-                if (!world.isClient) {
+                if (!world.isClient)
                     playerEntity.addChatMessage(new StringTextComponent("Set quarry to now running!").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
-                }
             } else if (!quarry.blockPositionsActive()) {
-                playerEntity.addChatMessage(new StringTextComponent("Error, no mining positions are set!").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+                if(!world.isClient)
+                    playerEntity.addChatMessage(new StringTextComponent("Error, no mining positions are set!").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
             }
         } else {
             CompoundTag tag = stack.getTag();
 
             if (tag == null) {
-                if (!world.isClient) {
+                if (!world.isClient)
                     playerEntity.addChatMessage(new StringTextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
-                }
+
                 return true;
             }
 
             if (!tag.containsKey("coordinates1") || !tag.containsKey("coordinates2")) {
-                if (!world.isClient) {
+                if (!world.isClient)
                     playerEntity.addChatMessage(new StringTextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
-                }
+
                 return true;
             }
 
             quarry.setCorners(TagHelper.deserializeBlockPos(tag.getCompound("coordinates1")), TagHelper.deserializeBlockPos(tag.getCompound("coordinates2")));
             quarry.hasQuarryRecorder = true;
             playerEntity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
-            playerEntity.addChatMessage(new StringTextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+
+            if(!world.isClient)
+                playerEntity.addChatMessage(new StringTextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
         }
 
         return true;
