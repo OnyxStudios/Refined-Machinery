@@ -17,6 +17,7 @@ repositories {
 	jcenter()
     maven { url = "https://jitpack.io/" }
 	maven { url = "https://oss.sonatype.org/content/repositories/releases/" }
+	maven { url = "http://maven.abusedmaster.xyz/" }
 }
 
 dependencies {

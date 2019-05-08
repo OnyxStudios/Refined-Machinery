@@ -6,10 +6,13 @@ import abused_master.refinedmachinery.registry.ModItems;
 import nerdhub.cardinalenergy.api.IEnergyItemHandler;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.Style;
 import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -37,9 +40,17 @@ public class ItemSteelIngot extends ItemBase implements IEnergyItemHandler {
     }
 
     @Override
+    public void onEntityTick(ItemStack stack, World world, Entity entity, int int_1, boolean boolean_1) {
+        if(stack.getAmount() > 1 && storage.getEnergyStored(stack) > 0) {
+            storage.setEnergyCapacity(stack, stack.getAmount() * 500000);
+        }
+    }
+
+    @Override
     public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> list, TooltipContext context) {
         if(stack.hasTag() && stack.getTag().containsKey(ItemEnergyStorage.ENERGY_TAG)) {
-            list.add(new StringTextComponent("Energy Stored: " + storage.getEnergyStored(stack) + " / " + storage.getEnergyCapacity(stack) + " CE"));
+            list.add(new StringTextComponent("Energy Stored: " + storage.getEnergyStored(stack) + " / " + storage.getEnergyCapacity(stack) + " CE").setStyle(new Style().setColor(TextFormat.GOLD)));
+
         }
     }
 
