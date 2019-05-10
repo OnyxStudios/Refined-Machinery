@@ -127,12 +127,10 @@ public class BlockEntityMobGrinder extends BlockEntityBase implements IEnergyHan
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if(!world.isClient) {
-            if (tag.containsKey("collectorPos")) {
-                tag.remove("collectorPos");
-            }
-            tag.put("blockPos", TagHelper.serializeBlockPos(pos));
-            player.addChatMessage(new StringTextComponent("Saved block position!"), true);
+        if (tag.containsKey("collectorPos")) {
+            tag.remove("collectorPos");
         }
+        tag.put("blockPos", TagHelper.serializeBlockPos(pos));
+        player.addChatMessage(new StringTextComponent("Saved block position!"), true);
     }
 }

@@ -44,12 +44,14 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
                 quarry.setRunning(false);
                 quarry.setHasQuarryRecorder(false);
                 quarry.setCorners(null, null);
+                world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
                 return true;
             }
 
             if (!quarry.isRunning() && quarry.blockPositionsActive()) {
-                quarry.setRunning(true);
                 quarry.cacheMiningArea();
+                quarry.setRunning(true);
+                world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
                 if (!world.isClient)
                     playerEntity.addChatMessage(new StringTextComponent("Set quarry to now running!").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
             } else if (!quarry.blockPositionsActive()) {
@@ -76,6 +78,7 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
             quarry.setCorners(TagHelper.deserializeBlockPos(tag.getCompound("coordinates1")), TagHelper.deserializeBlockPos(tag.getCompound("coordinates2")));
             quarry.hasQuarryRecorder = true;
             playerEntity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+            world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
 
             if(!world.isClient)
                 playerEntity.addChatMessage(new StringTextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
