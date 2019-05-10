@@ -24,10 +24,11 @@ public class ContainerDisenchanter extends Container {
 
         //Input Slot
         this.addSlot(new Slot(inventory, 0, 80, 24));
+        this.addSlot(new Slot(inventory, 1, 134, 55));
 
         //Output Slots
-        for (int slot = 1; slot < 7; slot++) {
-            this.addSlot(new OutputSlot(inventory, slot, 26 + slot * 18, 55));
+        for (int slot = 2; slot < 7; slot++) {
+            this.addSlot(new OutputSlot(inventory, slot, slot * 18, 55));
         }
 
         //Vanilla Slots

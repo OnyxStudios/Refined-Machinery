@@ -75,7 +75,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
     }
 
     public boolean canRun() {
-        if(inventory.get(0).isEmpty() || EnchantmentHelper.getEnchantments(inventory.get(0)).size() <= 0 || storage.getEnergyStored() < costPerEnchant || inventory.get(0).getItem() == Items.ENCHANTED_BOOK) {
+        if(inventory.get(0).isEmpty() || inventory.get(1).isEmpty() || inventory.get(1).getItem() != Items.BOOK || EnchantmentHelper.getEnchantments(inventory.get(0)).size() <= 0 || storage.getEnergyStored() < costPerEnchant || inventory.get(0).getItem() == Items.ENCHANTED_BOOK) {
             return false;
         }
 
@@ -111,6 +111,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
                 }
             }
 
+            inventory.get(1).subtractAmount(1);
             this.storage.extractEnergy(costPerEnchant);
         }
 
