@@ -120,7 +120,7 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     }
 
     public void checkMiningError() {
-        if(world.getBlockState(miningPos) == null || !InventoryHelper.insertItemIfPossible(InventoryHelper.getNearbyInventory(world, pos), new ItemStack(world.getBlockState(miningPos).getBlock()), true) || storage.getEnergyStored() < energyUsagePerBlock) {
+        if(miningPos == null || world.getBlockState(miningPos) == null || !InventoryHelper.insertItemIfPossible(InventoryHelper.getNearbyInventory(world, pos), new ItemStack(world.getBlockState(miningPos).getBlock()), true) || storage.getEnergyStored() < energyUsagePerBlock) {
             return;
         }
 
@@ -167,9 +167,10 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
                         }
                     }
 
-                    storage.extractEnergy(energyUsagePerBlock);
-                    cachedAreaPos.remove(currentMiningPos);
                 }
+
+                storage.extractEnergy(energyUsagePerBlock);
+                cachedAreaPos.remove(currentMiningPos);
             }else if(currentMiningPos == null && cachedAreaPos.isEmpty()){
                 this.setRunning(false);
             }
