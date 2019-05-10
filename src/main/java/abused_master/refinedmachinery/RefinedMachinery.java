@@ -8,6 +8,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,15 +27,21 @@ public class RefinedMachinery implements ModInitializer {
     public static ItemGroup modItemGroup = FabricItemGroupBuilder.build(new Identifier(MODID, "refinedmachinery"), () -> new ItemStack(ModBlocks.ENERGY_FURNACE));
 
     public static Config config;
+    public static File rmfolder = new File(FabricLoader.getInstance().getConfigDirectory().getPath() + "/refinedmachinery");
 
     @Override
     public void onInitialize() {
-        config = new Config(MODID, this.loadConfig());
+        if(!rmfolder.exists()) {
+            rmfolder.mkdir();
+        }
+
+        config = new Config("refinedmachinery/" + MODID, this.loadConfig());
         ModBlocks.registerBlocks();
         ModItems.registerItems();
         WorldGenRegistry.generateOres();
         ModBlockEntities.registerBlockEntities();
         ModBlockEntities.registerServerGUIs();
+        PulverizerRecipes.INSTANCE.initRecipes();
 
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if(player.getMainHandStack().getItem() == ModItems.WRENCH) {
