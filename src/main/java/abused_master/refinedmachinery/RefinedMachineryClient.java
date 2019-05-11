@@ -3,6 +3,7 @@ package abused_master.refinedmachinery;
 import abused_master.refinedmachinery.client.gui.container.*;
 import abused_master.refinedmachinery.client.gui.gui.*;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.registry.ModPackets;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
 import abused_master.refinedmachinery.tiles.machine.*;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,6 +18,7 @@ public class RefinedMachineryClient implements ClientModInitializer {
     public void onInitializeClient() {
         ModBlockEntities.registerEntityRenders();
         this.registerClientGUIs();
+        ModPackets.registerClientPackets();
     }
 
     public void registerClientGUIs() {

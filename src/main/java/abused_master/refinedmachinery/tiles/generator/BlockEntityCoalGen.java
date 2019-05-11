@@ -71,7 +71,7 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
             }
         }
 
-        EnergyHelper.sendEnergy(storage, world, pos, sendPerTick);
+        EnergyHelper.sendEnergyToNeighbors(storage, world, pos, sendPerTick);
         this.markDirty();
     }
 

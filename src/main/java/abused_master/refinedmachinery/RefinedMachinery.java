@@ -41,6 +41,7 @@ public class RefinedMachinery implements ModInitializer {
         WorldGenRegistry.generateOres();
         ModBlockEntities.registerBlockEntities();
         ModBlockEntities.registerServerGUIs();
+        ModPackets.registerPackets();
         PulverizerRecipes.INSTANCE.initRecipes();
 
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {

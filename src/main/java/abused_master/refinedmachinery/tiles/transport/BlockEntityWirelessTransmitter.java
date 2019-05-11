@@ -2,6 +2,8 @@ package abused_master.refinedmachinery.tiles.transport;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.utils.EnergyHelper;
+import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -44,8 +46,7 @@ public class BlockEntityWirelessTransmitter extends BlockEntityBase implements I
     @Override
     public void tick() {
         if (crystalPos != null && world.getBlockEntity(crystalPos) != null && world.getBlockEntity(crystalPos) instanceof BlockEntityWirelessController && storage.getEnergyStored() >= sendPerTick) {
-            BlockEntityWirelessController energyCrystal = (BlockEntityWirelessController) world.getBlockEntity(crystalPos);
-            storage.extractEnergy(energyCrystal.getEnergyStorage(null).receiveEnergy(sendPerTick));
+            EnergyHelper.sendEnergy(storage, world, crystalPos, sendPerTick);
         } else if (crystalPos != null && world.getBlockEntity(crystalPos) == null) {
             crystalPos = null;
             world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
@@ -67,11 +68,6 @@ public class BlockEntityWirelessTransmitter extends BlockEntityBase implements I
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if (tag.containsKey("blockPos")) {
-            tag.remove("blockPos");
-        }
-
-        tag.put("collectorPos", TagHelper.serializeBlockPos(pos));
-        player.addChatMessage(new StringTextComponent("Saved collector position!"), true);
+        ItemHelper.linkCollectorPos(world, pos, player, tag);
     }
 }

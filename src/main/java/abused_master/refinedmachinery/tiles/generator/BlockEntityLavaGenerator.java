@@ -71,7 +71,7 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
             }
         }
 
-        EnergyHelper.sendEnergy(storage, world, pos, sendPerTick);
+        EnergyHelper.sendEnergyToNeighbors(storage, world, pos, sendPerTick);
         this.markDirty();
     }
 

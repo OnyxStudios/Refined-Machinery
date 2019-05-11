@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.tiles.machine;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -16,10 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
@@ -204,11 +203,6 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if (tag.containsKey("collectorPos")) {
-            tag.remove("collectorPos");
-        }
-
-        tag.put("blockPos", TagHelper.serializeBlockPos(pos));
-        player.addChatMessage(new StringTextComponent("Saved block position!"), true);
+        ItemHelper.linkBlockPos(world, pos, player, tag);
     }
 }

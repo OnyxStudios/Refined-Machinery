@@ -6,7 +6,6 @@ import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
-import net.minecraft.block.GlassBlock;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -38,13 +37,14 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
 
     @Override
     public void tick() {
-        if(world.isDaylight() && canSeeSky()) {
-            if((storage.getEnergyStored() + generationPerTick) < storage.getEnergyCapacity()) {
+        if (world.isDaylight() && canSeeSky()) {
+            if ((storage.getEnergyStored() + generationPerTick) < storage.getEnergyCapacity()) {
                 storage.receiveEnergy(generationPerTick);
+                this.markDirty();
             }
         }
 
-        EnergyHelper.sendEnergy(storage, world, pos, generationPerTick);
+        EnergyHelper.sendEnergyToNeighbors(storage, world, pos, generationPerTick);
         this.markDirty();
     }
 
@@ -65,11 +65,7 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
 
     public void setType(EnumSolarPanelTypes type) {
         this.type = type;
-        if(storage != null && storage.getEnergyStored() > 0) {
-            this.storage = new EnergyStorage(type.getEnergyStorage(), storage.getEnergyStored());
-        }else {
-            this.storage = new EnergyStorage(type.getEnergyStorage());
-        }
+        this.storage = new EnergyStorage(type.getEnergyStorage());
         this.generationPerTick = type.getGenerationPerTick();
         markDirty();
     }

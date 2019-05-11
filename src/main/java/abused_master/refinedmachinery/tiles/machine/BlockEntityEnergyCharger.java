@@ -14,9 +14,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
@@ -154,10 +152,6 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if (tag.containsKey("collectorPos")) {
-            tag.remove("collectorPos");
-        }
-        tag.put("blockPos", TagHelper.serializeBlockPos(pos));
-        player.addChatMessage(new StringTextComponent("Saved block position!"), true);
+        ItemHelper.linkBlockPos(world, pos, player, tag);
     }
 }

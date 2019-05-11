@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.tiles.machine;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.PulverizerRecipes;
+import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -200,11 +201,6 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if (tag.containsKey("collectorPos")) {
-            tag.remove("collectorPos");
-        }
-
-        tag.put("blockPos", TagHelper.serializeBlockPos(pos));
-        player.addChatMessage(new StringTextComponent("Saved block position!"), true);
+        ItemHelper.linkBlockPos(world, pos, player, tag);
     }
 }

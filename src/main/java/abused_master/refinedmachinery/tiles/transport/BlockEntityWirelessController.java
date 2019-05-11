@@ -2,15 +2,22 @@ package abused_master.refinedmachinery.tiles.transport;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.registry.ModPackets;
+import abused_master.refinedmachinery.utils.EnergyHelper;
+import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
+import io.netty.buffer.Unpooled;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.StringTextComponent;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -76,7 +83,7 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
                 continue;
             }
 
-            storage.sendEnergy(world, blockPos, sendPerTick);
+            EnergyHelper.sendEnergy(storage, world, blockPos, sendPerTick);
             this.updateEntity();
         }
     }
@@ -88,26 +95,15 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if (tag.containsKey("collectorPos")) {
-            BlockPos collectorPos = TagHelper.deserializeBlockPos(tag.getCompound("collectorPos"));
-            BlockEntityWirelessTransmitter energyCollector = (BlockEntityWirelessTransmitter) world.getBlockEntity(collectorPos);
-            if (energyCollector != null) {
-                energyCollector.setCrystalPos(pos);
-                energyCollector.markDirty();
-                world.updateListeners(collectorPos, world.getBlockState(collectorPos), world.getBlockState(collectorPos), 3);
-                player.addChatMessage(new StringTextComponent("Linked collector position!"), true);
-            } else {
-                player.addChatMessage(new StringTextComponent("Invalid collector position!"), true);
+        if(!world.isClient) {
+            ItemHelper.handleControllerLink(world, pos, player, tag);
+
+            for (PlayerEntity worldPlayer : world.getPlayers()) {
+                PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                buf.writeBlockPos(pos);
+                buf.writeCompoundTag(tag);
+                ((ServerPlayerEntity) worldPlayer).networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_LINK_ENERGY, buf));
             }
-        } else if (tag.containsKey("blockPos")) {
-            BlockPos blockPos = TagHelper.deserializeBlockPos(tag.getCompound("blockPos"));
-            if (world.getBlockEntity(blockPos) != null && world.getBlockEntity(blockPos) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null) && !tilePositions.contains(blockPos)) {
-                tilePositions.add(blockPos);
-                this.updateEntity();
-                player.addChatMessage(new StringTextComponent("Linked BlockEntity position!"), true);
-            }
-        } else {
-            player.addChatMessage(new StringTextComponent("No block position has been linked!"), true);
         }
     }
 }

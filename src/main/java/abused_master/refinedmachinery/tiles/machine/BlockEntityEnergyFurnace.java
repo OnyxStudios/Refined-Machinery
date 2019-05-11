@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.tiles.machine;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -12,9 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
@@ -197,10 +196,6 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
 
     @Override
     public void link(PlayerEntity player, CompoundTag tag) {
-        if (tag.containsKey("collectorPos")) {
-            tag.remove("collectorPos");
-        }
-        tag.put("blockPos", TagHelper.serializeBlockPos(pos));
-        player.addChatMessage(new StringTextComponent("Saved block position!"), true);
+        ItemHelper.linkBlockPos(world, pos, player, tag);
     }
 }
