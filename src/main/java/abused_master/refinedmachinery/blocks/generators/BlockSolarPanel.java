@@ -35,7 +35,7 @@ public class BlockSolarPanel extends BlockWithEntityBase implements IWrenchable 
         BlockEntitySolarPanel panel = (BlockEntitySolarPanel) world.getBlockEntity(blockPos);
 
         if(!world.isClient) {
-            playerEntity.addChatMessage(new StringTextComponent("Energy: " + panel.storage.getEnergyStored() + " / " + panel.storage.getEnergyCapacity() + " PE"), true);
+            playerEntity.addChatMessage(new StringTextComponent("Energy: " + panel.storage.getEnergyStored() + " / " + panel.storage.getEnergyCapacity() + " CE"), true);
         }
 
         return true;

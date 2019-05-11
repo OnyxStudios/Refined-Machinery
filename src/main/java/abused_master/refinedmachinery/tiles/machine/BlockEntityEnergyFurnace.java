@@ -1,7 +1,6 @@
 package abused_master.refinedmachinery.tiles.machine;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
-import abused_master.abusedlib.utils.CacheMapHolder;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
@@ -11,6 +10,8 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.TagHelper;
@@ -68,8 +69,9 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
     }
 
     public ItemStack getOutputStack() {
-        if(!inventory.get(0).isEmpty()) {
-            return CacheMapHolder.INSTANCE.getOutputStack(inventory.get(0));
+        if (!inventory.get(0).isEmpty()) {
+            Recipe recipe = world.getRecipeManager().getFirstMatch(RecipeType.SMELTING, this, world).orElse(null);
+            return recipe != null ? recipe.getOutput().copy() : ItemStack.EMPTY;
         }
 
         return ItemStack.EMPTY;
@@ -97,9 +99,10 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
                 } else {
                     inventory.get(1).addAmount(1);
                 }
+
+                inventory.get(0).subtractAmount(1);
             }
 
-            inventory.get(0).subtractAmount(1);
             storage.extractEnergy(getEnergyUsage());
         }
     }
