@@ -91,10 +91,12 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
     public void smeltItem() {
         ItemStack output = getOutputStack();
         if(!output.isEmpty()) {
-            if (inventory.get(1).isEmpty()) {
-                inventory.set(1, output);
-            } else {
-                inventory.get(1).addAmount(1);
+            if(!world.isClient) {
+                if (inventory.get(1).isEmpty()) {
+                    inventory.set(1, output);
+                } else {
+                    inventory.get(1).addAmount(1);
+                }
             }
 
             inventory.get(0).subtractAmount(1);

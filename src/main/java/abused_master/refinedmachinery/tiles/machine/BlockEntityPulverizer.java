@@ -68,9 +68,6 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
 
     public boolean canRun() {
         PulverizerRecipes.PulverizerRecipe recipe = PulverizerRecipes.INSTANCE.getOutputRecipe(inventory.get(0));
-        if(recipe != null) {
-            recipe.get();
-        }
 
         if(inventory.get(0).isEmpty() || recipe == null || recipe.getOutput().isEmpty() || storage.getEnergyStored() < getEnergyUsage()) {
             return false;
@@ -88,25 +85,28 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
     }
 
     public void pulverizeItem() {
-        PulverizerRecipes.PulverizerRecipe recipe = PulverizerRecipes.INSTANCE.getOutputRecipe(inventory.get(0));
-        if(inventory.get(1).isEmpty()) {
-            inventory.set(1, new ItemStack(recipe.getOutput().getItem(), recipe.getOutputAmount()));
-        }else {
-            inventory.get(1).addAmount(recipe.getOutputAmount());
-        }
+        if(!world.isClient) {
+            PulverizerRecipes.PulverizerRecipe recipe = PulverizerRecipes.INSTANCE.getOutputRecipe(inventory.get(0));
+            if (inventory.get(1).isEmpty()) {
+                inventory.set(1, new ItemStack(recipe.getOutput().getItem(), recipe.getOutputAmount()));
+            } else {
+                inventory.get(1).addAmount(recipe.getOutputAmount());
+            }
 
-        if(!recipe.getRandomDrop().isEmpty()) {
-            float chance = world.getRandom().nextFloat() * 100;
-            if(chance <= recipe.getPercentageDrop()) {
-                if (inventory.get(2).isEmpty()) {
-                    inventory.set(2, new ItemStack(recipe.getRandomDrop().getItem(), recipe.getRandomDropAmoumt()));
-                } else {
-                    inventory.get(2).addAmount(recipe.getRandomDropAmoumt());
+            if (!recipe.getRandomDrop().isEmpty()) {
+                float chance = world.getRandom().nextFloat() * 100;
+                if (chance <= recipe.getPercentageDrop()) {
+                    if (inventory.get(2).isEmpty()) {
+                        inventory.set(2, new ItemStack(recipe.getRandomDrop().getItem(), recipe.getRandomDropAmoumt()));
+                    } else {
+                        inventory.get(2).addAmount(recipe.getRandomDropAmoumt());
+                    }
                 }
             }
+
+            inventory.get(0).subtractAmount(1);
         }
 
-        inventory.get(0).subtractAmount(1);
         storage.extractEnergy(getEnergyUsage());
     }
 
