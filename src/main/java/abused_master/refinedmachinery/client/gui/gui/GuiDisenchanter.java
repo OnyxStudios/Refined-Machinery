@@ -34,6 +34,14 @@ public class GuiDisenchanter extends ContainerScreen {
         this.renderBackground();
         super.render(var1, var2, var3);
         this.drawMouseoverTooltip(var1, var2);
+
+        if (this.isPointWithinBounds(10, 9, 20, 64, var1, var2)) {
+            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", var1, var2);
+        }
+
+        if (this.isPointWithinBounds(160, 9, 8, 64, var1, var2)) {
+            this.renderTooltip(tile.workTime + " / " + tile.requiredTime + " Progress", var1, var2);
+        }
     }
 
     @Override
@@ -50,14 +58,6 @@ public class GuiDisenchanter extends ContainerScreen {
 
         renderEnergy();
         renderWork();
-
-        if (this.isPointWithinBounds(10, 9, 20, 64, i, i1)) {
-            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", i, i1);
-        }
-
-        if (this.isPointWithinBounds(160, 9, 8, 64, i, i1)) {
-            this.renderTooltip(tile.workTime + " / " + tile.requiredTime + " Progress", i, i1);
-        }
     }
 
     public void renderWork() {

@@ -34,6 +34,10 @@ public class GuiFarmer extends ContainerScreen {
         this.renderBackground();
         super.render(var1, var2, var3);
         this.drawMouseoverTooltip(var1, var2);
+
+        if (this.isPointWithinBounds(10, 9, 20, 64, var1, var2)) {
+            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", var1, var2);
+        }
     }
 
     @Override
@@ -49,10 +53,6 @@ public class GuiFarmer extends ContainerScreen {
         blit(guiLeft, guiTop, 0, 0, containerWidth, containerHeight);
 
         renderEnergy();
-
-        if (this.isPointWithinBounds(10, 9, 20, 64, i, i1)) {
-            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", i, i1);
-        }
     }
 
     public void renderEnergy() {
