@@ -3,7 +3,6 @@ package abused_master.refinedmachinery;
 import abused_master.abusedlib.utils.Config;
 import abused_master.refinedmachinery.registry.*;
 import abused_master.refinedmachinery.utils.OreGenConfig;
-import abused_master.refinedmachinery.utils.OreGenEntry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;

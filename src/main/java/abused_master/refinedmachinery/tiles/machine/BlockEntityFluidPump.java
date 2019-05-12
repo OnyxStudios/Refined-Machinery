@@ -7,18 +7,23 @@ import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.registry.ModPackets;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
+import io.netty.buffer.Unpooled;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
+import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -142,19 +147,33 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
                 break;
             }
 
-            if (tank.getFluidStack() == null) {
-                tank.setFluidStack(new FluidStack(world.getFluidState(pos).getFluid(), 1000));
-                world.setBlockState(pos, Blocks.STONE.getDefaultState());
-                drainingSpeed = 0;
-                storage.extractEnergy(drainPerBlock);
-            } else if (tank.getFluidStack().getFluid().getDefaultState().getBlockState() == world.getFluidState(pos).getBlockState()) {
-                tank.fillFluid(new FluidStack(world.getFluidState(pos).getFluid(), 1000));
-                world.setBlockState(pos, Blocks.STONE.getDefaultState());
-                drainingSpeed = 0;
-                storage.extractEnergy(drainPerBlock);
+            if(pos != null) {
+                if(!world.isClient) {
+                    boolean filled = tank.fillFluid(new FluidStack(world.getFluidState(pos).getFluid(), 1000));
+                    if (filled) {
+                        world.setBlockState(pos, Blocks.STONE.getDefaultState());
+                        storage.extractEnergy(drainingSpeed);
+                        drainingSpeed = 0;
+
+                        for (PlayerEntity playerEntity : world.getPlayers()) {
+                            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) playerEntity;
+                            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                            buf.writeBlockPos(getPos());
+                            buf.writeCompoundTag(tank.getFluidStack().toTag(new CompoundTag()));
+
+                            PacketByteBuf energyBuf = new PacketByteBuf(Unpooled.buffer());
+                            energyBuf.writeBlockPos(getPos());
+                            energyBuf.writeInt(storage.getEnergyStored());
+
+                            serverPlayerEntity.networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_UPDATE_CLIENT_FLUID, buf));
+                            serverPlayerEntity.networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_UPDATE_CLIENT_ENERGY, energyBuf));
+                        }
+                    }
+                }
+
+                cachedDrainingPos.remove(pos);
             }
 
-            cachedDrainingPos.remove(pos);
             this.updateEntity();
         }
     }
@@ -166,10 +185,8 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
                 if (world.getBlockEntity(offsetPos) instanceof IFluidHandler) {
                     IFluidHandler fluidHandler = (IFluidHandler) world.getBlockEntity(offsetPos);
                     if((fluidHandler.getFluidTank().getFluidAmount() + 250) <= fluidHandler.getFluidTank().getFluidCapacity()) {
-                        if(fluidHandler.getFluidTank().getFluidStack() != null && fluidHandler.getFluidTank().getFluidStack().getFluid() == tank.getFluidStack().getFluid()) {
-                            fluidHandler.getFluidTank().fillFluid(new FluidStack(tank.getFluidStack().getFluid(), 250));
-                            tank.extractFluid(250);
-                        }else if(fluidHandler.getFluidTank().getFluidStack() == null) {
+                        boolean filled = fluidHandler.getFluidTank().fillFluid(new FluidStack(tank.getFluidStack().getFluid(), 250));
+                        if(filled) {
                             fluidHandler.getFluidTank().fillFluid(new FluidStack(tank.getFluidStack().getFluid(), 250));
                             tank.extractFluid(250);
                         }
@@ -184,7 +201,14 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
 
     public void cacheDrainingArea() {
         Iterable<BlockPos> drainArea = BlockPos.iterate(new BlockPos(pos.getX() - pumpRage, pos.getY() - pumpRage, pos.getZ() - pumpRage), new BlockPos(pos.getX() + pumpRage, pos.getY() + pumpRage, pos.getZ() + pumpRage));
-        this.cachedDrainingPos = BlockEntityQuarry.listBlocksInIterable(drainArea);
+        for (BlockPos pos : BlockEntityQuarry.listBlocksInIterable(drainArea)) {
+            if (world.isAir(pos) || world.getFluidState(pos) == null || !(world.getBlockState(pos).getBlock() instanceof FluidBlock) || world.isHeightInvalid(pos)) {
+                continue;
+            }
+
+            this.cachedDrainingPos.add(pos.toImmutable());
+        }
+
         this.updateEntity();
     }
 
@@ -218,7 +242,6 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
         List<String> toDisplay = new ArrayList<>();
         toDisplay.add((tank.getFluidStack() != null ? I18n.translate(tank.getFluidStack().getFluid().getDefaultState().getBlockState().getBlock().getTranslationKey()) : "Empty") + ": " + tank.getFluidAmount() + " / " + tank.getFluidCapacity() + " MB");
         toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getEnergyCapacity() + " CE");
-        toDisplay.add(drainingPos != null ? "Draining: X: " + drainingPos.getX() + " Y: " + drainingPos.getY() + " Z: " + drainingPos.getZ() : "Not currently working");
         return toDisplay;
     }
 

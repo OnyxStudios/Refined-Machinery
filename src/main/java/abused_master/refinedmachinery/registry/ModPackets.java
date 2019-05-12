@@ -1,5 +1,7 @@
 package abused_master.refinedmachinery.registry;
 
+import abused_master.abusedlib.fluid.FluidStack;
+import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
@@ -16,6 +18,7 @@ public class ModPackets {
 
     public static final Identifier PACKET_UPDATE_CLIENT_ENERGY = new Identifier(RefinedMachinery.MODID, "packet_update_client_energy");
     public static final Identifier PACKET_LINK_ENERGY = new Identifier(RefinedMachinery.MODID, "packet_link_energy");
+    public static final Identifier PACKET_UPDATE_CLIENT_FLUID = new Identifier(RefinedMachinery.MODID, "packet_update_client_fluid");
 
     public static void registerPackets() {
     }
@@ -50,5 +53,22 @@ public class ModPackets {
                 context.getTaskQueue().execute(() -> ItemHelper.handleControllerLink(world, pos, player, tag));
             }
         });
+
+        ClientSidePacketRegistry.INSTANCE.register(PACKET_UPDATE_CLIENT_FLUID, ((context, buffer) -> {
+            BlockPos pos = buffer.readBlockPos();
+            FluidStack stack = FluidStack.fluidFromTag(buffer.readCompoundTag());
+
+            if(context.getPlayer() != null && context.getPlayer().world != null) {
+                PlayerEntity player = context.getPlayer();
+                World world = player.world;
+                context.getTaskQueue().execute(() -> {
+                    if(world.getBlockEntity(pos) instanceof IFluidHandler) {
+                        IFluidHandler fluidHandler = (IFluidHandler) world.getBlockEntity(pos);
+                        fluidHandler.getFluidTank().fillFluid(stack);
+                        world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+                    }
+                });
+            }
+        }));
     }
 }
