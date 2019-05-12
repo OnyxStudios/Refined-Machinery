@@ -2,6 +2,8 @@ package abused_master.refinedmachinery.blocks;
 
 import abused_master.abusedlib.blocks.BlockBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.utils.OreGenConfig;
+import abused_master.refinedmachinery.utils.OreGenEntry;
 import net.minecraft.block.Material;
 
 public class BlockResources extends BlockBase {
@@ -11,11 +13,11 @@ public class BlockResources extends BlockBase {
     }
 
     public enum EnumResourceOres {
-        COPPER_ORE(1.0F, 3, 64, 40, RefinedMachinery.config.getBoolean("generateCopper")),
-        TIN_ORE(1.0F, 4, 64, 40, RefinedMachinery.config.getBoolean("generateTin")),
-        LEAD_ORE(2.0F, 3, 50, 40, RefinedMachinery.config.getBoolean("generateLead")),
-        SILVER_ORE(3.0F, 3, 40, 35, RefinedMachinery.config.getBoolean("generateSilver")),
-        NICKEL_ORE(2.0F, 4, 60, 40, RefinedMachinery.config.getBoolean("generateNickel"));
+        COPPER_ORE(1.0F, OreGenConfig.INSTANCE.getEntry("copper_ore")),
+        TIN_ORE(1.0F, OreGenConfig.INSTANCE.getEntry("tin_ore")),
+        LEAD_ORE(2.0F, OreGenConfig.INSTANCE.getEntry("lead_ore")),
+        SILVER_ORE(3.0F, OreGenConfig.INSTANCE.getEntry("silver_ore")),
+        NICKEL_ORE(2.0F, OreGenConfig.INSTANCE.getEntry("nickel_ore"));
 
         private BlockResources blockOres;
         private int maxHeight;
@@ -23,12 +25,12 @@ public class BlockResources extends BlockBase {
         private boolean generateOre;
         private int veinSize;
 
-        EnumResourceOres(float hardness, int veinSize, int maxHeight, int spawnRate, boolean generate) {
+        EnumResourceOres(float hardness, OreGenEntry entry) {
             this.blockOres = new BlockResources(getName(), hardness);
-            this.maxHeight = maxHeight;
-            this.spawnRate = spawnRate;
-            this.generateOre = generate;
-            this.veinSize = veinSize;
+            this.maxHeight = entry.getMaxHeight();
+            this.spawnRate = entry.getCount();
+            this.generateOre = entry.doesGenerate();
+            this.veinSize = entry.getSize();
         }
 
         public String getName() {

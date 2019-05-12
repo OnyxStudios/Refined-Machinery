@@ -1,9 +1,9 @@
 package abused_master.refinedmachinery;
 
 import abused_master.abusedlib.utils.Config;
-import abused_master.refinedmachinery.items.tools.ItemEnergizedSword;
 import abused_master.refinedmachinery.registry.*;
-import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
+import abused_master.refinedmachinery.utils.OreGenConfig;
+import abused_master.refinedmachinery.utils.OreGenEntry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -35,13 +35,14 @@ public class RefinedMachinery implements ModInitializer {
             rmfolder.mkdir();
         }
 
-        config = new Config("refinedmachinery/" + MODID, this.loadConfig());
+        config = new Config("refinedmachinery/config", this.loadConfig());
+        OreGenConfig.INSTANCE.initOreGen();
         ModBlocks.registerBlocks();
         ModItems.registerItems();
-        WorldGenRegistry.generateOres();
         ModBlockEntities.registerBlockEntities();
         ModBlockEntities.registerServerGUIs();
         ModPackets.registerPackets();
+        WorldGenRegistry.addOreFeatures();
         PulverizerRecipes.INSTANCE.initRecipes();
 
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
@@ -76,11 +77,6 @@ public class RefinedMachinery implements ModInitializer {
 
     public Map<String, Object> loadConfig() {
         Map<String, Object> configOptions = new HashMap<>();
-        configOptions.put("generateCopper", true);
-        configOptions.put("generateTin", true);
-        configOptions.put("generateLead", true);
-        configOptions.put("generateSilver", true);
-        configOptions.put("generateNickel", true);
         configOptions.put("pumpRange", 32);
         configOptions.put("pumpCostPerBlock", 250);
         configOptions.put("solarPanelMK1_Generation", 16);

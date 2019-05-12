@@ -5,7 +5,7 @@ import abused_master.refinedmachinery.blocks.BlockResources;
 
 public class WorldGenRegistry {
 
-    public static void generateOres() {
+    public static void addOreFeatures() {
         for (BlockResources.EnumResourceOres ore : BlockResources.EnumResourceOres.values()) {
             if (ore.generateOre()) {
                 RegistryHelper.generateOreInStone(ore.getBlockOres(), ore.getVeinSize(), ore.getSpawnRate(), ore.getMaxHeight());
