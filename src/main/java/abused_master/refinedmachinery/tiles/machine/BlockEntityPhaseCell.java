@@ -4,8 +4,10 @@ import abused_master.abusedlib.client.render.hud.IHudSupport;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
+import nerdhub.cardinalenergy.api.EnergyType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,15 +43,8 @@ public class BlockEntityPhaseCell extends BlockEntityBase implements IEnergyHand
 
     @Override
     public void tick() {
-        sendEnergy();
-    }
-
-    public void sendEnergy() {
-        for (Direction direction : Direction.values()) {
-            BlockPos offsetPos = pos.offset(direction);
-            storage.sendEnergy(world, offsetPos, 1000);
-            this.markDirty();
-        }
+        EnergyHelper.sendEnergyToNeighbors(storage, world, pos, 1000);
+        this.markDirty();
     }
 
     @Override

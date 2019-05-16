@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.utils;
 
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessController;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessTransmitter;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -56,7 +57,7 @@ public class ItemHelper {
             }
         } else if (tag.containsKey("blockPos")) {
             BlockPos blockPos = TagHelper.deserializeBlockPos(tag.getCompound("blockPos"));
-            if (world.getBlockEntity(blockPos) != null && world.getBlockEntity(blockPos) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null) && !controller.tilePositions.contains(blockPos)) {
+            if (world.getBlockEntity(blockPos) != null && world.getBlockEntity(blockPos) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY) && !controller.tilePositions.contains(blockPos)) {
                 controller.tilePositions.add(blockPos);
                 controller.markDirty();
                 player.addChatMessage(new StringTextComponent("Linked BlockEntity position!"), true);

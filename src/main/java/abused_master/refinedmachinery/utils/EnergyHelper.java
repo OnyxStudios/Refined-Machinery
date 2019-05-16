@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.utils;
 
 import abused_master.refinedmachinery.registry.ModPackets;
 import io.netty.buffer.Unpooled;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
@@ -18,14 +19,14 @@ public class EnergyHelper {
         if(!world.isClient && storage.getEnergyStored() >= sendAmount) {
             for (Direction direction : Direction.values()) {
                 BlockPos offsetPos = pos.offset(direction);
-                if(world.getBlockEntity(offsetPos) instanceof IEnergyHandler) {
+                if(world.getBlockEntity(offsetPos) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(offsetPos)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY)) {
                     int energySent = storage.sendEnergy(world, offsetPos, sendAmount);
 
                     if (energySent > 0) {
                         for (PlayerEntity playerEntity : world.getPlayers()) {
                             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                             buf.writeBlockPos(offsetPos);
-                            buf.writeInt(((IEnergyHandler) world.getBlockEntity(offsetPos)).getEnergyStorage(null).getEnergyStored());
+                            buf.writeInt(((EnergyStorage) ((IEnergyHandler) world.getBlockEntity(offsetPos)).getEnergyStorage(null)).getEnergyStored());
                             ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_UPDATE_CLIENT_ENERGY, buf));
                         }
                     }
@@ -36,14 +37,14 @@ public class EnergyHelper {
 
     public static void sendEnergy(EnergyStorage storage, World world, BlockPos receiver, int sendAmount) {
         if(!world.isClient && storage.getEnergyStored() >= sendAmount) {
-            if(world.getBlockEntity(receiver) instanceof IEnergyHandler) {
+            if(world.getBlockEntity(receiver) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(receiver)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY)) {
                 int energySent = storage.sendEnergy(world, receiver, sendAmount);
 
                 if(energySent > 0) {
                     for (PlayerEntity playerEntity : world.getPlayers()) {
                         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                         buf.writeBlockPos(receiver);
-                        buf.writeInt(((IEnergyHandler) world.getBlockEntity(receiver)).getEnergyStorage(null).getEnergyStored());
+                        buf.writeInt(((EnergyStorage) ((IEnergyHandler) world.getBlockEntity(receiver)).getEnergyStorage(null)).getEnergyStored());
                         ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_UPDATE_CLIENT_ENERGY, buf));
                     }
                 }

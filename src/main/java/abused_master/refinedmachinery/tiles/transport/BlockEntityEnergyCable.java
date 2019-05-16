@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.tiles.transport;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import nerdhub.cardinalenergy.api.EnergyType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +49,7 @@ public class BlockEntityEnergyCable extends BlockEntityBase implements IEnergyHa
     }
 
     @Override
-    public boolean isEnergyProvider(Direction direction) {
+    public boolean isEnergyProvider(Direction direction, EnergyType type) {
         return true;
     }
 }

@@ -5,6 +5,7 @@ import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
+import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -35,7 +36,7 @@ public class ModPackets {
                 context.getTaskQueue().execute(() -> {
                     if(world.getBlockEntity(pos) instanceof IEnergyHandler) {
                         IEnergyHandler energyHandler = (IEnergyHandler) world.getBlockEntity(pos);
-                        energyHandler.getEnergyStorage(null).setEnergyStored(energy);
+                        ((EnergyStorage) energyHandler.getEnergyStorage(null)).setEnergyStored(energy);
                         world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
                     }
                 });

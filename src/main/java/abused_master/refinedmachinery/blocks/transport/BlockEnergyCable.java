@@ -5,6 +5,7 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityEnergyCable;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -55,7 +56,7 @@ public class BlockEnergyCable extends BlockWithEntityBase implements IWrenchable
             Direction facing = Direction.values()[i];
             BlockEntity blockEntity = world.getBlockEntity(pos.offset(facing));
 
-            state = state.with(PROPS[i], blockEntity instanceof BlockEntityEnergyCable || (blockEntity instanceof IEnergyHandler && ((IEnergyHandler) blockEntity).canConnectEnergy(facing.getOpposite())));
+            state = state.with(PROPS[i], blockEntity instanceof BlockEntityEnergyCable || (blockEntity instanceof IEnergyHandler && ((IEnergyHandler) blockEntity).canConnectEnergy(facing.getOpposite(), DefaultTypes.CARDINAL_ENERGY)));
         }
 
         return state;

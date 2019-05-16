@@ -4,6 +4,7 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
+import nerdhub.cardinalenergy.api.EnergyType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.block.entity.FurnaceBlockEntity;
@@ -149,5 +150,15 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
     @Override
     public EnergyStorage getEnergyStorage(Direction direction) {
         return storage;
+    }
+
+    @Override
+    public boolean isEnergyProvider(Direction direction, EnergyType type) {
+        return true;
+    }
+
+    @Override
+    public boolean isEnergyReceiver(Direction direction, EnergyType type) {
+        return false;
     }
 }

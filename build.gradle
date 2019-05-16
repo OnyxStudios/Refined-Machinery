@@ -28,6 +28,8 @@ dependencies {
 
 	modCompile "abused_master.abusedlib:AbusedLib:${abusedlib_version}"
 	modCompile "com.github.NerdHubMC:Cardinal-Energy:${cardinal_version}"
+	modCompile "com.github.NerdHubMC:Cardinal-Components-API:${cardinal_components}"
+	include "com.github.NerdHubMC:Cardinal-Components-API:${cardinal_components}"
 	compileOnly "com.google.code.findbugs:jsr305:${findbugs_version}"
 }
 

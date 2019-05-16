@@ -7,6 +7,7 @@ import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import io.netty.buffer.Unpooled;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -77,7 +78,7 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
     public void sendEnergy() {
         for (Iterator<BlockPos> it = tilePositions.iterator(); it.hasNext();) {
             BlockPos blockPos = it.next();
-            if(blockPos == null || !(world.getBlockEntity(blockPos) instanceof IEnergyHandler) || !((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null)) {
+            if(blockPos == null || !(world.getBlockEntity(blockPos) instanceof IEnergyHandler) || !((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY)) {
                 it.remove();
                 this.updateEntity();
                 continue;

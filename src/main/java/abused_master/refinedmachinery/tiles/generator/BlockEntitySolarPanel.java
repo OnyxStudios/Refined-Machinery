@@ -4,6 +4,7 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.blocks.generators.EnumSolarPanelTypes;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
+import nerdhub.cardinalenergy.api.EnergyType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.nbt.CompoundTag;
@@ -76,7 +77,12 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
     }
 
     @Override
-    public boolean isEnergyProvider(Direction direction) {
+    public boolean isEnergyProvider(Direction direction, EnergyType type) {
         return true;
+    }
+
+    @Override
+    public boolean isEnergyReceiver(Direction direction, EnergyType type) {
+        return false;
     }
 }

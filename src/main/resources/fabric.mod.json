@@ -28,7 +28,7 @@
   "requires": {
     "fabricloader": ">=0.4.0",
     "fabric": "*",
-    "abusedlib": "*",
-    "cardinalenergy": "*"
+    "abusedlib": ">=1.0.2",
+    "cardinalenergy": ">=1.0.1"
   }
 }
