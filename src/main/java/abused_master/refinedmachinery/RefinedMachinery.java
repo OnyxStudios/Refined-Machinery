@@ -3,6 +3,8 @@ package abused_master.refinedmachinery;
 import abused_master.abusedlib.utils.Config;
 import abused_master.refinedmachinery.registry.*;
 import abused_master.refinedmachinery.utils.OreGenConfig;
+import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
+import nerdhub.cardinalenergy.DefaultTypes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -63,7 +65,9 @@ public class RefinedMachinery implements ModInitializer {
                     return ActionResult.PASS;
                 }
 
-                if (ModItems.ENERGIZED_SWORD.storage.getEnergyStored(stack) >= energyUsage) {
+                StackComponentAccessor stackComponentAccessor = ((StackComponentAccessor) (Object) stack);
+
+                if (stackComponentAccessor.hasComponent(DefaultTypes.CARDINAL_ENERGY) && stackComponentAccessor.getComponent(DefaultTypes.CARDINAL_ENERGY).getEnergyStored() >= energyUsage) {
                     return ActionResult.PASS;
                 }
 

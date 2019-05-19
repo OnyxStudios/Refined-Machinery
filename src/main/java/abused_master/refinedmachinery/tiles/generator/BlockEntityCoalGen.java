@@ -4,7 +4,7 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
-import nerdhub.cardinalenergy.api.EnergyType;
+import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.block.entity.FurnaceBlockEntity;
@@ -56,7 +56,7 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
     @Override
     public void tick() {
         super.tick();
-        if((storage.getEnergyStored() + generatePerTick) <= storage.getEnergyCapacity()) {
+        if((storage.getEnergyStored() + generatePerTick) <= storage.getCapacity()) {
             if (burnTime > 0) {
                 burnTime--;
                 if(burnTime == 0) {
@@ -148,17 +148,12 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
-    public boolean isEnergyProvider(Direction direction, EnergyType type) {
+    public boolean isEnergyProvider(Direction direction, ComponentType componentType) {
         return true;
     }
 
     @Override
-    public boolean isEnergyReceiver(Direction direction, EnergyType type) {
+    public boolean isEnergyReceiver(Direction direction, ComponentType componentType) {
         return false;
     }
 }

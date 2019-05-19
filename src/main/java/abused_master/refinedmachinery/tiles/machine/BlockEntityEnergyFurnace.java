@@ -190,11 +190,6 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
     public void link(PlayerEntity player, CompoundTag tag) {
         ItemHelper.linkBlockPos(world, pos, player, tag);
     }

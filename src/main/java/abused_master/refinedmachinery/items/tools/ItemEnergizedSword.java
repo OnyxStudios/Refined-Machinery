@@ -2,24 +2,27 @@ package abused_master.refinedmachinery.items.tools;
 
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.utils.ItemHelper;
+import nerdhub.cardinal.components.api.ItemComponentProvider;
+import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyItemHandler;
+import nerdhub.cardinalenergy.api.IEnergyItemStorage;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
+import net.minecraft.ChatFormat;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextComponent;
-import net.minecraft.text.TextFormat;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler {
+public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler, ItemComponentProvider {
 
-    public ItemEnergyStorage storage = new ItemEnergyStorage(25000);
     public int attackHeartCost = 50;
 
     public ItemEnergizedSword() {
@@ -30,9 +33,10 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler 
     public boolean onEntityDamaged(ItemStack stack, LivingEntity livingEntity, LivingEntity damagedEntity) {
         int damageAmount = (int) (damagedEntity.getHealthMaximum() - damagedEntity.getHealth());
         int energyUsage = (damageAmount == 0 ? (int) damagedEntity.getHealthMaximum() : damageAmount) * attackHeartCost;
+        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
-        if (storage.getEnergyStored(stack) >= energyUsage) {
-            storage.extractEnergy(stack, energyUsage);
+        if (storage.getEnergyStored() >= energyUsage) {
+            storage.extractEnergy(energyUsage);
             ItemHelper.updateItemDurability(stack, storage);
             return true;
         }
@@ -41,12 +45,17 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler 
     }
 
     @Override
-    public ItemEnergyStorage getEnergyStorage() {
-        return this.storage;
+    public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
+        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+        if(storage == null) {
+            storage = new ItemEnergyStorage(25000);
+        }
+
+        list.add(new TextComponent("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE").setStyle(new Style().setColor(ChatFormat.GOLD)));
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> list, TooltipContext tooltipOptions) {
-        list.add(new StringTextComponent("Energy: " + storage.getEnergyStored(stack) + " / " + storage.getEnergyCapacity(stack) + " CE").setStyle(new Style().setColor(TextFormat.GOLD)));
+    public void createComponents(ItemStack stack) {
+        addComponent(stack, DefaultTypes.CARDINAL_ENERGY, new ItemEnergyStorage(25000));
     }
 }

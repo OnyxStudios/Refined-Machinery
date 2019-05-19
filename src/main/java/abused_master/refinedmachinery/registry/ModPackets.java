@@ -4,7 +4,9 @@ import abused_master.abusedlib.fluid.FluidStack;
 import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.utils.ItemHelper;
-import nerdhub.cardinalenergy.api.IEnergyHandler;
+import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinalenergy.DefaultTypes;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -34,11 +36,13 @@ public class ModPackets {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
                 context.getTaskQueue().execute(() -> {
-                    if(world.getBlockEntity(pos) instanceof IEnergyHandler) {
-                        IEnergyHandler energyHandler = (IEnergyHandler) world.getBlockEntity(pos);
-                        ((EnergyStorage) energyHandler.getEnergyStorage(null)).setEnergyStored(energy);
+                    BlockComponentProvider componentProvider = (BlockComponentProvider) world.getBlockState(pos).getBlock();
+
+                    if(componentProvider.hasComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null)) {
+                        componentProvider.getComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null).setEnergyStored(energy);
                         world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
                     }
+
                 });
             }
         }));

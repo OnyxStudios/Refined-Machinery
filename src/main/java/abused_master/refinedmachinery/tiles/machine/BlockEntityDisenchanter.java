@@ -197,11 +197,6 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
     public void link(PlayerEntity player, CompoundTag tag) {
         ItemHelper.linkBlockPos(world, pos, player, tag);
     }

@@ -12,9 +12,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
@@ -192,11 +190,6 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
     @Override
     public void clear() {
         inventory.clear();
-    }
-
-    @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
     }
 
     @Override

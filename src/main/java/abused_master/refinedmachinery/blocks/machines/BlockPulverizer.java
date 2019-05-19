@@ -6,6 +6,10 @@ import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityPulverizer;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
+import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.component.Component;
+import nerdhub.cardinalenergy.DefaultTypes;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,8 +32,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Set;
 
-public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable {
+public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
@@ -89,5 +95,20 @@ public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable 
     @Override
     public boolean onWrenched(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         return player.isSneaking() ? WrenchHelper.dropBlock(world, pos) : WrenchHelper.rotateBlock(world, pos, state);
+    }
+
+    @Override
+    public <T extends Component> boolean hasComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY;
+    }
+
+    @Override
+    public <T extends Component> T getComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY ? (T) ((BlockEntityPulverizer) blockView.getBlockEntity(pos)).storage : null;
+    }
+
+    @Override
+    public Set<ComponentType<?>> getComponentTypes(BlockView blockView, BlockPos pos, @Nullable Direction side) {
+        return Collections.singleton(DefaultTypes.CARDINAL_ENERGY);
     }
 }

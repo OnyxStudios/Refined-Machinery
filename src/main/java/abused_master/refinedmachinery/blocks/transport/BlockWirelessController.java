@@ -5,21 +5,27 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessController;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
+import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.component.Component;
+import nerdhub.cardinalenergy.DefaultTypes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.SnakeCaseIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Set;
 
-public class BlockWirelessController extends BlockWithEntityBase implements IWrenchable {
+public class BlockWirelessController extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public static final EnumProperty<ControllerState> STATE = EnumProperty.create("state", ControllerState.class);
 
@@ -39,8 +45,8 @@ public class BlockWirelessController extends BlockWithEntityBase implements IWre
     }
 
     @Override
-    public boolean skipRenderingSide(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
-        return blockState_1.getBlock() == this ? true : super.skipRenderingSide(blockState_1, blockState_2, direction_1);
+    public boolean isSideInvisible(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
+        return blockState_1.getBlock() == this ? true : super.isSideInvisible(blockState_1, blockState_2, direction_1);
     }
 
     @Override
@@ -70,13 +76,28 @@ public class BlockWirelessController extends BlockWithEntityBase implements IWre
         return player.isSneaking() ? WrenchHelper.dropBlock(world, pos) : false;
     }
 
-    public enum ControllerState implements StringRepresentable {
+    public enum ControllerState implements SnakeCaseIdentifiable {
         idle,
         running;
 
         @Override
-        public String asString() {
+        public String toSnakeCase() {
             return this.name();
         }
+    }
+
+    @Override
+    public <T extends Component> boolean hasComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY;
+    }
+
+    @Override
+    public <T extends Component> T getComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY ? (T) ((BlockEntityWirelessController) blockView.getBlockEntity(pos)).storage : null;
+    }
+
+    @Override
+    public Set<ComponentType<?>> getComponentTypes(BlockView blockView, BlockPos pos, @Nullable Direction side) {
+        return Collections.singleton(DefaultTypes.CARDINAL_ENERGY);
     }
 }

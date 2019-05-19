@@ -7,8 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.TextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TagHelper;
@@ -40,13 +40,13 @@ public class ItemQuarryRecorder extends ItemBase {
             if (!tag.containsKey("coordinates1")) {
                 tag.put("coordinates1", TagHelper.serializeBlockPos(pos));
                 if (!world.isClient) {
-                    player.addChatMessage(new StringTextComponent("Set coordinates for the first corner"), true);
+                    player.addChatMessage(new TextComponent("Set coordinates for the first corner"), true);
                 }
 
             } else if (!tag.containsKey("coordinates2")) {
                 tag.put("coordinates2", TagHelper.serializeBlockPos(pos));
                 if (!world.isClient) {
-                    player.addChatMessage(new StringTextComponent("Set coordinates for the second corner"), true);
+                    player.addChatMessage(new TextComponent("Set coordinates for the second corner"), true);
                 }
             }
 
@@ -63,7 +63,7 @@ public class ItemQuarryRecorder extends ItemBase {
         if(player.isSneaking()) {
             clearTag(player.getStackInHand(hand));
             if(!world.isClient) {
-                player.addChatMessage(new StringTextComponent("Cleared recorder settings"), true);
+                player.addChatMessage(new TextComponent("Cleared recorder settings"), true);
             }
         }
 
@@ -75,20 +75,20 @@ public class ItemQuarryRecorder extends ItemBase {
     }
 
     @Override
-    public void buildTooltip(ItemStack itemStack, World world, List<TextComponent> list, TooltipContext tooltipOptions) {
+    public void buildTooltip(ItemStack itemStack, World world, List<Component> list, TooltipContext tooltipOptions) {
         CompoundTag tag = itemStack.getTag();
         if(tag != null) {
             if(tag.containsKey("coordinates1")) {
                 BlockPos pos = TagHelper.deserializeBlockPos(tag.getCompound("coordinates1"));
-                list.add(new StringTextComponent("First Corner, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
+                list.add(new TextComponent("First Corner, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
             }
 
             if(tag.containsKey("coordinates2")) {
                 BlockPos pos = TagHelper.deserializeBlockPos(tag.getCompound("coordinates2"));
-                list.add(new StringTextComponent("Second Corner, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
+                list.add(new TextComponent("Second Corner, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
             }
         }else {
-            list.add(new StringTextComponent("Recorder not yet linked to any blocks."));
+            list.add(new TextComponent("Recorder not yet linked to any blocks."));
         }
     }
 }

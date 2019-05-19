@@ -21,7 +21,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.StringTextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -273,13 +273,8 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
             toDisplay.add("Mining at: x: " + miningPos.getX() + " y: " + miningPos.getY() + " z: " + miningPos.getZ());
         }
 
-        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getEnergyCapacity() + " CE");
+        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE");
         return toDisplay;
-    }
-
-    @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
     }
 
     @Override

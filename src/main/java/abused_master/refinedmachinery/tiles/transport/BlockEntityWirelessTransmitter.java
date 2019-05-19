@@ -9,7 +9,7 @@ import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -59,11 +59,6 @@ public class BlockEntityWirelessTransmitter extends BlockEntityBase implements I
 
     public BlockPos getCrystalPos() {
         return crystalPos;
-    }
-
-    @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
     }
 
     @Override

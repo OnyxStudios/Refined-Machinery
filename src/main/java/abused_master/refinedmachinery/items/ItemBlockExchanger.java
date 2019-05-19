@@ -3,12 +3,16 @@ package abused_master.refinedmachinery.items;
 import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModItems;
-import com.google.common.collect.Maps;
 import com.mojang.blaze3d.platform.GlStateManager;
+import nerdhub.cardinal.components.api.ItemComponentProvider;
+import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyItemHandler;
+import nerdhub.cardinalenergy.api.IEnergyItemStorage;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.ChatFormat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,16 +22,15 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextComponent;
-import net.minecraft.text.TextFormat;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -39,11 +42,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
+public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, ItemComponentProvider {
 
-    public ItemEnergyStorage storage = new ItemEnergyStorage(250000);
     public int usePerBlock = 250;
     public static int[] ranges = new int[] {1, 3, 5, 7, 9, 12};
 
@@ -77,12 +78,12 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
             return ActionResult.SUCCESS;
         }else {
             if(getSavedBlock(stack) == null || getSavedBlock(stack) == Blocks.AIR) {
-                if(world.isClient) playerEntity.addChatMessage(new StringTextComponent("Cannot exchange with air!").setStyle(new Style().setColor(TextFormat.DARK_RED)), false);
+                if(world.isClient) playerEntity.addChatMessage(new TextComponent("Cannot exchange with air!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), false);
                 return ActionResult.FAIL;
             }
 
             if(getSavedBlock(stack) == state.getBlock()) {
-                if(world.isClient) playerEntity.addChatMessage(new StringTextComponent("Cannot exchange the same blocks!").setStyle(new Style().setColor(TextFormat.DARK_RED)), false);
+                if(world.isClient) playerEntity.addChatMessage(new TextComponent("Cannot exchange the same blocks!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), false);
                 return ActionResult.FAIL;
             }else {
                 this.exchangeBlocks(stack, world, playerEntity, pos, context.getFacing());
@@ -92,6 +93,8 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
     }
 
     public void exchangeBlocks(ItemStack stack, World world, PlayerEntity playerEntity, BlockPos pos, Direction direction) {
+        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+
         int range = getRange(stack);
         Block exchangeBlock = getSavedBlock(stack);
         Block toExchangeBlock = world.getBlockState(pos).getBlock();
@@ -106,17 +109,17 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
                 }
 
                 if(!doesPlayerHaveBlock(playerEntity, exchangeBlock)) {
-                    if(world.isClient) playerEntity.addChatMessage(new StringTextComponent("No valid blocks in your inventory!").setStyle(new Style().setColor(TextFormat.DARK_RED)), false);
+                    if(world.isClient) playerEntity.addChatMessage(new TextComponent("No valid blocks in your inventory!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), false);
                     break;
                 }
 
                 if(playerEntity.giveItemStack(new ItemStack(state.getBlock()))) {
-                    if(storage.getEnergyStored(stack) >= usePerBlock) {
+                    if(storage.getEnergyStored() >= usePerBlock) {
                         playerEntity.inventory.takeInvStack(getSlotForBlock(playerEntity, exchangeBlock), 1);
                         world.setBlockState(blockPos, exchangeBlock.getDefaultState());
-                        storage.extractEnergy(stack, usePerBlock);
+                        storage.extractEnergy(usePerBlock);
                     }else {
-                        if(world.isClient) playerEntity.addChatMessage(new StringTextComponent("Not enough power!").setStyle(new Style().setColor(TextFormat.DARK_RED)), false);
+                        if(world.isClient) playerEntity.addChatMessage(new TextComponent("Not enough power!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), false);
                         break;
                     }
                 }
@@ -170,7 +173,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
 
         Identifier blockID = Registry.BLOCK.getId(block);
         stack.getTag().putString("block", blockID.toString());
-        if(playerEntity.world.isClient) playerEntity.addChatMessage(new StringTextComponent("Block set to " + I18n.translate(block.getTranslationKey())).setStyle(new Style().setColor(TextFormat.GOLD)), false);
+        if(playerEntity.world.isClient) playerEntity.addChatMessage(new TextComponent("Block set to " + I18n.translate(block.getTranslationKey())).setStyle(new Style().setColor(ChatFormat.GOLD)), false);
     }
 
     public static void switchRange(PlayerEntity playerEntity, ItemStack stack) {
@@ -182,7 +185,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
         }
 
         stack.getTag().putInt("range", range);
-        if(playerEntity.world.isClient) playerEntity.addChatMessage(new StringTextComponent("Switched mode to " + ranges[range] + "x" + ranges[range]).setStyle(new Style().setColor(TextFormat.GOLD)), false);
+        if(playerEntity.world.isClient) playerEntity.addChatMessage(new TextComponent("Switched mode to " + ranges[range] + "x" + ranges[range]).setStyle(new Style().setColor(ChatFormat.GOLD)), false);
     }
 
     public static int getRange(ItemStack stack) {
@@ -203,17 +206,16 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
     }
 
     @Override
-    public ItemEnergyStorage getEnergyStorage() {
-        return storage;
-    }
+    public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
+        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
-    @Override
-    public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> list, TooltipContext tooltipOptions) {
-        list.add(new StringTextComponent("Mode: " + ranges[getRange(stack)] + "x" + ranges[getRange(stack)]).setStyle(new Style().setColor(TextFormat.DARK_PURPLE)));
+        list.add(new TextComponent("Mode: " + ranges[getRange(stack)] + "x" + ranges[getRange(stack)]).setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)));
         if(stack.hasTag() && stack.getTag().containsKey("block")) {
-            list.add(new StringTextComponent("Block Set: " + I18n.translate(Registry.BLOCK.get(new Identifier(stack.getTag().getString("block"))).getTranslationKey())).setStyle(new Style().setColor(TextFormat.DARK_PURPLE)));
+            list.add(new TextComponent("Block Set: " + I18n.translate(Registry.BLOCK.get(new Identifier(stack.getTag().getString("block"))).getTranslationKey())).setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)));
         }
-        list.add(new StringTextComponent("Energy: " + storage.getEnergyStored(stack) + " / " + storage.getEnergyCapacity(stack) + " CE").setStyle(new Style().setColor(TextFormat.GOLD)));
+
+        if(storage != null)
+            list.add(new TextComponent("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE").setStyle(new Style().setColor(ChatFormat.GOLD)));
     }
 
     @Environment(EnvType.CLIENT)
@@ -243,7 +245,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
                     double double_1 = camera_1.getPos().x;
                     double double_2 = camera_1.getPos().y;
                     double double_3 = camera_1.getPos().z;
-                    WorldRenderer.drawShapeOutline(blockState.getOutlineShape(playerEntity.world, blockPos, VerticalEntityPosition.fromEntity(camera_1.getFocusedEntity())), (double)blockPos.getX() - double_1, (double)blockPos.getY() - double_2, (double)blockPos.getZ() - double_3, 0, 191 / 255f, 255 / 255f, 5);
+                    WorldRenderer.drawShapeOutline(blockState.getOutlineShape(playerEntity.world, blockPos, EntityContext.of(camera_1.getFocusedEntity())), (double)blockPos.getX() - double_1, (double)blockPos.getY() - double_2, (double)blockPos.getZ() - double_3, 0, 191 / 255f, 255 / 255f, 5);
                     GlStateManager.popMatrix();
                     GlStateManager.matrixMode(5888);
                     GlStateManager.depthMask(true);
@@ -252,5 +254,10 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler {
                 }
             }
         }
+    }
+
+    @Override
+    public void createComponents(ItemStack stack) {
+        addComponent(stack, DefaultTypes.CARDINAL_ENERGY, new ItemEnergyStorage(25000));
     }
 }

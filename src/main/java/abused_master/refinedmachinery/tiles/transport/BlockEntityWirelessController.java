@@ -7,6 +7,7 @@ import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import io.netty.buffer.Unpooled;
+import nerdhub.cardinal.components.api.BlockComponentProvider;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -17,11 +18,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -78,7 +77,7 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
     public void sendEnergy() {
         for (Iterator<BlockPos> it = tilePositions.iterator(); it.hasNext();) {
             BlockPos blockPos = it.next();
-            if(blockPos == null || !(world.getBlockEntity(blockPos) instanceof IEnergyHandler) || !((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY)) {
+            if(blockPos == null || !(world.getBlockEntity(blockPos) instanceof IEnergyHandler) || !((BlockComponentProvider) world.getBlockState(blockPos).getBlock()).hasComponent(world, blockPos, DefaultTypes.CARDINAL_ENERGY, null)) {
                 it.remove();
                 this.updateEntity();
                 continue;
@@ -87,11 +86,6 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
             EnergyHelper.sendEnergy(storage, world, blockPos, sendPerTick);
             this.updateEntity();
         }
-    }
-
-    @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
     }
 
     @Override

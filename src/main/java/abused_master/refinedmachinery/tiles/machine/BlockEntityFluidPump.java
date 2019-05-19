@@ -213,11 +213,6 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
     public FluidContainer getFluidTank() {
         return tank;
     }
@@ -241,7 +236,7 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     public List<String> getClientLog() {
         List<String> toDisplay = new ArrayList<>();
         toDisplay.add((tank.getFluidStack() != null ? I18n.translate(tank.getFluidStack().getFluid().getDefaultState().getBlockState().getBlock().getTranslationKey()) : "Empty") + ": " + tank.getFluidAmount() + " / " + tank.getFluidCapacity() + " MB");
-        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getEnergyCapacity() + " CE");
+        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE");
         return toDisplay;
     }
 

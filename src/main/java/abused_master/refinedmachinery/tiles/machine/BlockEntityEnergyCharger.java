@@ -6,8 +6,10 @@ import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.ModItems;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
+import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
+import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
-import nerdhub.cardinalenergy.api.IEnergyItemHandler;
+import nerdhub.cardinalenergy.api.IEnergyItemStorage;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -49,33 +51,33 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
 
     @Override
     public void tick() {
-        if (!inventory.get(0).isEmpty() && inventory.get(0).getItem() instanceof IEnergyItemHandler) {
+        if (!inventory.get(0).isEmpty() && ((StackComponentAccessor) (Object) inventory.get(0)).hasComponent(DefaultTypes.CARDINAL_ENERGY)) {
             ItemStack stack = inventory.get(0);
-            IEnergyItemHandler energyItemHandler = (IEnergyItemHandler) stack.getItem();
+            IEnergyItemStorage energyItemStorage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
-            if(isEnergyFull(energyItemHandler, stack)) {
+            if (isEnergyFull(energyItemStorage)) {
                 inventory.set(0, ItemStack.EMPTY);
-                if(stack.getItem() == ModItems.STEEL_INGOT) {
+                if (stack.getItem() == ModItems.STEEL_INGOT) {
                     inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot()));
-                }else {
+                } else {
                     inventory.set(1, stack);
                 }
-            }else {
-               if(storage.canExtract(chargePerTick)) {
-                   if(stack.getAmount() > 0) {
-                       energyItemHandler.getEnergyStorage().setEnergyCapacity(stack, stack.getAmount() * energyItemHandler.getEnergyStorage().getEnergyCapacity(new ItemStack(stack.getItem())));
-                   }
+            } else {
+                if (storage.canExtract(chargePerTick)) {
+                    if (stack.getAmount() > 0) {
+                        energyItemStorage.setCapacity(stack.getAmount() * energyItemStorage.getCapacity());
+                    }
 
-                   storage.extractEnergy(energyItemHandler.getEnergyStorage().receiveEnergy(stack, chargePerTick));
-                   if(stack.hasDurability())
-                       ItemHelper.updateItemDurability(stack, energyItemHandler.getEnergyStorage());
-               }
+                    storage.extractEnergy(energyItemStorage.receiveEnergy(chargePerTick));
+                    if (stack.hasDurability())
+                        ItemHelper.updateItemDurability(stack, energyItemStorage);
+                }
             }
         }
     }
 
-    public boolean isEnergyFull(IEnergyItemHandler energyItemHandler, ItemStack stack) {
-        return energyItemHandler.getEnergyStorage().getEnergyStored(stack) >= energyItemHandler.getEnergyStorage().getEnergyCapacity(stack);
+    public boolean isEnergyFull(IEnergyItemStorage energyItemStorage) {
+        return energyItemStorage.getEnergyStored() >= energyItemStorage.getCapacity();
     }
 
     @Override
@@ -143,11 +145,6 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
     @Override
     public ItemStack takeInvStack(int i, int i1) {
         return Inventories.splitStack(this.inventory, i, i1);
-    }
-
-    @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
     }
 
     @Override

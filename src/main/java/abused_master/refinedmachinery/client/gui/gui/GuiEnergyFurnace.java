@@ -7,7 +7,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.ContainerScreen;
-import net.minecraft.text.StringTextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -18,7 +18,7 @@ public class GuiEnergyFurnace extends ContainerScreen {
     public int guiLeft, guiTop;
 
     public GuiEnergyFurnace(BlockEntityEnergyFurnace tile, ContainerEnergyFurnace containerRFFurnace) {
-        super(containerRFFurnace, containerRFFurnace.playerInventory, new StringTextComponent("Energy Furnace"));
+        super(containerRFFurnace, containerRFFurnace.playerInventory, new TextComponent("Energy Furnace"));
         this.tile = tile;
     }
 
@@ -37,7 +37,7 @@ public class GuiEnergyFurnace extends ContainerScreen {
         this.drawMouseoverTooltip(var1, var2);
 
         if(this.isPointWithinBounds(10, 9, 20, 64, var1, var2)) {
-            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getEnergyCapacity() + " CE", var1, var2);
+            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getCapacity() + " CE", var1, var2);
         }
     }
 
@@ -60,7 +60,7 @@ public class GuiEnergyFurnace extends ContainerScreen {
     public void renderEnergy() {
         if(this.tile.storage.getEnergyStored() > 0) {
             int k = 62;
-            int i = tile.storage.getEnergyStored() * k / tile.storage.getEnergyCapacity();
+            int i = tile.storage.getEnergyStored() * k / tile.storage.getCapacity();
             this.blit(guiLeft + 10, guiTop + 71 - i, 178, 66 - i, 18, i);
         }
     }

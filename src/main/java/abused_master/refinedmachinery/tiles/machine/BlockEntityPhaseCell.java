@@ -7,13 +7,10 @@ import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
-import nerdhub.cardinalenergy.api.EnergyType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -48,11 +45,6 @@ public class BlockEntityPhaseCell extends BlockEntityBase implements IEnergyHand
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
     public Direction getBlockOrientation() {
         return null;
     }
@@ -64,7 +56,7 @@ public class BlockEntityPhaseCell extends BlockEntityBase implements IEnergyHand
 
     @Override
     public List<String> getClientLog() {
-        return Arrays.asList(new String[]{"Energy: " + storage.getEnergyStored() + " / " + storage.getEnergyCapacity() + " CE"});
+        return Arrays.asList(new String[]{"Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE"});
     }
 
     @Override

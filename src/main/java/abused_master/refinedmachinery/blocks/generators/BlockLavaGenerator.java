@@ -6,6 +6,10 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityLavaGenerator;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
+import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.component.Component;
+import nerdhub.cardinalenergy.DefaultTypes;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -19,8 +23,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Set;
 
-public class BlockLavaGenerator extends BlockWithEntityBase implements IWrenchable {
+public class BlockLavaGenerator extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockLavaGenerator() {
         super("lava_generator", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
@@ -49,8 +55,8 @@ public class BlockLavaGenerator extends BlockWithEntityBase implements IWrenchab
     }
 
     @Override
-    public boolean skipRenderingSide(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
-        return blockState_1.getBlock() == this ? true : super.skipRenderingSide(blockState_1, blockState_2, direction_1);
+    public boolean isSideInvisible(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
+        return blockState_1.getBlock() == this ? true : super.isSideInvisible(blockState_1, blockState_2, direction_1);
     }
 
     @Override
@@ -67,5 +73,20 @@ public class BlockLavaGenerator extends BlockWithEntityBase implements IWrenchab
     @Override
     public boolean onWrenched(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         return player.isSneaking() ? WrenchHelper.dropBlock(world, pos) : false;
+    }
+
+    @Override
+    public <T extends Component> boolean hasComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY;
+    }
+
+    @Override
+    public <T extends Component> T getComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY ? (T) ((BlockEntityLavaGenerator) blockView.getBlockEntity(pos)).storage : null;
+    }
+
+    @Override
+    public Set<ComponentType<?>> getComponentTypes(BlockView blockView, BlockPos pos, @Nullable Direction side) {
+        return Collections.singleton(DefaultTypes.CARDINAL_ENERGY);
     }
 }

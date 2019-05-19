@@ -4,7 +4,7 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.blocks.generators.EnumSolarPanelTypes;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
-import nerdhub.cardinalenergy.api.EnergyType;
+import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.nbt.CompoundTag;
@@ -39,7 +39,7 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
     @Override
     public void tick() {
         if (world.isDaylight() && canSeeSky()) {
-            if ((storage.getEnergyStored() + generationPerTick) < storage.getEnergyCapacity()) {
+            if ((storage.getEnergyStored() + generationPerTick) < storage.getCapacity()) {
                 storage.receiveEnergy(generationPerTick);
                 this.markDirty();
             }
@@ -72,17 +72,12 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
-    public boolean isEnergyProvider(Direction direction, EnergyType type) {
+    public boolean isEnergyProvider(Direction direction, ComponentType componentType) {
         return true;
     }
 
     @Override
-    public boolean isEnergyReceiver(Direction direction, EnergyType type) {
+    public boolean isEnergyReceiver(Direction direction, ComponentType componentType) {
         return false;
     }
 }

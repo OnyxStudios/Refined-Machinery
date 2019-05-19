@@ -5,6 +5,7 @@ import abused_master.abusedlib.fluid.FluidHelper;
 import abused_master.abusedlib.fluid.FluidStack;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.tanks.BlockEntityTank;
+import net.minecraft.ChatFormat;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -14,11 +15,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextComponent;
-import net.minecraft.text.TextFormat;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -93,8 +93,8 @@ public class BlockTank extends BlockWithEntityBase {
     }
 
     @Override
-    public boolean skipRenderingSide(BlockState state, BlockState state2, Direction direction) {
-        return state.getBlock() == this ? true : super.skipRenderingSide(state, state2, direction);
+    public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
+        return state.getBlock() == this ? true : super.isSideInvisible(state, state2, direction);
     }
 
     @Override
@@ -103,11 +103,11 @@ public class BlockTank extends BlockWithEntityBase {
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable BlockView view, List<TextComponent> list, TooltipContext context) {
+    public void buildTooltip(ItemStack stack, @Nullable BlockView view, List<Component> list, TooltipContext context) {
         if(stack.hasTag() && stack.getTag().containsKey("TileData")) {
             FluidStack fluidStack = FluidStack.fluidFromTag(stack.getTag().getCompound("TileData").getCompound("FluidData"));
             if(fluidStack != null && fluidStack.getFluid() != null) {
-                list.add(new StringTextComponent("Holding: " + fluidStack.getAmount() + " MB of " + Registry.FLUID.getId(fluidStack.getFluid()).getPath()).setStyle(new Style().setColor(TextFormat.GOLD)));
+                list.add(new TextComponent("Holding: " + fluidStack.getAmount() + " MB of " + Registry.FLUID.getId(fluidStack.getFluid()).getPath()).setStyle(new Style().setColor(ChatFormat.GOLD)));
             }
         }
     }

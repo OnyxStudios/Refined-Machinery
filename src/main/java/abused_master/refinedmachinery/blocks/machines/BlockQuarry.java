@@ -7,6 +7,11 @@ import abused_master.refinedmachinery.registry.ModItems;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityQuarry;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
+import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.component.Component;
+import nerdhub.cardinalenergy.DefaultTypes;
+import net.minecraft.ChatFormat;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -15,9 +20,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextFormat;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.TagHelper;
@@ -27,7 +31,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Set;
+
+public class BlockQuarry extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockQuarry() {
         super("quarry", Material.STONE, 1.8f, RefinedMachinery.modItemGroup);
@@ -53,24 +61,24 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
                 quarry.setRunning(true);
                 world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
                 if (!world.isClient)
-                    playerEntity.addChatMessage(new StringTextComponent("Set quarry to now running!").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+                    playerEntity.addChatMessage(new TextComponent("Set quarry to now running!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
             } else if (!quarry.blockPositionsActive()) {
                 if(!world.isClient)
-                    playerEntity.addChatMessage(new StringTextComponent("Error, no mining positions are set!").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+                    playerEntity.addChatMessage(new TextComponent("Error, no mining positions are set!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
             }
         } else {
             CompoundTag tag = stack.getTag();
 
             if (tag == null) {
                 if (!world.isClient)
-                    playerEntity.addChatMessage(new StringTextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+                    playerEntity.addChatMessage(new TextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
 
                 return true;
             }
 
             if (!tag.containsKey("coordinates1") || !tag.containsKey("coordinates2")) {
                 if (!world.isClient)
-                    playerEntity.addChatMessage(new StringTextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+                    playerEntity.addChatMessage(new TextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
 
                 return true;
             }
@@ -81,7 +89,7 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
             world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
 
             if(!world.isClient)
-                playerEntity.addChatMessage(new StringTextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(TextFormat.DARK_RED)), true);
+                playerEntity.addChatMessage(new TextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
         }
 
         return true;
@@ -98,8 +106,8 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
     }
 
     @Override
-    public boolean skipRenderingSide(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
-        return blockState_1.getBlock() == this ? true : super.skipRenderingSide(blockState_1, blockState_2, direction_1);
+    public boolean isSideInvisible(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
+        return blockState_1.getBlock() == this ? true : super.isSideInvisible(blockState_1, blockState_2, direction_1);
     }
 
     @Override
@@ -134,5 +142,20 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable {
     @Override
     public boolean onWrenched(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         return player.isSneaking() ? WrenchHelper.dropBlock(world, pos) : false;
+    }
+
+    @Override
+    public <T extends Component> boolean hasComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY;
+    }
+
+    @Override
+    public <T extends Component> T getComponent(BlockView blockView, BlockPos pos, ComponentType<T> type, @Nullable Direction side) {
+        return type == DefaultTypes.CARDINAL_ENERGY ? (T) ((BlockEntityQuarry) blockView.getBlockEntity(pos)).storage : null;
+    }
+
+    @Override
+    public Set<ComponentType<?>> getComponentTypes(BlockView blockView, BlockPos pos, @Nullable Direction side) {
+        return Collections.singleton(DefaultTypes.CARDINAL_ENERGY);
     }
 }

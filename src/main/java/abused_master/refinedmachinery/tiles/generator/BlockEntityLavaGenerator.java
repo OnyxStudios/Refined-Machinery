@@ -8,7 +8,7 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.EnergyHelper;
-import nerdhub.cardinalenergy.api.EnergyType;
+import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.fluid.LavaFluid;
@@ -64,7 +64,7 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
 
     @Override
     public void tick() {
-        if (tank.getFluidAmount() >= 10 && tank.getFluidStack().getFluid() instanceof LavaFluid && (storage.getEnergyStored() + generatePer10) <= storage.getEnergyCapacity()) {
+        if (tank.getFluidAmount() >= 10 && tank.getFluidStack().getFluid() instanceof LavaFluid && (storage.getEnergyStored() + generatePer10) <= storage.getCapacity()) {
             if(!world.isReceivingRedstonePower(pos)) {
                 storage.receiveEnergy(generatePer10);
                 tank.extractFluid(10);
@@ -77,17 +77,12 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
     }
 
     @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
-    }
-
-    @Override
-    public boolean isEnergyProvider(Direction direction, EnergyType type) {
+    public boolean isEnergyProvider(Direction direction, ComponentType componentType) {
         return true;
     }
 
     @Override
-    public boolean isEnergyReceiver(Direction direction, EnergyType type) {
+    public boolean isEnergyReceiver(Direction direction, ComponentType componentType) {
         return false;
     }
 
@@ -105,7 +100,7 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
     public List<String> getClientLog() {
         List<String> toDisplay = new ArrayList<>();
         toDisplay.add("Lava: " + tank.getFluidAmount() + " / " + tank.getFluidCapacity() + " Lava");
-        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getEnergyCapacity() + " CE");
+        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE");
         return toDisplay;
     }
 

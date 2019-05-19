@@ -44,7 +44,7 @@ public class BlockGlassBase extends BlockBase {
     }
 
     @Override
-    public boolean skipRenderingSide(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
+    public boolean isSideInvisible(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
         return false;
     }
 

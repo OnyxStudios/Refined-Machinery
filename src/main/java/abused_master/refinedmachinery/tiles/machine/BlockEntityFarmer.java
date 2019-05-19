@@ -14,12 +14,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -87,7 +87,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                     List<ItemStack> drops = new ArrayList<>();
                     if (world.getBlockState(pos).getBlock() instanceof CropBlock) {
                         CropBlock block = (CropBlock) world.getBlockState(pos).getBlock();
-                        if (block.isValidState(world.getBlockState(pos))) {
+                        if (block.isMature(world.getBlockState(pos))) {
                             drops = CropBlock.getDroppedStacks(world.getBlockState(pos), (ServerWorld) world, pos, null);
                             world.setBlockState(pos, Blocks.AIR.getDefaultState());
                         }else {
@@ -129,9 +129,9 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
 
     public boolean plant(BlockPos plantingPos, ItemStack stack) {
         if (ItemTags.SAPLINGS.contains(stack.getItem())) {
-            for (Block saplingBlock : BlockTags.SAPLINGS.values()) {
-                if (saplingBlock.getItem() == stack.getItem() && !world.isAir(plantingPos.down())) {
-                    world.setBlockState(plantingPos, saplingBlock.getDefaultState());
+            for (Item saplingBlock : ItemTags.SAPLINGS.values()) {
+                if (saplingBlock == stack.getItem() && !world.isAir(plantingPos.down())) {
+                    world.setBlockState(plantingPos, ((BlockItem) saplingBlock).getBlock().getDefaultState());
                     return true;
                 }
             }
@@ -208,11 +208,6 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                 }
             }
         }
-    }
-
-    @Override
-    public EnergyStorage getEnergyStorage(Direction direction) {
-        return storage;
     }
 
     @Override
