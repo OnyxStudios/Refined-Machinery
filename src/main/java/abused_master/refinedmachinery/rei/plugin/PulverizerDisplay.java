@@ -13,11 +13,11 @@ import java.util.Optional;
 public class PulverizerDisplay implements RecipeDisplay {
 
     private PulverizerRecipes.PulverizerRecipe recipe;
-    private ItemStack input;
+    private List<ItemStack> inputs;
 
-    public PulverizerDisplay(ItemStack input, PulverizerRecipes.PulverizerRecipe recipe) {
+    public PulverizerDisplay(List<ItemStack> inputs, PulverizerRecipes.PulverizerRecipe recipe) {
         this.recipe = recipe;
-        this.input = input;
+        this.inputs = inputs;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class PulverizerDisplay implements RecipeDisplay {
 
     @Override
     public List<List<ItemStack>> getInput() {
-        return Collections.singletonList(Collections.singletonList(input));
+        return Collections.singletonList(inputs);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class PulverizerDisplay implements RecipeDisplay {
 
     @Override
     public List<List<ItemStack>> getRequiredItems() {
-        return Collections.singletonList(Collections.singletonList(input));
+        return Collections.singletonList(inputs);
     }
 }

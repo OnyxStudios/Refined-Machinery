@@ -11,6 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class RefinedMachineryPlugin implements REIPluginEntry {
@@ -32,11 +35,13 @@ public class RefinedMachineryPlugin implements REIPluginEntry {
     public void registerRecipeDisplays(RecipeHelper recipeHelper) {
         for (Map.Entry<Object, PulverizerRecipes.PulverizerRecipe> entry : PulverizerRecipes.INSTANCE.getRecipes().entrySet()) {
             if(entry.getKey() instanceof ItemStack) {
-                recipeHelper.registerDisplay(PULVERIZER, new PulverizerDisplay((ItemStack) entry.getKey(), entry.getValue()));
+                recipeHelper.registerDisplay(PULVERIZER, new PulverizerDisplay(Collections.singletonList((ItemStack) entry.getKey()), entry.getValue()));
             }else if(entry.getKey() instanceof Tag) {
+                List<ItemStack> inputs = new ArrayList<>();
                 for (Item item : ((Tag<Item>) entry.getKey()).values()) {
-                    recipeHelper.registerDisplay(PULVERIZER, new PulverizerDisplay(new ItemStack(item), entry.getValue()));
+                    inputs.add(new ItemStack(item));
                 }
+                recipeHelper.registerDisplay(PULVERIZER, new PulverizerDisplay(inputs, entry.getValue()));
             }
         }
     }
