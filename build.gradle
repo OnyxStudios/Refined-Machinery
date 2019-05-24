@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.1-SNAPSHOT'
+	id 'fabric-loom' version '0.2.2-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -24,7 +24,7 @@ dependencies {
 	minecraft "com.mojang:minecraft:${mc_version}"
 	mappings "net.fabricmc:yarn:${yarn_mappings}"
 	modCompile "net.fabricmc:fabric-loader:${loader_version}"
-	modCompile "net.fabricmc:fabric:${fabric_version}"
+	modCompile "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
 	modCompile "abused_master.abusedlib:AbusedLib:${abusedlib_version}"
 	modCompile "com.github.NerdHubMC:Cardinal-Energy:${cardinal_version}"
