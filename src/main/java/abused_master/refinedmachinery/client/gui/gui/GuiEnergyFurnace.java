@@ -6,12 +6,12 @@ import abused_master.refinedmachinery.tiles.machine.BlockEntityEnergyFurnace;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.ContainerScreen;
+import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class GuiEnergyFurnace extends ContainerScreen {
+public class GuiEnergyFurnace extends AbstractContainerScreen {
 
     public Identifier rfFurnaceGui = new Identifier(RefinedMachinery.MODID, "textures/gui/energy_furnace_gui.png");
     public BlockEntityEnergyFurnace tile;

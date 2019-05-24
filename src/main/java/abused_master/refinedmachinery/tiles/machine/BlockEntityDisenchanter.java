@@ -97,7 +97,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
         if(listTag.size() > 0) {
             CompoundTag tag = (CompoundTag) listTag.get(0);
 
-            Registry.ENCHANTMENT.getOrEmpty(Identifier.create(tag.getString("id"))).ifPresent((enchantment) -> {
+            Registry.ENCHANTMENT.getOrEmpty(Identifier.ofNullable(tag.getString("id"))).ifPresent((enchantment) -> {
                 EnchantedBookItem.addEnchantment(output, new InfoEnchantment(enchantment, tag.getInt("lvl")));
                 listTag.remove(tag);
                 input.getTag().put("Enchantments", listTag);

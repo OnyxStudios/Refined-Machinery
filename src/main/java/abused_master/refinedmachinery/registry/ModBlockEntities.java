@@ -2,6 +2,8 @@ package abused_master.refinedmachinery.registry;
 
 import abused_master.abusedlib.registry.RegistryHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.blocks.generators.EnumSolarPanelTypes;
+import abused_master.refinedmachinery.blocks.tanks.EnumTankTypes;
 import abused_master.refinedmachinery.client.gui.container.*;
 import abused_master.refinedmachinery.client.render.*;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
@@ -49,23 +51,23 @@ public class ModBlockEntities {
     public static final Identifier DISENCHANTER_CONTAINER = new Identifier(RefinedMachinery.MODID, "disenchanter");
 
     public static void registerBlockEntities() {
-        ENERGY_FURNACE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_furnace"), BlockEntityEnergyFurnace.class);
-        QUARRY = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "quarry"), BlockEntityQuarry.class);
-        SOLAR_PANEL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "solar_panel"), BlockEntitySolarPanel.class);
-        ENERGY_CRYSTAL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_crystal"), BlockEntityWirelessController.class);
-        ENERGY_CRYSTAL_COLLECTOR = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_crystal_collector"), BlockEntityWirelessTransmitter.class);
-        PULVERIZER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "pulverizer"), BlockEntityPulverizer.class);
-        LAVA_GENERATOR = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "lava_generator"), BlockEntityLavaGenerator.class);
-        ENERGY_CHARGER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_charger"), BlockEntityEnergyCharger.class);
-        FLUID_PUMP = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "fluid_pump"), BlockEntityFluidPump.class);
-        FARMER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "farmer"), BlockEntityFarmer.class);
-        MOB_GRINDER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "mob_grinder"), BlockEntityMobGrinder.class);
-        VACUUM = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "vacuum"), BlockEntityVacuum.class);
-        PHASE_CELL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "phase_cell"), BlockEntityPhaseCell.class);
-        ENERGY_CABLE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_cable"), BlockEntityEnergyCable.class);
-        TANK = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "tank"), BlockEntityTank.class);
-        COALGEN = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "coalgen"), BlockEntityCoalGen.class);
-        DISENCHANTER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "disenchanter"), BlockEntityDisenchanter.class);
+        ENERGY_FURNACE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_furnace"), BlockEntityEnergyFurnace.class, ModBlocks.ENERGY_FURNACE);
+        QUARRY = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "quarry"), BlockEntityQuarry.class, ModBlocks.QUARRY);
+        SOLAR_PANEL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "solar_panel"), BlockEntitySolarPanel.class, EnumSolarPanelTypes.SOLAR_PANEL_MK1.getBlockSolar(), EnumSolarPanelTypes.SOLAR_PANEL_MK2.getBlockSolar(), EnumSolarPanelTypes.SOLAR_PANEL_MK3.getBlockSolar());
+        ENERGY_CRYSTAL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_crystal"), BlockEntityWirelessController.class, ModBlocks.WIRELESS_CONTROLLER);
+        ENERGY_CRYSTAL_COLLECTOR = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_crystal_collector"), BlockEntityWirelessTransmitter.class, ModBlocks.WIRELESS_TRANSMITTER);
+        PULVERIZER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "pulverizer"), BlockEntityPulverizer.class, ModBlocks.PULVERIZER);
+        LAVA_GENERATOR = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "lava_generator"), BlockEntityLavaGenerator.class, ModBlocks.LAVA_GENERATOR);
+        ENERGY_CHARGER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_charger"), BlockEntityEnergyCharger.class, ModBlocks.ENERGY_CHARGER);
+        FLUID_PUMP = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "fluid_pump"), BlockEntityFluidPump.class, ModBlocks.FLUID_PUMP);
+        FARMER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "farmer"), BlockEntityFarmer.class, ModBlocks.FARMER);
+        MOB_GRINDER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "mob_grinder"), BlockEntityMobGrinder.class, ModBlocks.MOB_GRINDER);
+        VACUUM = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "vacuum"), BlockEntityVacuum.class, ModBlocks.VACUUM);
+        PHASE_CELL = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "phase_cell"), BlockEntityPhaseCell.class, ModBlocks.PHASE_CELL);
+        ENERGY_CABLE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_cable"), BlockEntityEnergyCable.class, ModBlocks.ENERGY_CABLE);
+        TANK = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "tank"), BlockEntityTank.class, EnumTankTypes.COPPER_TANK.getTank(), EnumTankTypes.SILVER_TANK.getTank(), EnumTankTypes.STEEL_TANK.getTank());
+        COALGEN = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "coalgen"), BlockEntityCoalGen.class, ModBlocks.COAL_GENERATOR);
+        DISENCHANTER = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "disenchanter"), BlockEntityDisenchanter.class, ModBlocks.DISENCHANTER);
     }
 
     @Environment(EnvType.CLIENT)

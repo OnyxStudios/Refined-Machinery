@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "refinedmachinery",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "name": "Refined Machinery",
   "description": "A tech based mod for 1.14",
   "authors": [
@@ -28,7 +28,7 @@
   "requires": {
     "fabricloader": ">=0.4.0",
     "fabric": "*",
-    "abusedlib": ">=1.0.2",
-    "cardinalenergy": ">=1.0.1"
+    "abusedlib": ">=1.1.0",
+    "cardinalenergy": ">=1.1.0"
   }
 }

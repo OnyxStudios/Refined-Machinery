@@ -15,7 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.SnakeCaseIdentifiable;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
@@ -76,12 +76,12 @@ public class BlockWirelessController extends BlockWithEntityBase implements IWre
         return player.isSneaking() ? WrenchHelper.dropBlock(world, pos) : false;
     }
 
-    public enum ControllerState implements SnakeCaseIdentifiable {
+    public enum ControllerState implements StringIdentifiable {
         idle,
         running;
 
         @Override
-        public String toSnakeCase() {
+        public String asString() {
             return this.name();
         }
     }

@@ -6,12 +6,12 @@ import abused_master.refinedmachinery.tiles.machine.BlockEntityVacuum;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.ContainerScreen;
+import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class GuiVacuum extends ContainerScreen {
+public class GuiVacuum extends AbstractContainerScreen {
 
     public Identifier vacuumGui = new Identifier(RefinedMachinery.MODID, "textures/gui/vacuum_gui.png");
     public BlockEntityVacuum tile;
