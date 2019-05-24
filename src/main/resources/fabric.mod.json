@@ -20,6 +20,9 @@
     ],
     "client": [
       "abused_master.refinedmachinery.RefinedMachineryClient"
+    ],
+    "rei_plugins": [
+      "abused_master.refinedmachinery.rei.RefinedMachineryPlugin"
     ]
   },
   "mixins": [

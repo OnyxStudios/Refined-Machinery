@@ -18,6 +18,7 @@ repositories {
     maven { url = "https://jitpack.io/" }
 	maven { url = "https://oss.sonatype.org/content/repositories/releases/" }
 	maven { url = "http://maven.abusedmaster.xyz/" }
+	maven { url = "https://minecraft.curseforge.com/api/maven" }
 }
 
 dependencies {
@@ -33,6 +34,11 @@ dependencies {
 	modCompile "com.github.NerdHubMC:Cardinal-Components-API:${cardinal_components}"
 	include "com.github.NerdHubMC:Cardinal-Components-API:${cardinal_components}"
 	compileOnly "com.google.code.findbugs:jsr305:${findbugs_version}"
+
+	//Rei Stuffs
+	modCompile "cloth:ClothEvents:${cloth_events_version}"
+	modCompile "cloth-config:ClothConfig:${cloth_config_version}"
+	modCompile "me.shedaniel:RoughlyEnoughItems:${rei_version}"
 }
 
 jar {

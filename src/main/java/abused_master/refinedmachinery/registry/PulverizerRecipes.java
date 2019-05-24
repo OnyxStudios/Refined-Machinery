@@ -139,6 +139,10 @@ public class PulverizerRecipes {
         return null;
     }
 
+    public Map<Object, PulverizerRecipe> getRecipes() {
+        return recipesMap;
+    }
+
     public class PulverizerRecipe {
 
         private ItemStack output, randomDrop;
