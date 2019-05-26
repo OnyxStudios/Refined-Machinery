@@ -5,6 +5,7 @@ import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessTransmi
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.api.IEnergyItemStorage;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 public class ItemHelper {
 
-    public static void updateItemDurability(ItemStack stack, IEnergyItemStorage storage) {
+    public static void updateItemDurability(ItemStack stack, IEnergyStorage storage) {
         stack.setDamage(storage.getCapacity() - storage.getEnergyStored());
     }
 

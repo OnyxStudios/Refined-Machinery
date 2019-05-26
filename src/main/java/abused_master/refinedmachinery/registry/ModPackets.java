@@ -5,13 +5,15 @@ import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyStorage;
-import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +24,7 @@ public class ModPackets {
     public static final Identifier PACKET_UPDATE_CLIENT_ENERGY = new Identifier(RefinedMachinery.MODID, "packet_update_client_energy");
     public static final Identifier PACKET_LINK_ENERGY = new Identifier(RefinedMachinery.MODID, "packet_link_energy");
     public static final Identifier PACKET_UPDATE_CLIENT_FLUID = new Identifier(RefinedMachinery.MODID, "packet_update_client_fluid");
+    public static final Identifier PACKET_CHARGE_ITEM = new Identifier(RefinedMachinery.MODID, "packet_charge_item");
 
     public static void registerPackets() {
     }
@@ -75,5 +78,28 @@ public class ModPackets {
                 });
             }
         }));
+
+        ClientSidePacketRegistry.INSTANCE.register(PACKET_CHARGE_ITEM, (context, buf) -> {
+            BlockPos pos = buf.readBlockPos();
+            ItemStack stack = buf.readItemStack();
+
+            if(context.getPlayer() != null && context.getPlayer().world != null) {
+                PlayerEntity player = context.getPlayer();
+                World world = player.world;
+                context.getTaskQueue().execute(() -> {
+                    Block block = world.getBlockState(pos).getBlock();
+                    IEnergyStorage storage = ((BlockComponentProvider) block).getComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null);
+                    IEnergyStorage energyItemStorage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+
+                    if (stack.getAmount() > 0)
+                        energyItemStorage.setCapacity(stack.getAmount() * energyItemStorage.getCapacity());
+
+                    storage.extractEnergy(energyItemStorage.receiveEnergy(50));
+
+                    if (stack.hasDurability())
+                        ItemHelper.updateItemDurability(stack, energyItemStorage);
+                });
+            }
+        });
     }
 }

@@ -4,19 +4,24 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.items.EnumResourceItems;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.ModItems;
+import abused_master.refinedmachinery.registry.ModPackets;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
+import io.netty.buffer.Unpooled;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
-import nerdhub.cardinalenergy.api.IEnergyItemStorage;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
+import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.DefaultedList;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
@@ -53,30 +58,37 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
     public void tick() {
         if (!inventory.get(0).isEmpty() && ((StackComponentAccessor) (Object) inventory.get(0)).hasComponent(DefaultTypes.CARDINAL_ENERGY)) {
             ItemStack stack = inventory.get(0);
-            IEnergyItemStorage energyItemStorage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+            IEnergyStorage energyItemStorage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
             if (isEnergyFull(energyItemStorage)) {
                 inventory.set(0, ItemStack.EMPTY);
                 if (stack.getItem() == ModItems.STEEL_INGOT) {
-                    inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot()));
+                    inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot(), stack.getAmount()));
                 } else {
                     inventory.set(1, stack);
                 }
             } else {
                 if (storage.canExtract(chargePerTick)) {
-                    if (stack.getAmount() > 0) {
-                        energyItemStorage.setCapacity(stack.getAmount() * energyItemStorage.getCapacity());
-                    }
+                    if(!world.isClient) {
+                        if (stack.getAmount() > 0) energyItemStorage.setCapacity(stack.getAmount() * energyItemStorage.getCapacity());
+                        storage.extractEnergy(energyItemStorage.receiveEnergy(chargePerTick));
+                        if (stack.hasDurability()) ItemHelper.updateItemDurability(stack, energyItemStorage);
 
-                    storage.extractEnergy(energyItemStorage.receiveEnergy(chargePerTick));
-                    if (stack.hasDurability())
-                        ItemHelper.updateItemDurability(stack, energyItemStorage);
+                        for (PlayerEntity playerEntity : world.getPlayers()) {
+                            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) playerEntity;
+                            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                            buf.writeBlockPos(getPos());
+                            buf.writeItemStack(stack);
+
+                            serverPlayerEntity.networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_CHARGE_ITEM, buf));
+                        }
+                    }
                 }
             }
         }
     }
 
-    public boolean isEnergyFull(IEnergyItemStorage energyItemStorage) {
+    public boolean isEnergyFull(IEnergyStorage energyItemStorage) {
         return energyItemStorage.getEnergyStored() >= energyItemStorage.getCapacity();
     }
 

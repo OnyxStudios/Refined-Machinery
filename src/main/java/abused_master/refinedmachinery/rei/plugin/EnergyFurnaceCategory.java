@@ -10,8 +10,6 @@ import me.shedaniel.rei.gui.renderables.RecipeRenderer;
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget;
 import me.shedaniel.rei.gui.widget.SlotWidget;
 import me.shedaniel.rei.gui.widget.Widget;
-import me.shedaniel.rei.plugin.DefaultPlugin;
-import me.shedaniel.rei.plugin.DefaultSmeltingDisplay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.item.ItemStack;

@@ -6,7 +6,7 @@ import nerdhub.cardinal.components.api.ItemComponentProvider;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyItemHandler;
-import nerdhub.cardinalenergy.api.IEnergyItemStorage;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.minecraft.ChatFormat;
 import net.minecraft.client.item.TooltipContext;
@@ -33,7 +33,7 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler,
     public boolean onEntityDamaged(ItemStack stack, LivingEntity livingEntity, LivingEntity damagedEntity) {
         int damageAmount = (int) (damagedEntity.getHealthMaximum() - damagedEntity.getHealth());
         int energyUsage = (damageAmount == 0 ? (int) damagedEntity.getHealthMaximum() : damageAmount) * attackHeartCost;
-        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+        IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         if (storage.getEnergyStored() >= energyUsage) {
             storage.extractEnergy(energyUsage);
@@ -46,12 +46,10 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler,
 
     @Override
     public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
-        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
-        if(storage == null) {
-            storage = new ItemEnergyStorage(25000);
+        IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+        if(storage != null) {
+            list.add(new TextComponent("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE").setStyle(new Style().setColor(ChatFormat.GOLD)));
         }
-
-        list.add(new TextComponent("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE").setStyle(new Style().setColor(ChatFormat.GOLD)));
     }
 
     @Override

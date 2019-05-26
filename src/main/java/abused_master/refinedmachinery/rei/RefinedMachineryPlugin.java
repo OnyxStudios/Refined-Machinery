@@ -8,8 +8,6 @@ import abused_master.refinedmachinery.rei.plugin.PulverizerCategory;
 import abused_master.refinedmachinery.rei.plugin.PulverizerDisplay;
 import me.shedaniel.rei.api.REIPluginEntry;
 import me.shedaniel.rei.api.RecipeHelper;
-import me.shedaniel.rei.plugin.DefaultPlugin;
-import me.shedaniel.rei.plugin.DefaultSmeltingDisplay;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;

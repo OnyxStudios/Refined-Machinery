@@ -1,6 +1,7 @@
 package abused_master.refinedmachinery;
 
 import abused_master.abusedlib.utils.Config;
+import abused_master.abusedlib.utils.events.DropItemCallback;
 import abused_master.refinedmachinery.registry.*;
 import abused_master.refinedmachinery.utils.OreGenConfig;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
@@ -74,6 +75,13 @@ public class RefinedMachinery implements ModInitializer {
                 return ActionResult.SUCCESS;
             }else {
                 return ActionResult.PASS;
+            }
+        });
+        
+        DropItemCallback.EVENT.register((player, stack, b, b1) -> {
+            if(stack.getItem() == ModItems.ROBOTIC_WINGS) {
+                player.abilities.allowFlying = false;
+                player.abilities.flying = false;
             }
         });
     }
