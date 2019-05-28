@@ -174,7 +174,9 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
 
     public boolean canInsert() {
         for (int i : outputSlots) {
-            return inventory.get(i).isEmpty() || inventory.get(i).getAmount() < 64;
+            if(inventory.get(i).isEmpty() || inventory.get(i).getAmount() < 64) {
+                return true;
+            }
         }
 
         return false;
@@ -188,8 +190,8 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                     inventory.set(slot, stack);
                     markDirty();
                     return;
-                }else if(slotStack.getItem() == stack.getItem() && stack.getAmount() < 64) {
-                    inventory.get(slot).addAmount(1);
+                }else if(slotStack.isEqualIgnoreTags(stack) && slotStack.getAmount() + stack.getAmount() < 64) {
+                    inventory.set(slot, new ItemStack(stack.getItem(), stack.getAmount() + inventory.get(slot).getAmount()));
                     markDirty();
                     return;
                 }
