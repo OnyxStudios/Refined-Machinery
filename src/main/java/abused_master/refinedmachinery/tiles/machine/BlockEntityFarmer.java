@@ -10,6 +10,7 @@ import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -71,7 +72,6 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
             }
         }
 
-        extractItems();
         autoPlant();
     }
 
@@ -146,21 +146,6 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
     public void useOnBlock(BlockPos plantingPos, Item seedsItem) {
         if(seedsItem instanceof AliasedBlockItem && ((AliasedBlockItem) seedsItem).getBlock() instanceof CropBlock) {
             world.setBlockState(plantingPos, ((AliasedBlockItem) seedsItem).getBlock().getDefaultState(), 11);
-        }
-    }
-
-    public void extractItems() {
-        for (Direction direction : Direction.values()) {
-            BlockPos offsetPosition = new BlockPos(pos).offset(direction);
-            BlockEntity entity = world.getBlockEntity(offsetPosition);
-            if (entity != null && entity instanceof Inventory) {
-                Inventory nearbyInv = (Inventory) entity;
-                for (int slot : outputSlots) {
-                    if(!inventory.get(slot).isEmpty()) {
-                        InventoryHelper.insertItemIfPossible(nearbyInv, inventory.get(slot), false);
-                    }
-                }
-            }
         }
     }
 
