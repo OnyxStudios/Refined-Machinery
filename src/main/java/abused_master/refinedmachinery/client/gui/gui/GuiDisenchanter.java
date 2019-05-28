@@ -39,8 +39,8 @@ public class GuiDisenchanter extends AbstractContainerScreen {
             this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getCapacity() + " CE", var1, var2);
         }
 
-        if (this.isPointWithinBounds(160, 9, 8, 64, var1, var2)) {
-            this.renderTooltip(tile.workTime + " / " + tile.requiredTime + " Progress", var1, var2);
+        if(this.isPointWithinBounds(10, 10, 14, 42, var1, var2)) {
+            this.renderTooltip(tile.storage.getEnergyStored() + " / " + tile.storage.getCapacity() + " CE", var1, var2);
         }
     }
 
@@ -69,10 +69,10 @@ public class GuiDisenchanter extends AbstractContainerScreen {
     }
 
     public void renderEnergy() {
-        if (this.tile.storage.getEnergyStored() > 0) {
-            int k = 62;
+        if(this.tile.storage.getEnergyStored() > 0) {
+            int k = 40;
             int i = tile.storage.getEnergyStored() * k / tile.storage.getCapacity();
-            this.blit(guiLeft + 10, guiTop + 71 - i, 178, 66 - i, 18, i);
+            this.blit(guiLeft + 10, guiTop + 50 - i, 178, 44 - i, 12, i);
         }
     }
 }

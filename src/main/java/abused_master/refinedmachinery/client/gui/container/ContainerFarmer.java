@@ -23,7 +23,7 @@ public class ContainerFarmer extends Container {
         this.world = playerInventory.player.world;
 
         //Upgrade Slot
-        this.addSlot(new Slot(inventory, 0, 44, 9));
+        this.addSlot(new Slot(inventory, 0, 8, 61));
 
         //Input plant slots
         this.addSlot(new Slot(inventory, 1, 134, 9));
