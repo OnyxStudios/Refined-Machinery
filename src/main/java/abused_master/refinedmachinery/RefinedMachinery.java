@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -72,6 +73,7 @@ public class RefinedMachinery implements ModInitializer {
                     return ActionResult.PASS;
                 }
 
+                entity.damage(DamageSource.player(player), 0.5f);
                 return ActionResult.SUCCESS;
             }else {
                 return ActionResult.PASS;
