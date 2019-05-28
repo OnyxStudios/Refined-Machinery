@@ -16,7 +16,6 @@ public class QuarryRenderer extends BlockEntityRenderer<BlockEntityQuarry> {
     @Override
     public void render(BlockEntityQuarry tile, double x, double y, double z, float float_1, int int_1) {
         super.render(tile, x, y, z, float_1, int_1);
-        HudRender.renderHud(tile, x, y, z);
 
         if (tile.miningPos != null && tile.miningBlock != null) {
             GlStateManager.pushMatrix();

@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.blocks.machines;
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.items.ItemQuarryRecorder;
+import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.ModItems;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityQuarry;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
@@ -11,6 +12,7 @@ import nerdhub.cardinal.components.api.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.ChatFormat;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockRenderType;
@@ -43,53 +45,8 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable, Blo
 
     @Override
     public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity, Hand hand, BlockHitResult blockHitResult) {
-        BlockEntityQuarry quarry = (BlockEntityQuarry) world.getBlockEntity(blockPos);
-        ItemStack stack = playerEntity.getStackInHand(hand);
-
-        if (!(stack.getItem() instanceof ItemQuarryRecorder)) {
-            if (playerEntity.isSneaking() && stack.isEmpty() && quarry.hasQuarryRecorder) {
-                playerEntity.setStackInHand(hand, new ItemStack(ModItems.RECORDER));
-                quarry.setRunning(false);
-                quarry.setHasQuarryRecorder(false);
-                quarry.setCorners(null, null);
-                world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
-                return true;
-            }
-
-            if (!quarry.isRunning() && quarry.blockPositionsActive()) {
-                quarry.cacheMiningArea();
-                quarry.setRunning(true);
-                world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
-                if (!world.isClient)
-                    playerEntity.addChatMessage(new TextComponent("Set quarry to now running!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
-            } else if (!quarry.blockPositionsActive()) {
-                if(!world.isClient)
-                    playerEntity.addChatMessage(new TextComponent("Error, no mining positions are set!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
-            }
-        } else {
-            CompoundTag tag = stack.getTag();
-
-            if (tag == null) {
-                if (!world.isClient)
-                    playerEntity.addChatMessage(new TextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
-
-                return true;
-            }
-
-            if (!tag.containsKey("coordinates1") || !tag.containsKey("coordinates2")) {
-                if (!world.isClient)
-                    playerEntity.addChatMessage(new TextComponent("Missing coordinate points for recorder").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
-
-                return true;
-            }
-
-            quarry.setCorners(TagHelper.deserializeBlockPos(tag.getCompound("coordinates1")), TagHelper.deserializeBlockPos(tag.getCompound("coordinates2")));
-            quarry.hasQuarryRecorder = true;
-            playerEntity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
-            world.updateListeners(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
-
-            if(!world.isClient)
-                playerEntity.addChatMessage(new TextComponent("Successfully linked quarry to positions").setStyle(new Style().setColor(ChatFormat.DARK_RED)), true);
+        if (!world.isClient) {
+            ContainerProviderRegistry.INSTANCE.openContainer(ModBlockEntities.QUARRY_CONTAINER, playerEntity, buf -> buf.writeBlockPos(blockPos));
         }
 
         return true;
@@ -125,9 +82,7 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable, Blo
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
         if(state.getBlock() != state2.getBlock() && blockEntity instanceof BlockEntityQuarry) {
-            if(((BlockEntityQuarry) blockEntity).hasQuarryRecorder) {
-                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.RECORDER));
-            }
+            ItemScatterer.spawn(world, pos, (BlockEntityQuarry) blockEntity);
             world.updateHorizontalAdjacent(pos, this);
         }
 

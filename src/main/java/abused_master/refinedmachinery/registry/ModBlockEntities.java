@@ -49,6 +49,7 @@ public class ModBlockEntities {
     public static final Identifier VACUUM_CONTAINER = new Identifier(RefinedMachinery.MODID, "vacuum_container");
     public static final Identifier COALGEN_CONTAINER = new Identifier(RefinedMachinery.MODID, "coalgen");
     public static final Identifier DISENCHANTER_CONTAINER = new Identifier(RefinedMachinery.MODID, "disenchanter");
+    public static final Identifier QUARRY_CONTAINER = new Identifier(RefinedMachinery.MODID, "quarry");
 
     public static void registerBlockEntities() {
         ENERGY_FURNACE = RegistryHelper.registerTile(new Identifier(RefinedMachinery.MODID, "energy_furnace"), BlockEntityEnergyFurnace.class, ModBlocks.ENERGY_FURNACE);
@@ -90,5 +91,6 @@ public class ModBlockEntities {
         ContainerProviderRegistry.INSTANCE.registerFactory(VACUUM_CONTAINER, (syncid, identifier, player, buf) -> new ContainerVacuum(syncid, player.inventory, (BlockEntityVacuum) player.world.getBlockEntity(buf.readBlockPos())));
         ContainerProviderRegistry.INSTANCE.registerFactory(COALGEN_CONTAINER, (syncid, identifier, player, buf) -> new ContainerCoalGen(syncid, player.inventory, (BlockEntityCoalGen) player.world.getBlockEntity(buf.readBlockPos())));
         ContainerProviderRegistry.INSTANCE.registerFactory(DISENCHANTER_CONTAINER, (syncid, identifier, player, buf) -> new ContainerDisenchanter(syncid, player.inventory, (BlockEntityDisenchanter) player.world.getBlockEntity(buf.readBlockPos())));
+        ContainerProviderRegistry.INSTANCE.registerFactory(QUARRY_CONTAINER, (syncid, identifier, player, buf) -> new ContainerQuarry(syncid, player.inventory, (BlockEntityQuarry) player.world.getBlockEntity(buf.readBlockPos())));
     }
 }

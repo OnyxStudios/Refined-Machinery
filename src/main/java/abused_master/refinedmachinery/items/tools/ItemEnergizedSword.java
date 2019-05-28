@@ -35,7 +35,7 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler,
         int energyUsage = (damageAmount == 0 ? (int) damagedEntity.getHealthMaximum() : damageAmount) * attackHeartCost;
         IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
-        if (storage.getEnergyStored() >= energyUsage) {
+        if (storage != null && storage.getEnergyStored() >= energyUsage) {
             storage.extractEnergy(energyUsage);
             ItemHelper.updateItemDurability(stack, storage);
             return true;

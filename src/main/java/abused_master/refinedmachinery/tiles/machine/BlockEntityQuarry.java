@@ -1,10 +1,10 @@
 package abused_master.refinedmachinery.tiles.machine;
 
-import abused_master.abusedlib.client.render.hud.IHudSupport;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.abusedlib.utils.InventoryHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.registry.ModItems;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
@@ -15,28 +15,31 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
-//TODO MAKE UPGRADES FOR QUARRY
-public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler, IHudSupport, ILinkerHandler {
+public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler, ILinkerHandler, SidedInventory {
 
     public EnergyStorage storage = new EnergyStorage(100000);
+    public DefaultedList<ItemStack> inventory = DefaultedList.create(2, ItemStack.EMPTY);
     public List<BlockPos> cachedAreaPos = new ArrayList<>();
     public BlockPos miningPos = null, firstCorner = null, secondCorner = null;
     public int energyUsagePerBlock = RefinedMachinery.config.getInt("quarryUsagePerBlock"), miningSpeed = 0;
     public BlockState miningBlock = null;
-    public boolean miningError = false, hasQuarryRecorder = false, running = false;
+    public boolean miningError = false, running = false;
 
     public boolean silkTouch = false;
     public int fortuneLevel = 0, speedMultiplier = 1;
@@ -49,6 +52,9 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
         this.storage.readEnergyFromTag(tag);
+        inventory = DefaultedList.create(2, ItemStack.EMPTY);
+        Inventories.fromTag(tag, this.inventory);
+
         if(tag.containsKey("cachedAreaPos")) {
             this.cachedAreaPos.clear();
             ListTag listTag = tag.getList("cachedAreaPos", NbtType.COMPOUND);
@@ -63,7 +69,6 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
         this.silkTouch = tag.getBoolean("silkTouch");
         this.fortuneLevel = tag.getInt("fortuneLevel");
         this.speedMultiplier = tag.getInt("speedMultiplier");
-        this.hasQuarryRecorder = tag.getBoolean("hasQuarryRecorder");
         if (tag.containsKey("firstCorner")) {
             this.firstCorner = TagHelper.deserializeBlockPos(tag.getCompound("firstCorner"));
         }
@@ -77,6 +82,8 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
         this.storage.writeEnergyToTag(tag);
+        Inventories.toTag(tag, this.inventory);
+
         if(!this.cachedAreaPos.isEmpty()) {
             ListTag listTag = new ListTag();
 
@@ -91,7 +98,6 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
         tag.putBoolean("silkTouch", this.silkTouch);
         tag.putInt("fortuneLevel", this.fortuneLevel);
         tag.putInt("speedMultiplier", this.speedMultiplier);
-        tag.putBoolean("hasQuarryRecorder", this.hasQuarryRecorder);
         if(firstCorner != null) {
             tag.put("firstCorner", TagHelper.serializeBlockPos(firstCorner));
         }
@@ -105,22 +111,28 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
 
     @Override
     public void tick() {
-        if(!miningError) {
-            if(canRun() && running && storage.getEnergyStored() >= energyUsagePerBlock) {
-                miningSpeed++;
-                if (miningSpeed >= (20 / speedMultiplier)) {
-                    Inventory inventory = InventoryHelper.getNearbyInventory(world, pos);
-                    this.mineBlocks(inventory);
+        if(!world.isReceivingRedstonePower(pos)) {
+            if (!miningError) {
+                if (canRun() && running && storage.getEnergyStored() >= energyUsagePerBlock) {
+                    miningSpeed++;
+                    if (miningSpeed >= (20 / speedMultiplier)) {
+                        Inventory inventory = InventoryHelper.getNearbyInventory(world, pos);
+                        this.mineBlocks(inventory);
+                    }
+                } else {
+                    this.setMiningError(true);
                 }
-            }else {
-                this.setMiningError(true);
+            } else {
+                this.checkMiningError();
             }
-        }else {
-            this.checkMiningError();
         }
     }
 
     public void checkMiningError() {
+        if(miningPos == null) {
+            miningPos = cachedAreaPos.isEmpty() ? null : cachedAreaPos.get(0);
+        }
+
         if(miningPos == null || world.getBlockState(miningPos) == null || !InventoryHelper.insertItemIfPossible(InventoryHelper.getNearbyInventory(world, pos), new ItemStack(world.getBlockState(miningPos).getBlock()), true) || storage.getEnergyStored() < energyUsagePerBlock) {
             return;
         }
@@ -149,29 +161,27 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
                 BlockState state = world.getBlockState(currentMiningPos);
                 miningBlock = state;
 
-                if (!world.isClient()) {
-                    List<ItemStack> drops = Block.getDroppedStacks(state, (ServerWorld) world, currentMiningPos, world.getBlockEntity(currentMiningPos));
-                    world.setBlockState(currentMiningPos, Blocks.AIR.getDefaultState());
+                List<ItemStack> drops = world.isClient ? new ArrayList<>() : Block.getDroppedStacks(state, (ServerWorld) world, currentMiningPos, world.getBlockEntity(currentMiningPos));
+                world.setBlockState(currentMiningPos, Blocks.AIR.getDefaultState());
 
-                    if (silkTouch) {
-                        if (!InventoryHelper.insertItemIfPossible(inventory, new ItemStack(state.getBlock()), false)) {
+                if (silkTouch) {
+                    if (!InventoryHelper.insertItemIfPossible(inventory, new ItemStack(state.getBlock()), false)) {
+                        setMiningError(true);
+                    }
+                } else {
+                    for (ItemStack itemStack : drops) {
+                        Random random = new Random();
+                        ItemStack stackWithFortune = new ItemStack(itemStack.getItem(), fortuneLevel == 0 ? 1 : random.nextInt(fortuneLevel * 2));
+
+                        if (!InventoryHelper.insertItemIfPossible(inventory, stackWithFortune, false)) {
                             setMiningError(true);
-                        }
-                    } else {
-                        for (ItemStack itemStack : drops) {
-                            Random random = new Random();
-                            ItemStack stackWithFortune = new ItemStack(itemStack.getItem(), fortuneLevel == 0 ? 1 : random.nextInt(fortuneLevel * 2));
-
-                            if (!InventoryHelper.insertItemIfPossible(inventory, stackWithFortune, false)) {
-                                setMiningError(true);
-                            }
                         }
                     }
                 }
 
                 storage.extractEnergy(energyUsagePerBlock);
                 cachedAreaPos.remove(currentMiningPos);
-            }else if(currentMiningPos == null && cachedAreaPos.isEmpty()){
+            } else if (currentMiningPos == null && cachedAreaPos.isEmpty()) {
                 this.setRunning(false);
             }
         }
@@ -241,40 +251,113 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
         this.miningError = miningError;
     }
 
-    public void setHasQuarryRecorder(boolean hasQuarryRecorder) {
-        this.hasQuarryRecorder = hasQuarryRecorder;
-    }
-
     public boolean isRunning() {
         return running;
     }
 
-    @Override
-    public Direction getBlockOrientation() {
-        return null;
+    public void stopAndUpdate() {
+        setRunning(false);
+        setCorners(null, null);
+        world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
     }
 
     @Override
-    public boolean isBlockAboveAir() {
-        return getWorld().isAir(pos.up());
+    public int[] getInvAvailableSlots(Direction direction) {
+        return new int[] {0, 1};
     }
 
     @Override
-    public BlockPos getBlockPos() {
-        return getPos();
+    public boolean canInsertInvStack(int i, ItemStack itemStack, @Nullable Direction direction) {
+        return true;
     }
 
     @Override
-    public List<String> getClientLog() {
-        List<String> toDisplay = new ArrayList<>();
-        if(miningPos == null) {
-            toDisplay.add("No mining coords set");
-        }else {
-            toDisplay.add("Mining at: x: " + miningPos.getX() + " y: " + miningPos.getY() + " z: " + miningPos.getZ());
+    public boolean canExtractInvStack(int i, ItemStack itemStack, Direction direction) {
+        return false;
+    }
+
+    @Override
+    public int getInvSize() {
+        return inventory.size();
+    }
+
+    @Override
+    public boolean isInvEmpty() {
+        Iterator var1 = this.inventory.iterator();
+
+        ItemStack itemStack_1;
+        do {
+            if (!var1.hasNext()) {
+                return true;
+            }
+
+            itemStack_1 = (ItemStack)var1.next();
+        } while(itemStack_1.isEmpty());
+
+        return false;
+    }
+
+    @Override
+    public void setInvStack(int i, ItemStack itemStack) {
+        inventory.set(i, itemStack);
+        if(i == 0 && itemStack.getItem() == ModItems.RECORDER) {
+            if(itemStack.isEmpty()) {
+                stopAndUpdate();
+            }else if(itemStack.getItem() == ModItems.RECORDER) {
+                CompoundTag tag = itemStack.getTag();
+
+                if (tag != null && tag.containsKey("coordinates1") && tag.containsKey("coordinates2")) {
+                    setCorners(TagHelper.deserializeBlockPos(tag.getCompound("coordinates1")), TagHelper.deserializeBlockPos(tag.getCompound("coordinates2")));
+                    cacheMiningArea();
+                }
+            }
         }
 
-        toDisplay.add("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE");
-        return toDisplay;
+        this.markDirty();
+        world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+    }
+
+    @Override
+    public ItemStack takeInvStack(int i, int i1) {
+        ItemStack stack = Inventories.splitStack(this.inventory, i, i1);
+        if(i == 0 && inventory.get(0).getItem() != ModItems.RECORDER) {
+            stopAndUpdate();
+        }
+
+        return stack;
+    }
+
+    @Override
+    public ItemStack getInvStack(int i) {
+        return inventory.get(i);
+    }
+
+    @Override
+    public ItemStack removeInvStack(int i) {
+        ItemStack stack = Inventories.removeStack(this.inventory, i);
+
+        if(i == 0 && inventory.get(0).getItem() != ModItems.RECORDER) {
+            stopAndUpdate();
+        }
+
+        return stack;
+    }
+
+    @Override
+    public boolean canPlayerUseInv(PlayerEntity playerEntity) {
+        if (this.world.getBlockEntity(this.pos) != this) {
+            return false;
+        } else {
+            return playerEntity.squaredDistanceTo((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+        }
+    }
+
+    @Override
+    public void clear() {
+        setRunning(false);
+        setCorners(null, null);
+        world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+        inventory.clear();
     }
 
     @Override
