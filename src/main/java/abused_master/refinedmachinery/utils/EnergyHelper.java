@@ -28,11 +28,14 @@ public class EnergyHelper {
                     if (energySent > 0) {
                         for (PlayerEntity playerEntity : world.getPlayers()) {
                             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                            buf.writeBlockPos(pos);
                             buf.writeBlockPos(offsetPos);
-                            buf.writeInt(componentProvider.getComponent(world, offsetPos, DefaultTypes.CARDINAL_ENERGY, null).getEnergyStored());
+                            buf.writeInt(sendAmount);
                             ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_UPDATE_CLIENT_ENERGY, buf));
                         }
                     }
+
+                    world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
                 }
             }
         }

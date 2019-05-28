@@ -67,20 +67,21 @@ public class ModPackets {
     @Environment(EnvType.CLIENT)
     public static void registerClientPackets() {
         ClientSidePacketRegistry.INSTANCE.register(PACKET_UPDATE_CLIENT_ENERGY, (context, buffer) -> {
-            BlockPos pos = buffer.readBlockPos();
+            BlockPos sendingPos = buffer.readBlockPos();
+            BlockPos offsetPos = buffer.readBlockPos();
             int energy = buffer.readInt();
 
             if(context.getPlayer() != null && context.getPlayer().world != null) {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
                 context.getTaskQueue().execute(() -> {
-                    BlockComponentProvider componentProvider = (BlockComponentProvider) world.getBlockState(pos).getBlock();
+                    BlockComponentProvider sendingComponentProvider = (BlockComponentProvider) world.getBlockState(sendingPos).getBlock();
+                    BlockComponentProvider componentProvider = (BlockComponentProvider) world.getBlockState(offsetPos).getBlock();
 
-                    if(componentProvider.hasComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null)) {
-                        componentProvider.getComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null).setEnergyStored(energy);
-                        world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+                    if(componentProvider.hasComponent(world, offsetPos, DefaultTypes.CARDINAL_ENERGY, null)) {
+                        sendingComponentProvider.getComponent(world, sendingPos, DefaultTypes.CARDINAL_ENERGY, null).sendEnergy(world, offsetPos, energy);
+                        world.updateListeners(offsetPos, world.getBlockState(offsetPos), world.getBlockState(offsetPos), 3);
                     }
-
                 });
             }
         });
