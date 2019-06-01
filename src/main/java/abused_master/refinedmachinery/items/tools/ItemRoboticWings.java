@@ -35,8 +35,10 @@ public class ItemRoboticWings extends ArmorItem implements IEnergyItemHandler, I
     public void onEntityTick(ItemStack stack, World world, Entity entity, int int_1, boolean boolean_1) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            if (player.isCreative() && !player.abilities.allowFlying) {
-                player.abilities.allowFlying = true;
+            if (player.isCreative()) {
+                if(!player.abilities.allowFlying)
+                    player.abilities.allowFlying = true;
+
                 return;
             }
 
@@ -68,7 +70,7 @@ public class ItemRoboticWings extends ArmorItem implements IEnergyItemHandler, I
     public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
         IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
-        if(storage != null) {
+        if (storage != null) {
             list.add(new TextComponent("Energy: " + storage.getEnergyStored() + " / " + storage.getCapacity() + " CE").setStyle(new Style().setColor(ChatFormat.GOLD)));
         }
     }

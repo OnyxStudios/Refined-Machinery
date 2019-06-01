@@ -9,6 +9,7 @@ import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyItemHandler;
 import nerdhub.cardinalenergy.api.IEnergyItemStorage;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -49,7 +50,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
     public static int[] ranges = new int[] {1, 3, 5, 7, 9, 12};
 
     public ItemBlockExchanger() {
-        super("block_exchanger", new Settings().stackSize(1).itemGroup(RefinedMachinery.modItemGroup).durability(250000));
+        super("block_exchanger", new Settings().stackSize(1).itemGroup(RefinedMachinery.modItemGroup));
     }
 
     @Override
@@ -93,7 +94,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
     }
 
     public void exchangeBlocks(ItemStack stack, World world, PlayerEntity playerEntity, BlockPos pos, Direction direction) {
-        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+        IEnergyStorage storage = (IEnergyStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         int range = getRange(stack);
         Block exchangeBlock = getSavedBlock(stack);
@@ -207,7 +208,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
 
     @Override
     public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
-        IEnergyItemStorage storage = (IEnergyItemStorage) ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+        IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         list.add(new TextComponent("Mode: " + ranges[getRange(stack)] + "x" + ranges[getRange(stack)]).setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)));
         if(stack.hasTag() && stack.getTag().containsKey("block")) {

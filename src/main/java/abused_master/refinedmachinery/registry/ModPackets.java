@@ -127,9 +127,6 @@ public class ModPackets {
                     IEnergyStorage storage = ((BlockComponentProvider) block).getComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null);
                     IEnergyStorage energyItemStorage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
-                    if (stack.getAmount() > 0)
-                        energyItemStorage.setCapacity(stack.getAmount() * energyItemStorage.getCapacity());
-
                     storage.extractEnergy(energyItemStorage.receiveEnergy(50));
 
                     if (stack.hasDurability())
