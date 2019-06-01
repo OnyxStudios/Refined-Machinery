@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.3-SNAPSHOT'
+	id 'fabric-loom' version '0.2.4-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -15,9 +15,9 @@ minecraft {
 
 repositories {
 	jcenter()
-    maven { url = "https://jitpack.io/" }
+	maven { url = "https://maven.fabricmc.net/me/" }
+	maven { url = "https://maven.abusedmaster.xyz/" }
 	maven { url = "https://oss.sonatype.org/content/repositories/releases/" }
-	maven { url = "http://maven.abusedmaster.xyz/" }
 	maven { url = "https://minecraft.curseforge.com/api/maven" }
 }
 
@@ -64,7 +64,9 @@ artifacts {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			artifact jar
+			afterEvaluate {
+				artifact remapJar.output
+			}
 			artifact sourcesJar
 			pom {
 				name = "Refined-Machinery"
