@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityEnergyCharger;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
@@ -40,7 +41,7 @@ public class BlockEnergyCharger extends BlockWithEntityBase implements IWrenchab
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public BlockEnergyCharger() {
-        super("energy_charger", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("energy_charger", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
         this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH));
     }
 

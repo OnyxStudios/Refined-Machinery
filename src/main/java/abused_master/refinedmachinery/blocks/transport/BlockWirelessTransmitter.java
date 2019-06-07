@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.transport;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessTransmitter;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -31,7 +32,7 @@ import java.util.Set;
 public class BlockWirelessTransmitter extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockWirelessTransmitter() {
-        super("wireless_transmitter", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("wireless_transmitter", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
         this.setDefaultState(this.stateFactory.getDefaultState().with(HorizontalFacingBlock.FACING, Direction.NORTH).with(WallMountedBlock.FACE, WallMountLocation.WALL));
     }
 

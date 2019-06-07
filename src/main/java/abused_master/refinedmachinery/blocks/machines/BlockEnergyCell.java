@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityPhaseCell;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -25,7 +26,7 @@ import java.util.Set;
 public class BlockEnergyCell extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockEnergyCell() {
-        super("energy_cell", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("energy_cell", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
     }
 
     @Nullable

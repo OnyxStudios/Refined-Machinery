@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityFarmer;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
@@ -33,7 +34,7 @@ import java.util.Set;
 public class BlockFarmer extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockFarmer() {
-        super("farmer", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("farmer", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
     }
 
     @Override

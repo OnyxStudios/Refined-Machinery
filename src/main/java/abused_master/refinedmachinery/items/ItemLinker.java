@@ -1,7 +1,8 @@
 package abused_master.refinedmachinery.items;
 
+import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
-import abused_master.refinedmachinery.utils.ItemBase;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -23,7 +24,7 @@ import java.util.List;
 public class ItemLinker extends ItemBase {
 
     public ItemLinker() {
-        super("linker", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
+        super("linker", new Settings().group(RefinedMachineryClient.modItemGroup).maxCount(1));
     }
 
     @Override

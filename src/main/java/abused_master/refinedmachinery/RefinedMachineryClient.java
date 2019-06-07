@@ -3,16 +3,23 @@ package abused_master.refinedmachinery;
 import abused_master.refinedmachinery.client.gui.container.*;
 import abused_master.refinedmachinery.client.gui.gui.*;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.registry.ModBlocks;
 import abused_master.refinedmachinery.registry.ModPackets;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
 import abused_master.refinedmachinery.tiles.machine.*;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
 import static abused_master.refinedmachinery.registry.ModBlockEntities.*;
 
 public class RefinedMachineryClient implements ClientModInitializer {
+
+    public static ItemGroup modItemGroup = FabricItemGroupBuilder.build(new Identifier(RefinedMachinery.MODID, "refinedmachinery"), () -> new ItemStack(ModBlocks.ENERGY_FURNACE));
 
     @Override
     public void onInitializeClient() {

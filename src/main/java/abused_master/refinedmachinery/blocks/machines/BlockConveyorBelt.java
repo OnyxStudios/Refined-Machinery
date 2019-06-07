@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
 import net.minecraft.block.*;
@@ -27,7 +28,7 @@ public class BlockConveyorBelt extends BlockBase implements IWrenchable {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public BlockConveyorBelt() {
-        super("conveyor_belt", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("conveyor_belt", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
     }
 
     @Override

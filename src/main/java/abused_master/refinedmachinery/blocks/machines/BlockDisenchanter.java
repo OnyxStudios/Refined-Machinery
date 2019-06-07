@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityDisenchanter;
 import nerdhub.cardinal.components.api.BlockComponentProvider;
@@ -27,7 +28,7 @@ import java.util.Set;
 public class BlockDisenchanter extends BlockWithEntityBase implements BlockComponentProvider {
 
     public BlockDisenchanter() {
-        super("disenchanter", Material.STONE, 1.6f, RefinedMachinery.modItemGroup);
+        super("disenchanter", Material.STONE, 1.6f, RefinedMachineryClient.modItemGroup);
     }
 
     @Override

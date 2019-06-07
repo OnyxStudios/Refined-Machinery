@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.transport;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessController;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -30,7 +31,7 @@ public class BlockWirelessController extends BlockWithEntityBase implements IWre
     public static final EnumProperty<ControllerState> STATE = EnumProperty.of("state", ControllerState.class);
 
     public BlockWirelessController() {
-        super("wireless_controller", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("wireless_controller", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
         this.setDefaultState(this.getStateFactory().getDefaultState().with(STATE, ControllerState.idle));
     }
 

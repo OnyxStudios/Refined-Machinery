@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.transport;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityEnergyCable;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -41,7 +42,7 @@ public class BlockEnergyCable extends BlockWithEntityBase implements IWrenchable
     };
 
     public BlockEnergyCable() {
-        super("energy_cable", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("energy_cable", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
         this.setDefaultState(this.getStateFactory().getDefaultState().with(PROPS[6], true));
     }
 

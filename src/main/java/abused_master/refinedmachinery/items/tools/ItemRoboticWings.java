@@ -1,6 +1,7 @@
 package abused_master.refinedmachinery.items.tools;
 
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import nerdhub.cardinal.components.api.ItemComponentProvider;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
@@ -29,7 +30,7 @@ public class ItemRoboticWings extends ArmorItem implements IEnergyItemHandler, I
     public int usePerTick = 25;
 
     public ItemRoboticWings() {
-        super(CustomArmorMaterials.ROBOTIC_WINGS_MATERIAL, EquipmentSlot.CHEST, new Settings().maxCount(1).group(RefinedMachinery.modItemGroup));
+        super(CustomArmorMaterials.ROBOTIC_WINGS_MATERIAL, EquipmentSlot.CHEST, new Settings().maxCount(1).group(RefinedMachineryClient.modItemGroup));
     }
 
     @Override

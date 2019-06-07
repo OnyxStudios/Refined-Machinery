@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.generators;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
@@ -40,7 +41,7 @@ public class BlockCoalGen extends BlockWithEntityBase implements IWrenchable, Bl
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public BlockCoalGen() {
-        super("coalgen", Material.STONE, 1.5f, RefinedMachinery.modItemGroup);
+        super("coalgen", Material.STONE, 1.5f, RefinedMachineryClient.modItemGroup);
         this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH));
     }
 

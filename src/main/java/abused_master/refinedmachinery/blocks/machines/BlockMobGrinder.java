@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityMobGrinder;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -36,7 +37,7 @@ public class BlockMobGrinder extends BlockWithEntityBase implements IWrenchable,
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public BlockMobGrinder() {
-        super("mob_grinder", RefinedMachinery.modItemGroup, FabricBlockSettings.of(Material.STONE).strength(1.0f, 100.0f).build());
+        super("mob_grinder", RefinedMachineryClient.modItemGroup, FabricBlockSettings.of(Material.STONE).strength(1.0f, 100.0f).build());
         this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH));
     }
 

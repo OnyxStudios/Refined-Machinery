@@ -1,7 +1,8 @@
 package abused_master.refinedmachinery.items;
 
+import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
-import abused_master.refinedmachinery.utils.ItemBase;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ItemQuarryRecorder extends ItemBase {
 
     public ItemQuarryRecorder() {
-        super("quarry_recorder", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
+        super("quarry_recorder", new Settings().group(RefinedMachineryClient.modItemGroup).maxCount(1));
     }
 
     @Override

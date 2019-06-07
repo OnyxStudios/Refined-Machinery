@@ -1,6 +1,7 @@
 package abused_master.refinedmachinery.items.tools;
 
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import nerdhub.cardinal.components.api.ItemComponentProvider;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
@@ -26,7 +27,7 @@ public class ItemEnergizedSword extends SwordItem implements IEnergyItemHandler,
     public int attackHeartCost = 50;
 
     public ItemEnergizedSword() {
-        super(CustomToolMaterials.ENERGIZED_SWORD, 12, 0, new Settings().maxCount(1).group(RefinedMachinery.modItemGroup).maxDamage(25000));
+        super(CustomToolMaterials.ENERGIZED_SWORD, 12, 0, new Settings().maxCount(1).group(RefinedMachineryClient.modItemGroup).maxDamage(25000));
     }
 
     @Override

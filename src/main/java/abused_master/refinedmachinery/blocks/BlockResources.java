@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks;
 
 import abused_master.abusedlib.blocks.BlockBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.utils.OreGenConfig;
 import abused_master.refinedmachinery.utils.OreGenEntry;
 import net.minecraft.block.Material;
@@ -9,7 +10,7 @@ import net.minecraft.block.Material;
 public class BlockResources extends BlockBase {
 
     public BlockResources(String name, float hardness) {
-        super(name, Material.STONE, hardness, RefinedMachinery.modItemGroup);
+        super(name, Material.STONE, hardness, RefinedMachineryClient.modItemGroup);
     }
 
     public enum EnumResourceOres {

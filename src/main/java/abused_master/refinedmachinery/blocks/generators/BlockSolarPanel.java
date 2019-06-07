@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.generators;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.generator.BlockEntitySolarPanel;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -33,7 +34,7 @@ public class BlockSolarPanel extends BlockWithEntityBase implements IWrenchable,
     public EnumSolarPanelTypes solarPanelType;
 
     public BlockSolarPanel(EnumSolarPanelTypes type, String name) {
-        super(name, Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super(name, Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
         this.solarPanelType = type;
     }
 

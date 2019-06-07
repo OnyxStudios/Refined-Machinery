@@ -27,7 +27,6 @@ public class RefinedMachinery implements ModInitializer {
 
     public static final String RESOURCES_TAG = "c";
     public static String MODID = "refinedmachinery";
-    public static ItemGroup modItemGroup = FabricItemGroupBuilder.build(new Identifier(MODID, "refinedmachinery"), () -> new ItemStack(ModBlocks.ENERGY_FURNACE));
 
     public static Config config;
     public static File rmfolder = new File(FabricLoader.getInstance().getConfigDirectory().getPath() + "/refinedmachinery");

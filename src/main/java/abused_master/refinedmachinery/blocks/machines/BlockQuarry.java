@@ -2,6 +2,7 @@ package abused_master.refinedmachinery.blocks.machines;
 
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.items.ItemQuarryRecorder;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.ModItems;
@@ -40,7 +41,7 @@ import java.util.Set;
 public class BlockQuarry extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockQuarry() {
-        super("quarry", Material.STONE, 1.8f, RefinedMachinery.modItemGroup);
+        super("quarry", Material.STONE, 1.8f, RefinedMachineryClient.modItemGroup);
     }
 
     @Override

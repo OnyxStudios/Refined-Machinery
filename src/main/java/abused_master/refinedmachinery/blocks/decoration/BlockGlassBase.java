@@ -4,6 +4,7 @@ import abused_master.abusedlib.blocks.BlockBase;
 import abused_master.abusedlib.blocks.property.BlockFacings;
 import abused_master.abusedlib.blocks.property.PropertyBlockFacings;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
@@ -22,7 +23,7 @@ public class BlockGlassBase extends BlockBase {
     private boolean[] actualFacings;
 
     public BlockGlassBase(String name) {
-        super(name, RefinedMachinery.modItemGroup, FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).strength(1, 1).build());
+        super(name, RefinedMachineryClient.modItemGroup, FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).strength(1, 1).build());
         this.actualFacings = new boolean[Direction.values().length];
         this.setDefaultState(this.stateFactory.getDefaultState().with(PropertyBlockFacings.FACINGS, PropertyBlockFacings.None));
     }

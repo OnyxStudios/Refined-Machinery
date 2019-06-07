@@ -4,6 +4,7 @@ import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.abusedlib.fluid.FluidHelper;
 import abused_master.abusedlib.fluid.FluidStack;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.tanks.BlockEntityTank;
 import net.minecraft.ChatFormat;
 import net.minecraft.block.BlockRenderLayer;
@@ -37,7 +38,7 @@ public class BlockTank extends BlockWithEntityBase {
     public EnumTankTypes type;
 
     public BlockTank(EnumTankTypes type) {
-        super(type.getName(), Material.STONE, 1.5f, RefinedMachinery.modItemGroup);
+        super(type.getName(), Material.STONE, 1.5f, RefinedMachineryClient.modItemGroup);
         this.type = type;
     }
 
@@ -107,7 +108,7 @@ public class BlockTank extends BlockWithEntityBase {
         if(stack.hasTag() && stack.getTag().containsKey("TileData")) {
             FluidStack fluidStack = FluidStack.fluidFromTag(stack.getTag().getCompound("TileData").getCompound("FluidData"));
             if(fluidStack != null && fluidStack.getFluid() != null) {
-                list.add(new TextComponent("Holding: " + fluidStack.getAmount() + " MB of " + Registry.FLUID.getId(fluidStack.getFluid()).getPath()).setStyle(new Style().setColor(ChatFormat.GOLD)));
+                list.add(new TextComponent("Holding: " + fluidStack.getCount() + " MB of " + Registry.FLUID.getId(fluidStack.getFluid()).getPath()).setStyle(new Style().setColor(ChatFormat.GOLD)));
             }
         }
     }

@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.blocks.generators;
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.abusedlib.fluid.FluidHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityLavaGenerator;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -29,7 +30,7 @@ import java.util.Set;
 public class BlockLavaGenerator extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public BlockLavaGenerator() {
-        super("lava_generator", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);
+        super("lava_generator", Material.STONE, 1.0f, RefinedMachineryClient.modItemGroup);
     }
 
     @Override

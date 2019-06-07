@@ -1,8 +1,9 @@
 package abused_master.refinedmachinery.items;
 
+import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.registry.ModItems;
-import abused_master.refinedmachinery.utils.ItemBase;
 import com.mojang.blaze3d.platform.GlStateManager;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.ItemComponentProvider;
@@ -51,7 +52,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
     public static int[] ranges = new int[] {1, 3, 5, 7, 9, 12};
 
     public ItemBlockExchanger() {
-        super("block_exchanger", new Settings().maxCount(1).group(RefinedMachinery.modItemGroup));
+        super("block_exchanger", new Settings().maxCount(1).group(RefinedMachineryClient.modItemGroup));
     }
 
     @Override

@@ -1,8 +1,8 @@
 package abused_master.refinedmachinery.items;
-
-import abused_master.refinedmachinery.RefinedMachinery;
+;
+import abused_master.abusedlib.items.ItemBase;
+import abused_master.refinedmachinery.RefinedMachineryClient;
 import abused_master.refinedmachinery.registry.ModItems;
-import abused_master.refinedmachinery.utils.ItemBase;
 import nerdhub.cardinal.components.api.ItemComponentProvider;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -11,7 +11,6 @@ import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.minecraft.ChatFormat;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -29,7 +28,7 @@ import java.util.List;
 public class ItemSteelIngot extends ItemBase implements IEnergyItemHandler, ItemComponentProvider {
 
     public ItemSteelIngot() {
-        super("steel_ingot", new Settings().group(RefinedMachinery.modItemGroup));
+        super("steel_ingot", new Settings().group(RefinedMachineryClient.modItemGroup));
     }
 
     @Override
