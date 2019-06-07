@@ -1,9 +1,10 @@
 package abused_master.refinedmachinery.items;
 
-import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModItems;
+import abused_master.refinedmachinery.utils.ItemBase;
 import com.mojang.blaze3d.platform.GlStateManager;
+import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.ItemComponentProvider;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -50,7 +51,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
     public static int[] ranges = new int[] {1, 3, 5, 7, 9, 12};
 
     public ItemBlockExchanger() {
-        super("block_exchanger", new Settings().stackSize(1).itemGroup(RefinedMachinery.modItemGroup));
+        super("block_exchanger", new Settings().maxCount(1).group(RefinedMachinery.modItemGroup));
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
         World world = context.getWorld();
         PlayerEntity playerEntity = context.getPlayer();
         BlockPos pos = context.getBlockPos();
-        ItemStack stack = context.getItemStack();
+        ItemStack stack = context.getStack();
         BlockState state = world.getBlockState(pos);
 
         if(context.isPlayerSneaking()) {
@@ -87,7 +88,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
                 if(world.isClient) playerEntity.addChatMessage(new TextComponent("Cannot exchange the same blocks!").setStyle(new Style().setColor(ChatFormat.DARK_RED)), false);
                 return ActionResult.FAIL;
             }else {
-                this.exchangeBlocks(stack, world, playerEntity, pos, context.getFacing());
+                this.exchangeBlocks(stack, world, playerEntity, pos, context.getPlayerFacing());
                 return ActionResult.SUCCESS;
             }
         }
@@ -151,7 +152,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
     public int getSlotForBlock(PlayerEntity playerEntity, Block block) {
         for (int i = 0; i < playerEntity.inventory.getInvSize(); i++) {
             ItemStack stack = playerEntity.inventory.getInvStack(i);
-            if (!stack.isEmpty() && stack.getItem() == Item.getItemFromBlock(block)) {
+            if (!stack.isEmpty() && stack.getItem() == Item.fromBlock(block)) {
                 return i;
             }
         }
@@ -207,7 +208,7 @@ public class ItemBlockExchanger extends ItemBase implements IEnergyItemHandler, 
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
         IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         list.add(new TextComponent("Mode: " + ranges[getRange(stack)] + "x" + ranges[getRange(stack)]).setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)));

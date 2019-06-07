@@ -1,7 +1,7 @@
 package abused_master.refinedmachinery.items;
 
-import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.utils.ItemBase;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ItemQuarryRecorder extends ItemBase {
 
     public ItemQuarryRecorder() {
-        super("quarry_recorder", new Settings().itemGroup(RefinedMachinery.modItemGroup).stackSize(1));
+        super("quarry_recorder", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ItemQuarryRecorder extends ItemBase {
         BlockPos pos = usageContext.getBlockPos();
         World world = usageContext.getWorld();
         PlayerEntity player = usageContext.getPlayer();
-        ItemStack stack = usageContext.getItemStack();
+        ItemStack stack = usageContext.getStack();
 
         CompoundTag tag = stack.getTag();
         if (!player.isSneaking()) {
@@ -75,7 +75,7 @@ public class ItemQuarryRecorder extends ItemBase {
     }
 
     @Override
-    public void buildTooltip(ItemStack itemStack, World world, List<Component> list, TooltipContext tooltipOptions) {
+    public void appendTooltip(ItemStack itemStack, World world, List<Component> list, TooltipContext tooltipOptions) {
         CompoundTag tag = itemStack.getTag();
         if(tag != null) {
             if(tag.containsKey("coordinates1")) {

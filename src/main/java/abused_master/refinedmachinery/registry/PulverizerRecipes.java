@@ -87,9 +87,9 @@ public class PulverizerRecipes {
                 String input = entry.getKey() instanceof ItemStack ? Registry.ITEM.getId(((ItemStack) entry.getKey()).getItem()).toString() : "#" + ((Tag) entry.getKey()).getId().toString();
                 JsonObject entryObj = new JsonObject();
                 entryObj.addProperty("output", Registry.ITEM.getId(entry.getValue().getOutput().getItem()).toString());
-                entryObj.addProperty("outputAmount", entry.getValue().getOutput().getAmount());
+                entryObj.addProperty("outputAmount", entry.getValue().getOutput().getCount());
                 entryObj.addProperty("randomOutput", Registry.ITEM.getId(entry.getValue().getRandomDrop().getItem()).toString());
-                entryObj.addProperty("randomOutputAmount", entry.getValue().getRandomDrop().getAmount());
+                entryObj.addProperty("randomOutputAmount", entry.getValue().getRandomDrop().getCount());
                 entryObj.addProperty("randomOutputChance", entry.getValue().getPercentageDrop());
 
                 recipes.add(input, entryObj);
@@ -163,11 +163,11 @@ public class PulverizerRecipes {
         }
 
         public int getOutputAmount() {
-            return output.getAmount();
+            return output.getCount();
         }
 
         public int getRandomDropAmoumt() {
-            return randomDrop.getAmount();
+            return randomDrop.getCount();
         }
 
         public int getPercentageDrop() {

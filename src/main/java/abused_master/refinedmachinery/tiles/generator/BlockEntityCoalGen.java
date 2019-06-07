@@ -67,7 +67,7 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
             } else if (FurnaceBlockEntity.canUseAsFuel(inventory.get(0))) {
                 burnTotalTime = FurnaceBlockEntity.createFuelTimeMap().getOrDefault(inventory.get(0).getItem(), 0);
                 burnTime = burnTotalTime;
-                inventory.get(0).subtractAmount(1);
+                inventory.get(0).setCount(inventory.get(0).getCount() - 1);
                 this.markDirty();
             }
         }

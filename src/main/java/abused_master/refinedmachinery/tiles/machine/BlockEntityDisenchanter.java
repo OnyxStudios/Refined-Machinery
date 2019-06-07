@@ -110,7 +110,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
                 }
             }
 
-            inventory.get(1).subtractAmount(1);
+            inventory.get(1).setCount(inventory.get(1).getCount() - 1);
             this.storage.extractEnergy(costPerEnchant);
         }
 

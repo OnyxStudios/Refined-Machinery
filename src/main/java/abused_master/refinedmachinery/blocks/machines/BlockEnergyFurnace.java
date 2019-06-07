@@ -68,7 +68,7 @@ public class BlockEnergyFurnace extends BlockWithEntityBase implements IWrenchab
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerHorizontalFacing().getOpposite());
+        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerFacing().getOpposite());
     }
 
     @Override

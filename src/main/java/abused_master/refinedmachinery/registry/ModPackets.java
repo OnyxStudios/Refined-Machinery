@@ -129,7 +129,7 @@ public class ModPackets {
 
                     storage.extractEnergy(energyItemStorage.receiveEnergy(50));
 
-                    if (stack.hasDurability())
+                    if (stack.isDamageable())
                         ItemHelper.updateItemDurability(stack, energyItemStorage);
                 });
             }

@@ -1,7 +1,7 @@
 package abused_master.refinedmachinery.items;
 
-import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.utils.ItemBase;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -23,14 +23,14 @@ import java.util.List;
 public class ItemLinker extends ItemBase {
 
     public ItemLinker() {
-        super("linker", new Settings().itemGroup(RefinedMachinery.modItemGroup).stackSize(1));
+        super("linker", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext usageContext) {
         World world = usageContext.getWorld();
         PlayerEntity player = usageContext.getPlayer();
-        ItemStack stack = usageContext.getItemStack();
+        ItemStack stack = usageContext.getStack();
 
         CompoundTag tag = stack.getTag();
         if (player.isSneaking()) {
@@ -69,7 +69,7 @@ public class ItemLinker extends ItemBase {
     }
 
     @Override
-    public void buildTooltip(ItemStack itemStack, World world, List<Component> list, TooltipContext tooltipOptions) {
+    public void appendTooltip(ItemStack itemStack, World world, List<Component> list, TooltipContext tooltipOptions) {
         CompoundTag tag = itemStack.getTag();
         if(tag != null) {
             if(tag.containsKey("collectorPos")) {

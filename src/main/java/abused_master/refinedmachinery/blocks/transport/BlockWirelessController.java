@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class BlockWirelessController extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
-    public static final EnumProperty<ControllerState> STATE = EnumProperty.create("state", ControllerState.class);
+    public static final EnumProperty<ControllerState> STATE = EnumProperty.of("state", ControllerState.class);
 
     public BlockWirelessController() {
         super("wireless_controller", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);

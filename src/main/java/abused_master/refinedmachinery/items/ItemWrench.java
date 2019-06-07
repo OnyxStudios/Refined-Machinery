@@ -1,7 +1,7 @@
 package abused_master.refinedmachinery.items;
 
-import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
+import abused_master.refinedmachinery.utils.ItemBase;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemUsageContext;
@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class ItemWrench extends ItemBase {
 
     public ItemWrench() {
-        super("wrench", new Settings().itemGroup(RefinedMachinery.modItemGroup).stackSize(1));
+        super("wrench", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
     }
 
     @Override

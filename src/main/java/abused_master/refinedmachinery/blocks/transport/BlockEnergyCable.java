@@ -31,13 +31,13 @@ import java.util.Set;
 public class BlockEnergyCable extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
     public static final BooleanProperty[] PROPS = new BooleanProperty[] {
-            BooleanProperty.create("down"),
-            BooleanProperty.create("up"),
-            BooleanProperty.create("north"),
-            BooleanProperty.create("south"),
-            BooleanProperty.create("west"),
-            BooleanProperty.create("east"),
-            BooleanProperty.create("none")
+            BooleanProperty.of("down"),
+            BooleanProperty.of("up"),
+            BooleanProperty.of("north"),
+            BooleanProperty.of("south"),
+            BooleanProperty.of("west"),
+            BooleanProperty.of("east"),
+            BooleanProperty.of("none")
     };
 
     public BlockEnergyCable() {

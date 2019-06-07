@@ -5,7 +5,9 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.items.*;
 import abused_master.refinedmachinery.items.tools.ItemEnergizedSword;
 import abused_master.refinedmachinery.items.tools.ItemRoboticWings;
+import abused_master.refinedmachinery.utils.ItemBase;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class ModItems {
 
@@ -18,11 +20,11 @@ public class ModItems {
     public static ItemBlockExchanger EXCHANGER = new ItemBlockExchanger();
 
     public static void registerItems() {
-        RegistryHelper.registerItem(RefinedMachinery.MODID, RECORDER);
-        RegistryHelper.registerItem(RefinedMachinery.MODID, LINKER);
-        RegistryHelper.registerItem(RefinedMachinery.MODID, STEEL_INGOT);
-        RegistryHelper.registerItem(RefinedMachinery.MODID, WRENCH);
-        RegistryHelper.registerItem(RefinedMachinery.MODID, EXCHANGER);
+        registerItem(RefinedMachinery.MODID, RECORDER);
+        registerItem(RefinedMachinery.MODID, LINKER);
+        registerItem(RefinedMachinery.MODID, STEEL_INGOT);
+        registerItem(RefinedMachinery.MODID, WRENCH);
+        registerItem(RefinedMachinery.MODID, EXCHANGER);
 
         RegistryHelper.registerItem(new Identifier(RefinedMachinery.MODID, "energized_sword"), ENERGIZED_SWORD);
         RegistryHelper.registerItem(new Identifier(RefinedMachinery.MODID, "robotic_wings"), ROBOTIC_WINGS);
@@ -30,5 +32,9 @@ public class ModItems {
         for (EnumResourceItems item : EnumResourceItems.values()) {
             RegistryHelper.registerItem(RefinedMachinery.MODID, item.getItemIngot());
         }
+    }
+
+    private static void registerItem(String modid, ItemBase item) {
+        Registry.register(Registry.ITEM, item.getNameIdentifier(modid), item);
     }
 }

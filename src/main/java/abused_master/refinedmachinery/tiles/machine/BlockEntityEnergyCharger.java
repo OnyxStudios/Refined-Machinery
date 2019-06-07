@@ -78,12 +78,12 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
                 if (itemStorage.getEnergyStored() < itemStorage.getCapacity()) {
                     storage.extractEnergy(itemStorage.receiveEnergy(chargePerTick));
                     property.set(0, itemStorage.getEnergyStored());
-                    if (stack.hasDurability()) ItemHelper.updateItemDurability(stack, itemStorage);
+                    if (stack.isDamageable()) ItemHelper.updateItemDurability(stack, itemStorage);
 
                 } else if (inventory.get(1).isEmpty()) {
                     inventory.set(0, ItemStack.EMPTY);
                     if (stack.getItem() == ModItems.STEEL_INGOT) {
-                        inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot(), stack.getAmount()));
+                        inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot(), stack.getCount()));
                     } else {
                         inventory.set(1, stack);
                     }

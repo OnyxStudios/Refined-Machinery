@@ -121,7 +121,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                 }
 
                 if(plant(blockPos, inventory.get(i))) {
-                    inventory.get(i).subtractAmount(1);
+                    inventory.get(i).setCount(inventory.get(i).getCount() - 1);
                 }
             }
         }
@@ -159,7 +159,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
 
     public boolean canInsert() {
         for (int i : outputSlots) {
-            if(inventory.get(i).isEmpty() || inventory.get(i).getAmount() < 64) {
+            if(inventory.get(i).isEmpty() || inventory.get(i).getCount() < 64) {
                 return true;
             }
         }
@@ -175,8 +175,8 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                     inventory.set(slot, stack);
                     markDirty();
                     return;
-                }else if(slotStack.isEqualIgnoreTags(stack) && slotStack.getAmount() + stack.getAmount() < 64) {
-                    inventory.set(slot, new ItemStack(stack.getItem(), stack.getAmount() + inventory.get(slot).getAmount()));
+                }else if(slotStack.isItemEqualIgnoreDamage(stack) && slotStack.getCount() + stack.getCount() < 64) {
+                    inventory.set(slot, new ItemStack(stack.getItem(), stack.getCount() + inventory.get(slot).getCount()));
                     markDirty();
                     return;
                 }
@@ -188,8 +188,8 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                     inventory.set(slot, stack);
                     markDirty();
                     return;
-                }else if(slotStack.getItem() == stack.getItem() && slotStack.getAmount() < 64) {
-                    inventory.get(slot).addAmount(1);
+                }else if(slotStack.getItem() == stack.getItem() && slotStack.getCount() < 64) {
+                    inventory.get(slot).setCount(inventory.get(slot).getCount() + 1);
                     markDirty();
                     return;
                 }

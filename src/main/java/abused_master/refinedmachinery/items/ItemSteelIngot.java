@@ -1,8 +1,8 @@
 package abused_master.refinedmachinery.items;
 
-import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModItems;
+import abused_master.refinedmachinery.utils.ItemBase;
 import nerdhub.cardinal.components.api.ItemComponentProvider;
 import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -12,6 +12,7 @@ import nerdhub.cardinalenergy.impl.ItemEnergyStorage;
 import net.minecraft.ChatFormat;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.chat.Component;
@@ -28,7 +29,7 @@ import java.util.List;
 public class ItemSteelIngot extends ItemBase implements IEnergyItemHandler, ItemComponentProvider {
 
     public ItemSteelIngot() {
-        super("steel_ingot", new Settings().itemGroup(RefinedMachinery.modItemGroup));
+        super("steel_ingot", new Settings().group(RefinedMachinery.modItemGroup));
     }
 
     @Override
@@ -45,19 +46,18 @@ public class ItemSteelIngot extends ItemBase implements IEnergyItemHandler, Item
         return new TypedActionResult<>(ActionResult.SUCCESS, playerEntity.getMainHandStack());
     }
 
-    @Override
-    public void onEntityTick(ItemStack stack, World world, Entity entity, int int_1, boolean boolean_1) {
+    public void usageTick(World world, LivingEntity entity, ItemStack stack, int int_1) {
         IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         if(storage != null) {
-            if (stack.getAmount() > 1 && storage.getEnergyStored() > 0 && storage.getCapacity() < (stack.getAmount() * 500000)) {
-                storage.setCapacity(stack.getAmount() * 500000);
+            if (stack.getCount() > 1 && storage.getEnergyStored() > 0 && storage.getCapacity() < (stack.getCount() * 500000)) {
+                storage.setCapacity(stack.getCount() * 500000);
             }
         }
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext context) {
         IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         if(storage != null) {

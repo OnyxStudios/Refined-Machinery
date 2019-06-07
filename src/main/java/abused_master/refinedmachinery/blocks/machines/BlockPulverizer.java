@@ -68,7 +68,7 @@ public class BlockPulverizer extends BlockWithEntityBase implements IWrenchable,
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerHorizontalFacing().getOpposite());
+        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerFacing().getOpposite());
     }
 
     @Override

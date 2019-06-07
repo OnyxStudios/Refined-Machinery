@@ -12,6 +12,7 @@ import net.minecraft.ChatFormat;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
@@ -28,11 +29,11 @@ public class ItemRoboticWings extends ArmorItem implements IEnergyItemHandler, I
     public int usePerTick = 25;
 
     public ItemRoboticWings() {
-        super(CustomArmorMaterials.ROBOTIC_WINGS_MATERIAL, EquipmentSlot.CHEST, new Settings().stackSize(1).itemGroup(RefinedMachinery.modItemGroup));
+        super(CustomArmorMaterials.ROBOTIC_WINGS_MATERIAL, EquipmentSlot.CHEST, new Settings().maxCount(1).group(RefinedMachinery.modItemGroup));
     }
 
     @Override
-    public void onEntityTick(ItemStack stack, World world, Entity entity, int int_1, boolean boolean_1) {
+    public void usageTick(World world, LivingEntity entity, ItemStack stack, int int_1) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
             if (player.isCreative()) {
@@ -67,7 +68,7 @@ public class ItemRoboticWings extends ArmorItem implements IEnergyItemHandler, I
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Component> list, TooltipContext tooltipOptions) {
         IEnergyStorage storage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
 
         if (storage != null) {

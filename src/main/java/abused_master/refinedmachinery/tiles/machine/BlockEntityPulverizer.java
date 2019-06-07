@@ -71,11 +71,11 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
         if(inventory.get(0).isEmpty() || recipe == null || recipe.getOutput().isEmpty() || storage.getEnergyStored() < getEnergyUsage()) {
             return false;
         }else if(!inventory.get(1).isEmpty()) {
-            if(recipe.getOutput().getItem() != inventory.get(1).getItem() || (inventory.get(1).getAmount() + recipe.getOutputAmount()) > 64) {
+            if(recipe.getOutput().getItem() != inventory.get(1).getItem() || (inventory.get(1).getCount() + recipe.getOutputAmount()) > 64) {
                 return false;
             }
         }else if(!inventory.get(2).isEmpty() && !recipe.getOutput().isEmpty()) {
-            if(recipe.getRandomDrop().getItem() != inventory.get(2).getItem() || (inventory.get(2).getAmount() + recipe.getRandomDropAmoumt()) > 64) {
+            if(recipe.getRandomDrop().getItem() != inventory.get(2).getItem() || (inventory.get(2).getCount() + recipe.getRandomDropAmoumt()) > 64) {
                 return false;
             }
         }
@@ -89,7 +89,7 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
             if (inventory.get(1).isEmpty()) {
                 inventory.set(1, new ItemStack(recipe.getOutput().getItem(), recipe.getOutputAmount()));
             } else {
-                inventory.get(1).addAmount(recipe.getOutputAmount());
+                inventory.get(1).setCount(inventory.get(1).getCount() + recipe.getOutputAmount());
             }
 
             if (!recipe.getRandomDrop().isEmpty()) {
@@ -98,12 +98,12 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
                     if (inventory.get(2).isEmpty()) {
                         inventory.set(2, new ItemStack(recipe.getRandomDrop().getItem(), recipe.getRandomDropAmoumt()));
                     } else {
-                        inventory.get(2).addAmount(recipe.getRandomDropAmoumt());
+                        inventory.get(2).setCount(inventory.get(2).getCount() + recipe.getRandomDropAmoumt());
                     }
                 }
             }
 
-            inventory.get(0).subtractAmount(1);
+            inventory.get(0).setCount(inventory.get(0).getCount() - 1);
         }
 
         storage.extractEnergy(getEnergyUsage());

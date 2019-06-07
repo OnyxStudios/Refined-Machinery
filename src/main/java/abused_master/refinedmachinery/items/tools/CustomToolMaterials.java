@@ -9,15 +9,15 @@ public enum CustomToolMaterials implements ToolMaterial {
 
     private int miningLevel;
     private int durability;
-    private float blockBreakSpeed;
+    private float miningSpeed;
     private float attackDamage;
     private int enchantability;
     private Ingredient repairIngredient;
 
-    CustomToolMaterials(int miningLevel, int durability, float blockBreakSpeed, float attackDamage, int enchantability, Ingredient repairIngredient) {
+    CustomToolMaterials(int miningLevel, int durability, float miningSpeed, float attackDamage, int enchantability, Ingredient repairIngredient) {
         this.miningLevel = miningLevel;
         this.durability = durability;
-        this.blockBreakSpeed = blockBreakSpeed;
+        this.miningSpeed = miningSpeed;
         this.attackDamage = attackDamage;
         this.enchantability = enchantability;
         this.repairIngredient = repairIngredient;
@@ -29,8 +29,8 @@ public enum CustomToolMaterials implements ToolMaterial {
     }
 
     @Override
-    public float getBlockBreakingSpeed() {
-        return this.blockBreakSpeed;
+    public float getMiningSpeed() {
+        return this.miningSpeed;
     }
 
     @Override

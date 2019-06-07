@@ -78,7 +78,7 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
 
     public boolean canRun() {
         ItemStack output = getOutputStack();
-        if(inventory.get(0).isEmpty() || output.isEmpty() || inventory.get(1).getAmount() > 64 || storage.getEnergyStored() < getEnergyUsage()) {
+        if(inventory.get(0).isEmpty() || output.isEmpty() || inventory.get(1).getCount() > 64 || storage.getEnergyStored() < getEnergyUsage()) {
             return false;
         }else if(!inventory.get(1).isEmpty()) {
             if (output.getItem() != inventory.get(1).getItem()) {
@@ -96,10 +96,10 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
                 if (inventory.get(1).isEmpty()) {
                     inventory.set(1, output);
                 } else {
-                    inventory.get(1).addAmount(1);
+                    inventory.get(1).setCount(inventory.get(1).getCount() + 1);
                 }
 
-                inventory.get(0).subtractAmount(1);
+                inventory.get(0).setCount(inventory.get(0).getCount() - 1);
             }
 
             storage.extractEnergy(getEnergyUsage());
