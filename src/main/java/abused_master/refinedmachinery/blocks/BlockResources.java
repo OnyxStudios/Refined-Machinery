@@ -6,6 +6,8 @@ import abused_master.refinedmachinery.utils.OreGenConfig;
 import abused_master.refinedmachinery.utils.OreGenEntry;
 import net.minecraft.block.Material;
 
+import java.util.Locale;
+
 public class BlockResources extends BlockBase {
 
     public BlockResources(String name, float hardness) {
@@ -34,7 +36,7 @@ public class BlockResources extends BlockBase {
         }
 
         public String getName() {
-            return this.toString().toLowerCase();
+            return this.toString().toLowerCase(Locale.ROOT);
         }
 
         public BlockResources getBlockOres() {
@@ -72,7 +74,7 @@ public class BlockResources extends BlockBase {
         }
 
         public String getName() {
-            return this.toString().toLowerCase();
+            return this.toString().toLowerCase(Locale.ROOT);
         }
 
         public BlockResources getBlockOres() {

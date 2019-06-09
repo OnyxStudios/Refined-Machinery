@@ -4,6 +4,8 @@ import abused_master.abusedlib.items.ItemBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import net.minecraft.item.ItemStack;
 
+import java.util.Locale;
+
 public enum EnumResourceItems {
     COPPER_INGOT,
     TIN_INGOT,
@@ -37,7 +39,7 @@ public enum EnumResourceItems {
     }
 
     public String getName() {
-        return this.toString().toLowerCase();
+        return this.toString().toLowerCase(Locale.ROOT);
     }
 
     public ItemBase getItemIngot() {

@@ -2,6 +2,8 @@ package abused_master.refinedmachinery.blocks.tanks;
 
 import abused_master.refinedmachinery.RefinedMachinery;
 
+import java.util.Locale;
+
 public enum EnumTankTypes {
     COPPER_TANK(RefinedMachinery.config.getInt("copperTankStorage")),
     SILVER_TANK(RefinedMachinery.config.getInt("silverTankStorage")),
@@ -16,7 +18,7 @@ public enum EnumTankTypes {
     }
 
     public String getName() {
-        return this.toString().toLowerCase();
+        return this.toString().toLowerCase(Locale.ROOT);
     }
 
     public BlockTank getTank() {

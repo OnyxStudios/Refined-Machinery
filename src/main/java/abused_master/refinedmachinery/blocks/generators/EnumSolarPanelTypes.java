@@ -2,6 +2,8 @@ package abused_master.refinedmachinery.blocks.generators;
 
 import abused_master.refinedmachinery.RefinedMachinery;
 
+import java.util.Locale;
+
 public enum EnumSolarPanelTypes {
     SOLAR_PANEL_MK1(RefinedMachinery.config.getInt("solarPanelMK1_Generation"), 10000),
     SOLAR_PANEL_MK2(RefinedMachinery.config.getInt("solarPanelMK2_Generation"), 100000),
@@ -17,7 +19,7 @@ public enum EnumSolarPanelTypes {
     }
 
     public String getName() {
-        return this.toString().toLowerCase();
+        return this.toString().toLowerCase(Locale.ROOT);
     }
 
     public BlockSolarPanel getBlockSolar() {
