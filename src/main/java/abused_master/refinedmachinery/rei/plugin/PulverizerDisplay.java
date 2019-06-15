@@ -22,7 +22,7 @@ public class PulverizerDisplay implements RecipeDisplay {
 
     @Override
     public Optional<PulverizerRecipes.PulverizerRecipe> getRecipe() {
-        return Optional.ofNullable(recipe);
+        return Optional.empty();
     }
 
     @Override
