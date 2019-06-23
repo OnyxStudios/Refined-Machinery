@@ -5,6 +5,7 @@ import abused_master.refinedmachinery.rei.RefinedMachineryPlugin;
 import me.shedaniel.rei.api.RecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.recipe.Recipe;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,8 +22,8 @@ public class PulverizerDisplay implements RecipeDisplay {
     }
 
     @Override
-    public Optional<PulverizerRecipes.PulverizerRecipe> getRecipe() {
-        return Optional.ofNullable(recipe);
+    public Optional<Recipe<?>> getRecipe() {
+        return Optional.empty();
     }
 
     @Override
