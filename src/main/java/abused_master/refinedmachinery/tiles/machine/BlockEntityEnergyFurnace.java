@@ -23,7 +23,7 @@ import java.util.Iterator;
 public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
 
     public EnergyStorage storage = new EnergyStorage(100000);
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(2, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
     private int upgradeTier = 1;
     private int smeltTime = 0;
     private int baseEnergyUsage = 400;
@@ -37,9 +37,9 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
         super.fromTag(nbt);
         this.upgradeTier = nbt.getInt("upgradeTier");
         this.smeltTime = nbt.getInt("smeltTime");
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
 
-        inventory = DefaultedList.create(2, ItemStack.EMPTY);
+        inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
         Inventories.fromTag(nbt, this.inventory);
     }
 
@@ -48,7 +48,7 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
         super.toTag(nbt);
         nbt.putInt("upgradeTier", upgradeTier);
         nbt.putInt("smeltTime", this.smeltTime);
-        this.storage.writeEnergyToTag(nbt);
+        this.storage.toTag(nbt);
         Inventories.toTag(nbt, this.inventory);
         return nbt;
     }
@@ -78,7 +78,7 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
 
     public boolean canRun() {
         ItemStack output = getOutputStack();
-        if(inventory.get(0).isEmpty() || output.isEmpty() || inventory.get(1).getAmount() > 64 || storage.getEnergyStored() < getEnergyUsage()) {
+        if(inventory.get(0).isEmpty() || output.isEmpty() || inventory.get(1).getCount() > 64 || storage.getEnergyStored() < getEnergyUsage()) {
             return false;
         }else if(!inventory.get(1).isEmpty()) {
             if (output.getItem() != inventory.get(1).getItem()) {
@@ -96,10 +96,10 @@ public class BlockEntityEnergyFurnace extends BlockEntityBase implements IEnergy
                 if (inventory.get(1).isEmpty()) {
                     inventory.set(1, output);
                 } else {
-                    inventory.get(1).addAmount(1);
+                    inventory.get(1).increment(1);
                 }
 
-                inventory.get(0).subtractAmount(1);
+                inventory.get(0).decrement(1);
             }
 
             storage.extractEnergy(getEnergyUsage());

@@ -5,7 +5,7 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.generator.BlockEntitySolarPanel;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -13,8 +13,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -42,7 +41,7 @@ public class BlockSolarPanel extends BlockWithEntityBase implements IWrenchable,
         BlockEntitySolarPanel panel = (BlockEntitySolarPanel) world.getBlockEntity(blockPos);
 
         if(!world.isClient) {
-            playerEntity.addChatMessage(new TextComponent("Energy: " + panel.storage.getEnergyStored() + " / " + panel.storage.getCapacity() + " CE"), true);
+            playerEntity.addChatMessage(new LiteralText("Energy: " + panel.storage.getEnergyStored() + " / " + panel.storage.getCapacity() + " CE"), true);
         }
 
         return true;

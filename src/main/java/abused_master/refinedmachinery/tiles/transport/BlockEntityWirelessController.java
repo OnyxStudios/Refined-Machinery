@@ -7,7 +7,7 @@ import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import io.netty.buffer.Unpooled;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
@@ -39,7 +39,7 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
     @Override
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
-        storage.readEnergyFromTag(nbt);
+        storage.fromTag(nbt);
 
         if(nbt.containsKey("tilePositions")) {
             tilePositions.clear();
@@ -53,7 +53,7 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
-        storage.writeEnergyToTag(nbt);
+        storage.toTag(nbt);
 
         if(tilePositions.size() > 0) {
             ListTag tags = new ListTag();
@@ -83,7 +83,7 @@ public class BlockEntityWirelessController extends BlockEntityBase implements IE
                 continue;
             }
 
-            EnergyHelper.sendEnergy(storage, world, blockPos, sendPerTick);
+            EnergyHelper.sendEnergy(getPos(), storage, world, blockPos, sendPerTick);
             this.updateEntity();
         }
     }

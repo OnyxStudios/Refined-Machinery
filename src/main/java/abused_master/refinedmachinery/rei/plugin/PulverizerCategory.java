@@ -1,6 +1,5 @@
 package abused_master.refinedmachinery.rei.plugin;
 
-import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlocks;
 import abused_master.refinedmachinery.rei.RefinedMachineryPlugin;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -62,7 +61,7 @@ public class PulverizerCategory implements RecipeCategory<PulverizerDisplay> {
                 int i = MathHelper.ceil((System.currentTimeMillis() / 250 % 24d) / 1f);
                 this.blit(startingPoint.x + 72, startingPoint.y + 19, 152, 0, i, 15);
 
-                int percent = recipeDisplaySupplier.get().getRecipe().get().getPercentageDrop();
+                int percent = recipeDisplaySupplier.get().getPercentDrop();
                 if(percent > 0)
                     font.draw(percent + "%", startingPoint.x + 134, startingPoint.y + 38, 4210752);
             }
@@ -71,7 +70,7 @@ public class PulverizerCategory implements RecipeCategory<PulverizerDisplay> {
         List<List<ItemStack>> input = recipeDisplaySupplier.get().getInput();
         widgets.add(new SlotWidget(startingPoint.x + 48, startingPoint.y + 19, input.get(0), false, true, true));
         widgets.add(new SlotWidget(startingPoint.x + 108, startingPoint.y + 19, recipeDisplaySupplier.get().getOutput(), false, true, true));
-        widgets.add(new SlotWidget(startingPoint.x + 133, startingPoint.y + 19, Collections.singletonList(recipeDisplaySupplier.get().getRecipe().get().getRandomDrop()), false, true, true));
+        widgets.add(new SlotWidget(startingPoint.x + 133, startingPoint.y + 19, Collections.singletonList(recipeDisplaySupplier.get().getRandomDrop()), false, true, true));
 
         return widgets;
     }

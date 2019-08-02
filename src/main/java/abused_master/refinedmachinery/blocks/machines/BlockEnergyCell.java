@@ -5,7 +5,7 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityPhaseCell;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;

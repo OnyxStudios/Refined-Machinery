@@ -9,7 +9,7 @@ import nerdhub.cardinalenergy.api.IEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -28,7 +28,7 @@ public class ItemHelper {
         tag.put("blockPos", TagHelper.serializeBlockPos(pos));
 
         if(world.isClient)
-            player.addChatMessage(new TextComponent("Saved block position!"), true);
+            player.addChatMessage(new LiteralText("Saved block position!"), true);
     }
 
     public static void linkCollectorPos(World world, BlockPos pos, PlayerEntity player, CompoundTag tag) {
@@ -39,7 +39,7 @@ public class ItemHelper {
         tag.put("collectorPos", TagHelper.serializeBlockPos(pos));
 
         if (world.isClient)
-            player.addChatMessage(new TextComponent("Saved collector position!"), true);
+            player.addChatMessage(new LiteralText("Saved collector position!"), true);
     }
 
     public static void handleControllerLink(World world, BlockPos pos, PlayerEntity player, CompoundTag tag) {
@@ -52,19 +52,19 @@ public class ItemHelper {
                 energyCollector.setCrystalPos(pos);
                 energyCollector.markDirty();
                 world.updateListeners(collectorPos, world.getBlockState(collectorPos), world.getBlockState(collectorPos), 3);
-                player.addChatMessage(new TextComponent("Linked collector position!"), true);
+                player.addChatMessage(new LiteralText("Linked collector position!"), true);
             } else {
-                player.addChatMessage(new TextComponent("Invalid collector position!"), true);
+                player.addChatMessage(new LiteralText("Invalid collector position!"), true);
             }
         } else if (tag.containsKey("blockPos")) {
             BlockPos blockPos = TagHelper.deserializeBlockPos(tag.getCompound("blockPos"));
             if (world.getBlockEntity(blockPos) != null && world.getBlockEntity(blockPos) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(blockPos)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY) && !controller.tilePositions.contains(blockPos)) {
                 controller.tilePositions.add(blockPos);
                 controller.markDirty();
-                player.addChatMessage(new TextComponent("Linked BlockEntity position!"), true);
+                player.addChatMessage(new LiteralText("Linked BlockEntity position!"), true);
             }
         } else {
-            player.addChatMessage(new TextComponent("No block position has been linked!"), true);
+            player.addChatMessage(new LiteralText("No block position has been linked!"), true);
         }
     }
 }

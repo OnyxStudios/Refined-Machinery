@@ -4,9 +4,9 @@ import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.refinedmachinery.items.EnumResourceItems;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.ModItems;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
-import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.api.IEnergyStorage;
@@ -26,18 +26,18 @@ import java.util.Iterator;
 public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
 
     public EnergyStorage storage = new EnergyStorage(50000);
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(2, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
     public int chargePerTick = 50;
     public PropertyDelegate property = new PropertyDelegate() {
         @Override
         public int get(int i) {
-            return i == 0 && ((StackComponentAccessor) (Object) inventory.get(0)).hasComponent(DefaultTypes.CARDINAL_ENERGY) ? ((StackComponentAccessor) (Object) inventory.get(0)).getComponent(DefaultTypes.CARDINAL_ENERGY).getEnergyStored() : 0;
+            return i == 0 && EnergyHelper.getEnergyStorage(inventory.get(0)) != null ? EnergyHelper.getEnergyStorage(inventory.get(0)).getEnergyStored() : 0;
         }
 
         @Override
         public void set(int i, int i1) {
-            if(i == 0 && ((StackComponentAccessor) (Object) inventory.get(0)).hasComponent(DefaultTypes.CARDINAL_ENERGY)) {
-                ((StackComponentAccessor) (Object) inventory.get(0)).getComponent(DefaultTypes.CARDINAL_ENERGY).setEnergyStored(i1);
+            if(i == 0 && EnergyHelper.getEnergyStorage(inventory.get(0)) != null) {
+                EnergyHelper.getEnergyStorage(inventory.get(0)).setEnergyStored(i1);
             }
         }
 
@@ -54,16 +54,16 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
     @Override
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
 
-        inventory = DefaultedList.create(2, ItemStack.EMPTY);
+        inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
         Inventories.fromTag(nbt, this.inventory);
     }
 
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
-        this.storage.writeEnergyToTag(nbt);
+        this.storage.toTag(nbt);
         Inventories.toTag(nbt, this.inventory);
         return nbt;
     }
@@ -72,18 +72,19 @@ public class BlockEntityEnergyCharger extends BlockEntityBase implements IEnergy
     public void tick() {
         if(!world.isClient) {
             ItemStack stack = inventory.get(0);
-            if (!stack.isEmpty() && ((StackComponentAccessor) (Object) stack).hasComponent(DefaultTypes.CARDINAL_ENERGY) && storage.canExtract(chargePerTick)) {
-                IEnergyStorage itemStorage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+            IEnergyStorage itemStorage = EnergyHelper.getEnergyStorage(stack);
+
+            if (!stack.isEmpty() && itemStorage != null && storage.canExtract(chargePerTick)) {
 
                 if (itemStorage.getEnergyStored() < itemStorage.getCapacity()) {
                     storage.extractEnergy(itemStorage.receiveEnergy(chargePerTick));
                     property.set(0, itemStorage.getEnergyStored());
-                    if (stack.hasDurability()) ItemHelper.updateItemDurability(stack, itemStorage);
+                    if (stack.isDamaged()) ItemHelper.updateItemDurability(stack, itemStorage);
 
                 } else if (inventory.get(1).isEmpty()) {
                     inventory.set(0, ItemStack.EMPTY);
                     if (stack.getItem() == ModItems.STEEL_INGOT) {
-                        inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot(), stack.getAmount()));
+                        inventory.set(1, new ItemStack(EnumResourceItems.ENERGIZED_STEEL_INGOT.getItemIngot(), stack.getCount()));
                     } else {
                         inventory.set(1, stack);
                     }

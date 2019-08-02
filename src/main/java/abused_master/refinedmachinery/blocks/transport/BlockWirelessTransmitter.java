@@ -5,7 +5,7 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessTransmitter;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -36,11 +36,6 @@ public class BlockWirelessTransmitter extends BlockWithEntityBase implements IWr
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, ViewableWorld viewableWorld, BlockPos pos) {
-        return WallMountedBlock.canPlaceAt(viewableWorld, pos, getDirection(state).getOpposite());
-    }
-
-    @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
@@ -52,14 +47,14 @@ public class BlockWirelessTransmitter extends BlockWithEntityBase implements IWr
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext context) {
-        Direction[] directions = context.getPlacementFacings();
+        Direction[] directions = context.getPlacementDirections();
         int facings = directions.length;
 
-        for(int i = 0; i < facings; ++i) {
+        for (int i = 0; i < facings; ++i) {
             Direction direction = directions[i];
             BlockState state;
             if (direction.getAxis() == Direction.Axis.Y) {
-                state = this.getDefaultState().with(WallMountedBlock.FACE, direction == Direction.UP ? WallMountLocation.CEILING : WallMountLocation.FLOOR).with(HorizontalFacingBlock.FACING, context.getPlayerHorizontalFacing());
+                state = this.getDefaultState().with(WallMountedBlock.FACE, direction == Direction.UP ? WallMountLocation.CEILING : WallMountLocation.FLOOR).with(HorizontalFacingBlock.FACING, context.getPlayerFacing());
             } else {
                 state = this.getDefaultState().with(WallMountedBlock.FACE, WallMountLocation.WALL).with(HorizontalFacingBlock.FACING, direction.getOpposite());
             }
@@ -69,7 +64,7 @@ public class BlockWirelessTransmitter extends BlockWithEntityBase implements IWr
             }
         }
 
-        return null;
+        return this.getDefaultState();
     }
 
     @Override

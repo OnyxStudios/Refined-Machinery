@@ -1,7 +1,6 @@
 package abused_master.refinedmachinery.tiles.machine;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
-import abused_master.abusedlib.utils.InventoryHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.utils.ItemHelper;
@@ -9,11 +8,8 @@ import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -34,7 +30,7 @@ import java.util.List;
 public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
 
     public EnergyStorage storage = new EnergyStorage(50000);
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(12, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(12, ItemStack.EMPTY);
     public int[] outputSlots = new int[] {5, 6, 7, 8, 9, 10, 11};
     public int[] seedsSlot = new int[] {1, 2, 3, 4};
     public int farmerRange = 3;
@@ -49,16 +45,16 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
     @Override
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
 
-        inventory = DefaultedList.create(12, ItemStack.EMPTY);
+        inventory = DefaultedList.ofSize(12, ItemStack.EMPTY);
         Inventories.fromTag(nbt, this.inventory);
     }
 
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
-        this.storage.writeEnergyToTag(nbt);
+        this.storage.toTag(nbt);
         Inventories.toTag(nbt, this.inventory);
         return nbt;
     }
@@ -121,7 +117,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                 }
 
                 if(plant(blockPos, inventory.get(i))) {
-                    inventory.get(i).subtractAmount(1);
+                    inventory.get(i).decrement(1);
                 }
             }
         }
@@ -159,7 +155,7 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
 
     public boolean canInsert() {
         for (int i : outputSlots) {
-            if(inventory.get(i).isEmpty() || inventory.get(i).getAmount() < 64) {
+            if(inventory.get(i).isEmpty() || inventory.get(i).getCount() < 64) {
                 return true;
             }
         }
@@ -175,8 +171,8 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                     inventory.set(slot, stack);
                     markDirty();
                     return;
-                }else if(slotStack.isEqualIgnoreTags(stack) && slotStack.getAmount() + stack.getAmount() < 64) {
-                    inventory.set(slot, new ItemStack(stack.getItem(), stack.getAmount() + inventory.get(slot).getAmount()));
+                }else if(slotStack.isItemEqual(stack) && slotStack.getCount() + stack.getCount() < 64) {
+                    inventory.set(slot, new ItemStack(stack.getItem(), stack.getCount() + inventory.get(slot).getCount()));
                     markDirty();
                     return;
                 }
@@ -188,8 +184,8 @@ public class BlockEntityFarmer extends BlockEntityBase implements IEnergyHandler
                     inventory.set(slot, stack);
                     markDirty();
                     return;
-                }else if(slotStack.getItem() == stack.getItem() && slotStack.getAmount() < 64) {
-                    inventory.get(slot).addAmount(1);
+                }else if(slotStack.getItem() == stack.getItem() && slotStack.getCount() < 64) {
+                    inventory.get(slot).increment(1);
                     markDirty();
                     return;
                 }

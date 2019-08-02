@@ -14,7 +14,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BoundingBox;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 import java.util.Collections;
@@ -23,7 +23,7 @@ import java.util.List;
 public class BlockEntityMobGrinder extends BlockEntityBase implements IEnergyHandler, IHudSupport, ILinkerHandler {
 
     public EnergyStorage storage = new EnergyStorage(100000);
-    public BoundingBox mobKillBox = null;
+    public Box mobKillBox = null;
     public int killTimer = 0;
     public int costPerHeart = RefinedMachinery.config.getInt("grinderCostPerHeart");
 
@@ -34,14 +34,14 @@ public class BlockEntityMobGrinder extends BlockEntityBase implements IEnergyHan
     @Override
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
         killTimer = nbt.getInt("killTimer");
     }
 
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
-        this.storage.writeEnergyToTag(nbt);
+        this.storage.toTag(nbt);
         nbt.putInt("killTimer", this.killTimer);
         return nbt;
     }
@@ -96,7 +96,7 @@ public class BlockEntityMobGrinder extends BlockEntityBase implements IEnergyHan
         Direction direction = world.getBlockState(pos).get(BlockMobGrinder.FACING);
         BlockPos pos1 = pos.add(-3, -3, -3).add(direction.getOffsetX() * 4, 0, direction.getOffsetZ() * 4);
         BlockPos pos2 = pos.add(4, 4, 4).add(direction.getOffsetX() * 4, 0, direction.getOffsetZ() * 4);
-        mobKillBox = new BoundingBox(pos1, pos2);
+        mobKillBox = new Box(pos1, pos2);
     }
 
     @Override

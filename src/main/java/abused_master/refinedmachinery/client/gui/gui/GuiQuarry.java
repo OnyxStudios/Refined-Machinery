@@ -8,7 +8,7 @@ import abused_master.refinedmachinery.tiles.machine.BlockEntityQuarry;
 import com.mojang.blaze3d.platform.GlStateManager;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.server.network.packet.CustomPayloadC2SPacket;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
@@ -21,7 +21,7 @@ public class GuiQuarry extends AbstractContainerScreen {
     public QuarryActionWidget startButton, stopButton;
 
     public GuiQuarry(BlockEntityQuarry tile, ContainerQuarry containerQuarry) {
-        super(containerQuarry, containerQuarry.playerInventory, new TextComponent("Quarry"));
+        super(containerQuarry, containerQuarry.playerInventory, new LiteralText("Quarry"));
         this.tile = tile;
     }
 

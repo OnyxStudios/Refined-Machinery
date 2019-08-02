@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class ItemWrench extends ItemBase {
 
     public ItemWrench() {
-        super("wrench", new Settings().itemGroup(RefinedMachinery.modItemGroup).stackSize(1));
+        super("wrench", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
     }
 
     @Override

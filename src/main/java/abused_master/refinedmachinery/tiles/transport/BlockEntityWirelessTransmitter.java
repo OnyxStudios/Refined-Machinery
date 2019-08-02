@@ -9,7 +9,7 @@ import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.TagHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -27,7 +27,7 @@ public class BlockEntityWirelessTransmitter extends BlockEntityBase implements I
     @Override
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
         if(nbt.containsKey("crystalPos")) {
             this.crystalPos = TagHelper.deserializeBlockPos(nbt.getCompound("crystalPos"));
         }
@@ -36,7 +36,7 @@ public class BlockEntityWirelessTransmitter extends BlockEntityBase implements I
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
-        storage.writeEnergyToTag(nbt);
+        storage.toTag(nbt);
         if(crystalPos != null) {
             nbt.put("crystalPos", TagHelper.serializeBlockPos(crystalPos));
         }
@@ -46,7 +46,7 @@ public class BlockEntityWirelessTransmitter extends BlockEntityBase implements I
     @Override
     public void tick() {
         if (crystalPos != null && world.getBlockEntity(crystalPos) != null && world.getBlockEntity(crystalPos) instanceof BlockEntityWirelessController && storage.getEnergyStored() >= sendPerTick) {
-            EnergyHelper.sendEnergy(storage, world, crystalPos, sendPerTick);
+            EnergyHelper.sendEnergy(getPos(), storage, world, crystalPos, sendPerTick);
         } else if (crystalPos != null && world.getBlockEntity(crystalPos) == null) {
             crystalPos = null;
             world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);

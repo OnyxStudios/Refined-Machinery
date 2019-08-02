@@ -25,14 +25,14 @@ public class BlockEntitySolarPanel extends BlockEntityBase implements IEnergyHan
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
         this.setType(EnumSolarPanelTypes.values()[nbt.getInt("type")]);
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
     }
 
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
         nbt.putInt("type", this.type.ordinal());
-        this.storage.writeEnergyToTag(nbt);
+        this.storage.toTag(nbt);
         return nbt;
     }
 

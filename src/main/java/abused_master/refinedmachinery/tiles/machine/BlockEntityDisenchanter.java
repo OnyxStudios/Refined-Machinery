@@ -28,7 +28,7 @@ import java.util.Iterator;
 public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
 
     public EnergyStorage storage = new EnergyStorage(100000);
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(7, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(7, ItemStack.EMPTY);
 
     public int costPerEnchant = RefinedMachinery.config.getInt("disenchanter_cost");
     public int requiredTime = 250;
@@ -41,8 +41,8 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        this.storage.readEnergyFromTag(tag);
-        inventory = DefaultedList.create(7, ItemStack.EMPTY);
+        this.storage.fromTag(tag);
+        inventory = DefaultedList.ofSize(7, ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
         workTime = tag.getInt("workTime");
         requiredTime = tag.getInt("requiredTime");
@@ -51,7 +51,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
-        this.storage.writeEnergyToTag(tag);
+        this.storage.toTag(tag);
         Inventories.toTag(tag, this.inventory);
         tag.putInt("workTime", this.workTime);
         tag.putInt("requiredTime", this.requiredTime);
@@ -97,7 +97,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
         if(listTag.size() > 0) {
             CompoundTag tag = (CompoundTag) listTag.get(0);
 
-            Registry.ENCHANTMENT.getOrEmpty(Identifier.ofNullable(tag.getString("id"))).ifPresent((enchantment) -> {
+            Registry.ENCHANTMENT.getOrEmpty(Identifier.tryParse(tag.getString("id"))).ifPresent((enchantment) -> {
                 EnchantedBookItem.addEnchantment(output, new InfoEnchantment(enchantment, tag.getInt("lvl")));
                 listTag.remove(tag);
                 input.getTag().put("Enchantments", listTag);
@@ -110,7 +110,7 @@ public class BlockEntityDisenchanter extends BlockEntityBase implements IEnergyH
                 }
             }
 
-            inventory.get(1).subtractAmount(1);
+            inventory.get(1).decrement(1);
             this.storage.extractEnergy(costPerEnchant);
         }
 

@@ -5,7 +5,6 @@ import abused_master.abusedlib.fluid.FluidHelper;
 import abused_master.abusedlib.fluid.FluidStack;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.tanks.BlockEntityTank;
-import net.minecraft.ChatFormat;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -15,10 +14,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.loot.context.LootContext;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -103,11 +104,11 @@ public class BlockTank extends BlockWithEntityBase {
     }
 
     @Override
-    public void buildTooltip(ItemStack stack, @Nullable BlockView view, List<Component> list, TooltipContext context) {
+    public void buildTooltip(ItemStack stack, @Nullable BlockView view, List<Text> list, TooltipContext context) {
         if(stack.hasTag() && stack.getTag().containsKey("TileData")) {
             FluidStack fluidStack = FluidStack.fluidFromTag(stack.getTag().getCompound("TileData").getCompound("FluidData"));
             if(fluidStack != null && fluidStack.getFluid() != null) {
-                list.add(new TextComponent("Holding: " + fluidStack.getAmount() + " MB of " + Registry.FLUID.getId(fluidStack.getFluid()).getPath()).setStyle(new Style().setColor(ChatFormat.GOLD)));
+                list.add(new LiteralText("Holding: " + fluidStack.getAmount() + " MB of " + Registry.FLUID.getId(fluidStack.getFluid()).getPath()).setStyle(new Style().setColor(Formatting.GOLD)));
             }
         }
     }

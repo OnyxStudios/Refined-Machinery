@@ -29,7 +29,7 @@ public enum CustomToolMaterials implements ToolMaterial {
     }
 
     @Override
-    public float getBlockBreakingSpeed() {
+    public float getMiningSpeed() {
         return this.blockBreakSpeed;
     }
 

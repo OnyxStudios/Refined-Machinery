@@ -5,7 +5,7 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityMobGrinder;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -43,7 +43,7 @@ public class BlockMobGrinder extends BlockWithEntityBase implements IWrenchable,
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerHorizontalFacing());
+        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerFacing());
     }
 
     @Override

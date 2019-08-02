@@ -6,11 +6,12 @@ import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityFarmer;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -54,6 +55,11 @@ public class BlockFarmer extends BlockWithEntityBase implements IWrenchable, Blo
                 world.setBlockState(blockPos, Blocks.FARMLAND.getDefaultState(), 3);
             }
         }
+    }
+
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
 
     @Override

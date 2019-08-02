@@ -9,8 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TagHelper;
@@ -23,14 +23,14 @@ import java.util.List;
 public class ItemLinker extends ItemBase {
 
     public ItemLinker() {
-        super("linker", new Settings().itemGroup(RefinedMachinery.modItemGroup).stackSize(1));
+        super("linker", new Settings().group(RefinedMachinery.modItemGroup).maxCount(1));
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext usageContext) {
         World world = usageContext.getWorld();
         PlayerEntity player = usageContext.getPlayer();
-        ItemStack stack = usageContext.getItemStack();
+        ItemStack stack = usageContext.getStack();
 
         CompoundTag tag = stack.getTag();
         if (player.isSneaking()) {
@@ -42,7 +42,7 @@ public class ItemLinker extends ItemBase {
             if (blockEntity != null && blockEntity instanceof ILinkerHandler) {
                 ((ILinkerHandler) blockEntity).link(player, tag);
             } else {
-                player.addChatMessage(new TextComponent("The selected block is invalid for linking!"), true);
+                player.addChatMessage(new LiteralText("The selected block is invalid for linking!"), true);
             }
 
             stack.setTag(tag);
@@ -57,7 +57,7 @@ public class ItemLinker extends ItemBase {
         if(player.isSneaking()) {
             clearTag(player.getStackInHand(hand));
             if(!world.isClient) {
-                player.addChatMessage(new TextComponent("Cleared linker settings"), true);
+                player.addChatMessage(new LiteralText("Cleared linker settings"), true);
             }
         }
 
@@ -69,21 +69,21 @@ public class ItemLinker extends ItemBase {
     }
 
     @Override
-    public void buildTooltip(ItemStack itemStack, World world, List<Component> list, TooltipContext tooltipOptions) {
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> list, TooltipContext tooltipOptions) {
         CompoundTag tag = itemStack.getTag();
         if(tag != null) {
             if(tag.containsKey("collectorPos")) {
                 BlockPos pos = TagHelper.deserializeBlockPos(tag.getCompound("collectorPos"));
-                list.add(new TextComponent("Collector Pos, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
+                list.add(new LiteralText("Collector Pos, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
             }else if(tag.containsKey("blockPos")) {
                 BlockPos pos = TagHelper.deserializeBlockPos(tag.getCompound("blockPos"));
-                list.add(new TextComponent("BlockEntity Pos, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
+                list.add(new LiteralText("BlockEntity Pos, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
             }else if(tag.containsKey("itemPos")) {
                 BlockPos pos = TagHelper.deserializeBlockPos(tag.getCompound("itemPos"));
-                list.add(new TextComponent("Transfer Crystal, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
+                list.add(new LiteralText("Transfer Crystal, x: " + pos.getX() + " y: " + pos.getY() + " z: " + pos.getZ()));
             }
         }else {
-            list.add(new TextComponent("No block positions have been saved."));
+            list.add(new LiteralText("No block positions have been saved."));
         }
     }
 }

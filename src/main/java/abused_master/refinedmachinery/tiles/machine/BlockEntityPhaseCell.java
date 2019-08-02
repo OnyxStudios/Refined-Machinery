@@ -28,13 +28,13 @@ public class BlockEntityPhaseCell extends BlockEntityBase implements IEnergyHand
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        storage.readEnergyFromTag(tag);
+        storage.fromTag(tag);
     }
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
-        storage.writeEnergyToTag(tag);
+        storage.toTag(tag);
         return tag;
     }
 

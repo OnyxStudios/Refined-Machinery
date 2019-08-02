@@ -21,7 +21,7 @@ import java.util.Iterator;
 public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
 
     public EnergyStorage storage = new EnergyStorage(100000);
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(3, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
     private int upgradeTier = 1;
     private int pulverizeTime = 0;
     private int baseEnergyUsage = 400;
@@ -35,9 +35,9 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
         super.fromTag(nbt);
         this.upgradeTier = nbt.getInt("upgradeTier");
         this.pulverizeTime = nbt.getInt("pulverizeTime");
-        this.storage.readEnergyFromTag(nbt);
+        this.storage.fromTag(nbt);
 
-        inventory = DefaultedList.create(3, ItemStack.EMPTY);
+        inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
         Inventories.fromTag(nbt, this.inventory);
     }
 
@@ -46,7 +46,7 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
         super.toTag(nbt);
         nbt.putInt("upgradeTier", upgradeTier);
         nbt.putInt("pulverizeTime", this.pulverizeTime);
-        this.storage.writeEnergyToTag(nbt);
+        this.storage.toTag(nbt);
         Inventories.toTag(nbt, this.inventory);
         return nbt;
     }
@@ -71,11 +71,11 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
         if(inventory.get(0).isEmpty() || recipe == null || recipe.getOutput().isEmpty() || storage.getEnergyStored() < getEnergyUsage()) {
             return false;
         }else if(!inventory.get(1).isEmpty()) {
-            if(recipe.getOutput().getItem() != inventory.get(1).getItem() || (inventory.get(1).getAmount() + recipe.getOutputAmount()) > 64) {
+            if(recipe.getOutput().getItem() != inventory.get(1).getItem() || (inventory.get(1).getCount() + recipe.getOutputAmount()) > 64) {
                 return false;
             }
         }else if(!inventory.get(2).isEmpty() && !recipe.getOutput().isEmpty()) {
-            if(recipe.getRandomDrop().getItem() != inventory.get(2).getItem() || (inventory.get(2).getAmount() + recipe.getRandomDropAmoumt()) > 64) {
+            if(recipe.getRandomDrop().getItem() != inventory.get(2).getItem() || (inventory.get(2).getCount() + recipe.getRandomDropAmoumt()) > 64) {
                 return false;
             }
         }
@@ -89,7 +89,7 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
             if (inventory.get(1).isEmpty()) {
                 inventory.set(1, new ItemStack(recipe.getOutput().getItem(), recipe.getOutputAmount()));
             } else {
-                inventory.get(1).addAmount(recipe.getOutputAmount());
+                inventory.get(1).increment(recipe.getOutputAmount());
             }
 
             if (!recipe.getRandomDrop().isEmpty()) {
@@ -98,12 +98,12 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
                     if (inventory.get(2).isEmpty()) {
                         inventory.set(2, new ItemStack(recipe.getRandomDrop().getItem(), recipe.getRandomDropAmoumt()));
                     } else {
-                        inventory.get(2).addAmount(recipe.getRandomDropAmoumt());
+                        inventory.get(2).increment(recipe.getRandomDropAmoumt());
                     }
                 }
             }
 
-            inventory.get(0).subtractAmount(1);
+            inventory.get(0).decrement(1);
         }
 
         storage.extractEnergy(getEnergyUsage());

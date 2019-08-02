@@ -6,8 +6,8 @@ import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.tiles.generator.BlockEntityCoalGen;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
@@ -68,7 +68,7 @@ public class BlockCoalGen extends BlockWithEntityBase implements IWrenchable, Bl
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
-        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerHorizontalFacing().getOpposite());
+        return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerFacing().getOpposite());
     }
 
     @Override

@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.tiles.machine;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.abusedlib.utils.InventoryHelper;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import javafx.geometry.BoundingBox;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -10,7 +11,7 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.math.BoundingBox;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ import java.util.List;
 //TODO ADD FILTER TO GUI
 public class BlockEntityVacuum extends BlockEntityBase implements SidedInventory {
 
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(14, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(14, ItemStack.EMPTY);
 
     public BlockEntityVacuum() {
         super(ModBlockEntities.VACUUM);
@@ -30,7 +31,7 @@ public class BlockEntityVacuum extends BlockEntityBase implements SidedInventory
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
 
-        inventory = DefaultedList.create(14, ItemStack.EMPTY);
+        inventory = DefaultedList.ofSize(14, ItemStack.EMPTY);
         Inventories.fromTag(nbt, this.inventory);
     }
 
@@ -55,7 +56,7 @@ public class BlockEntityVacuum extends BlockEntityBase implements SidedInventory
     }
 
     public ItemEntity findTarget() {
-        List<ItemEntity> items = world.getEntities(ItemEntity.class, new BoundingBox(pos.add(-3, -3, -3), pos.add(3, 3, 3)));
+        List<ItemEntity> items = world.getEntities(ItemEntity.class, new Box(pos.add(-3, -3, -3), pos.add(3, 3, 3)));
         if(items.isEmpty()) {
             return null;
         }

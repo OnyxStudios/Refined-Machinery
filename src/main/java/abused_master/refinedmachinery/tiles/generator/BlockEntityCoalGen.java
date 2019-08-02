@@ -27,7 +27,7 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
     public int burnTime;
     public int burnTotalTime;
 
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(1, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
     public BlockEntityCoalGen() {
         super(ModBlockEntities.COALGEN);
@@ -36,8 +36,8 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        this.storage.readEnergyFromTag(tag);
-        inventory = DefaultedList.create(1, ItemStack.EMPTY);
+        this.storage.fromTag(tag);
+        inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
         this.burnTime = tag.getInt("burnTime");
         this.burnTotalTime = tag.getInt("burnTotalTime");
@@ -46,7 +46,7 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
-        this.storage.writeEnergyToTag(tag);
+        this.storage.toTag(tag);
         Inventories.toTag(tag, this.inventory);
         tag.putInt("burnTime", this.burnTime);
         tag.putInt("burnTotalTime", this.burnTotalTime);
@@ -67,7 +67,7 @@ public class BlockEntityCoalGen extends BlockEntityBase implements SidedInventor
             } else if (FurnaceBlockEntity.canUseAsFuel(inventory.get(0))) {
                 burnTotalTime = FurnaceBlockEntity.createFuelTimeMap().getOrDefault(inventory.get(0).getItem(), 0);
                 burnTime = burnTotalTime;
-                inventory.get(0).subtractAmount(1);
+                inventory.get(0).decrement(1);
                 this.markDirty();
             }
         }

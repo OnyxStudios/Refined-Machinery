@@ -49,7 +49,7 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        storage.readEnergyFromTag(tag);
+        storage.fromTag(tag);
 
         if(this.tank != null) {
             this.tank.setBlockEntity(this);
@@ -82,7 +82,7 @@ public class BlockEntityFluidPump extends BlockEntityBase implements IEnergyHand
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
-        storage.writeEnergyToTag(tag);
+        storage.toTag(tag);
 
         if (this.tank != null && this.tank.getFluidStack() != null) {
             CompoundTag tankTag = new CompoundTag();

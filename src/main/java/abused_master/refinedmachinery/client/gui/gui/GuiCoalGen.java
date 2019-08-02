@@ -7,7 +7,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -18,7 +18,7 @@ public class GuiCoalGen extends AbstractContainerScreen {
     public int guiLeft, guiTop;
 
     public GuiCoalGen(BlockEntityCoalGen tile, ContainerCoalGen containerCoalGen) {
-        super(containerCoalGen, containerCoalGen.playerInventory, new TextComponent("Coal Generator"));
+        super(containerCoalGen, containerCoalGen.playerInventory, new LiteralText("Coal Generator"));
         this.tile = tile;
     }
 

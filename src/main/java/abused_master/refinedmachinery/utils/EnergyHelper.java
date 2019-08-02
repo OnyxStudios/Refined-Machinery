@@ -2,17 +2,21 @@ package abused_master.refinedmachinery.utils;
 
 import abused_master.refinedmachinery.registry.ModPackets;
 import io.netty.buffer.Unpooled;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
 import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class EnergyHelper {
 
@@ -41,7 +45,7 @@ public class EnergyHelper {
         }
     }
 
-    public static void sendEnergy(EnergyStorage storage, World world, BlockPos receiver, int sendAmount) {
+    public static void sendEnergy(BlockPos sendingPos, EnergyStorage storage, World world, BlockPos receiver, int sendAmount) {
         if(!world.isClient && storage.getEnergyStored() >= sendAmount) {
             BlockComponentProvider componentProvider = (BlockComponentProvider) world.getBlockState(receiver).getBlock();
             if(world.getBlockEntity(receiver) instanceof IEnergyHandler && ((IEnergyHandler) world.getBlockEntity(receiver)).isEnergyReceiver(null, DefaultTypes.CARDINAL_ENERGY) && componentProvider.hasComponent(world, receiver, DefaultTypes.CARDINAL_ENERGY, null)) {
@@ -50,6 +54,7 @@ public class EnergyHelper {
                 if(energySent > 0) {
                     for (PlayerEntity playerEntity : world.getPlayers()) {
                         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                        buf.writeBlockPos(sendingPos);
                         buf.writeBlockPos(receiver);
                         buf.writeInt(componentProvider.getComponent(world, receiver, DefaultTypes.CARDINAL_ENERGY, null).getEnergyStored());
                         ((ServerPlayerEntity) playerEntity).networkHandler.sendPacket(new CustomPayloadS2CPacket(ModPackets.PACKET_UPDATE_CLIENT_ENERGY, buf));
@@ -57,5 +62,15 @@ public class EnergyHelper {
                 }
             }
         }
+    }
+
+    public static IEnergyStorage getEnergyStorage(ItemStack stack) {
+        Optional<IEnergyStorage> optional = DefaultTypes.CARDINAL_ENERGY.maybeGet(stack);
+
+        if(optional.isPresent()) {
+            return optional.get();
+        }
+
+        return null;
     }
 }

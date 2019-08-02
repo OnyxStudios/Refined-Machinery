@@ -33,7 +33,7 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
     @Override
     public void fromTag(CompoundTag nbt) {
         super.fromTag(nbt);
-        storage.readEnergyFromTag(nbt);
+        storage.fromTag(nbt);
 
         if(this.tank != null) {
             this.tank.setBlockEntity(this);
@@ -50,7 +50,7 @@ public class BlockEntityLavaGenerator extends BlockEntityBase implements IEnergy
     @Override
     public CompoundTag toTag(CompoundTag nbt) {
         super.toTag(nbt);
-        storage.writeEnergyToTag(nbt);
+        storage.toTag(nbt);
 
         if (this.tank != null && this.tank.getFluidStack() != null) {
             CompoundTag tankTag = new CompoundTag();

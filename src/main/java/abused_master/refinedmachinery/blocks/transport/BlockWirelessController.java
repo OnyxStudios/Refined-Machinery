@@ -5,7 +5,7 @@ import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.transport.BlockEntityWirelessController;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.component.Component;
 import nerdhub.cardinalenergy.DefaultTypes;
@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class BlockWirelessController extends BlockWithEntityBase implements IWrenchable, BlockComponentProvider {
 
-    public static final EnumProperty<ControllerState> STATE = EnumProperty.create("state", ControllerState.class);
+    public static final EnumProperty<ControllerState> STATE = EnumProperty.of("state", ControllerState.class);
 
     public BlockWirelessController() {
         super("wireless_controller", Material.STONE, 1.0f, RefinedMachinery.modItemGroup);

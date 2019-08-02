@@ -3,9 +3,10 @@ package abused_master.refinedmachinery;
 import abused_master.abusedlib.utils.Config;
 import abused_master.abusedlib.utils.events.DropItemCallback;
 import abused_master.refinedmachinery.registry.*;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.OreGenConfig;
-import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
 import nerdhub.cardinalenergy.DefaultTypes;
+import nerdhub.cardinalenergy.api.IEnergyStorage;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -22,6 +23,7 @@ import net.minecraft.util.Identifier;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class RefinedMachinery implements ModInitializer {
 
@@ -67,9 +69,7 @@ public class RefinedMachinery implements ModInitializer {
                     return ActionResult.PASS;
                 }
 
-                StackComponentAccessor stackComponentAccessor = ((StackComponentAccessor) (Object) stack);
-
-                if (stackComponentAccessor.hasComponent(DefaultTypes.CARDINAL_ENERGY) && stackComponentAccessor.getComponent(DefaultTypes.CARDINAL_ENERGY).getEnergyStored() >= energyUsage) {
+                if (EnergyHelper.getEnergyStorage(stack).getEnergyStored() >= energyUsage) {
                     return ActionResult.PASS;
                 }
 

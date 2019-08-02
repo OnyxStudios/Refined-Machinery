@@ -34,7 +34,7 @@ import java.util.*;
 public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler, ILinkerHandler, SidedInventory {
 
     public EnergyStorage storage = new EnergyStorage(100000);
-    public DefaultedList<ItemStack> inventory = DefaultedList.create(2, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
     public List<BlockPos> cachedAreaPos = new ArrayList<>();
     public BlockPos miningPos = null, firstCorner = null, secondCorner = null;
     public int energyUsagePerBlock = RefinedMachinery.config.getInt("quarryUsagePerBlock"), miningSpeed = 0;
@@ -51,8 +51,8 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        this.storage.readEnergyFromTag(tag);
-        inventory = DefaultedList.create(2, ItemStack.EMPTY);
+        this.storage.fromTag(tag);
+        inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
 
         if(tag.containsKey("cachedAreaPos")) {
@@ -81,7 +81,7 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
-        this.storage.writeEnergyToTag(tag);
+        this.storage.toTag(tag);
         Inventories.toTag(tag, this.inventory);
 
         if(!this.cachedAreaPos.isEmpty()) {

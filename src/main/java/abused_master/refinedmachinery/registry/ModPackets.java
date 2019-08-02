@@ -4,9 +4,9 @@ import abused_master.abusedlib.fluid.FluidStack;
 import abused_master.abusedlib.fluid.IFluidHandler;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityQuarry;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
-import nerdhub.cardinal.components.api.BlockComponentProvider;
-import nerdhub.cardinal.components.api.accessor.StackComponentAccessor;
+import nerdhub.cardinal.components.api.component.BlockComponentProvider;
 import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyStorage;
 import net.fabricmc.api.EnvType;
@@ -125,11 +125,11 @@ public class ModPackets {
                 context.getTaskQueue().execute(() -> {
                     Block block = world.getBlockState(pos).getBlock();
                     IEnergyStorage storage = ((BlockComponentProvider) block).getComponent(world, pos, DefaultTypes.CARDINAL_ENERGY, null);
-                    IEnergyStorage energyItemStorage = ((StackComponentAccessor) (Object) stack).getComponent(DefaultTypes.CARDINAL_ENERGY);
+                    IEnergyStorage energyItemStorage = EnergyHelper.getEnergyStorage(stack);
 
                     storage.extractEnergy(energyItemStorage.receiveEnergy(50));
 
-                    if (stack.hasDurability())
+                    if (stack.isDamaged())
                         ItemHelper.updateItemDurability(stack, energyItemStorage);
                 });
             }
