@@ -28,7 +28,7 @@
   "mixins": [
     "refinedmachinery.mixins.json"
   ],
-  "requires": {
+  "depends": {
     "fabricloader": ">=0.4.0",
     "fabric": "*",
     "abusedlib": ">=1.1.0",
