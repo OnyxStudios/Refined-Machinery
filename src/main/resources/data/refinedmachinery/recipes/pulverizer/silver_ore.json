@@ -1,0 +1,14 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "c:silver_ore"
+  },
+  "randomOutput": {
+    "item": "refinedmachinery:lead_dust",
+    "chance": 10
+  },
+  "result": {
+    "item": "refinedmachinery:silver_dust",
+    "count": 2
+  }
+}

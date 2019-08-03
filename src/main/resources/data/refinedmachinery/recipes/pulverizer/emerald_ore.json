@@ -1,0 +1,14 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:emerald_ore"
+  },
+  "randomOutput": {
+    "item": "minecraft:emerald",
+    "chance": 10
+  },
+  "result": {
+    "item": "minecraft:emerald",
+    "count": 2
+  }
+}

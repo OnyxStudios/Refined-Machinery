@@ -7,7 +7,6 @@ import abused_master.refinedmachinery.registry.ModItems;
 import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
-import nerdhub.cardinalenergy.DefaultTypes;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.api.IEnergyStorage;
 import nerdhub.cardinalenergy.impl.EnergyStorage;

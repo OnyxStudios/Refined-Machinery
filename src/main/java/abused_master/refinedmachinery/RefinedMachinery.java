@@ -3,10 +3,9 @@ package abused_master.refinedmachinery;
 import abused_master.abusedlib.utils.Config;
 import abused_master.abusedlib.utils.events.DropItemCallback;
 import abused_master.refinedmachinery.registry.*;
+import abused_master.refinedmachinery.registry.recipe.PulverizerRecipeSerializer;
 import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.OreGenConfig;
-import nerdhub.cardinalenergy.DefaultTypes;
-import nerdhub.cardinalenergy.api.IEnergyStorage;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -17,13 +16,14 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class RefinedMachinery implements ModInitializer {
 
@@ -33,6 +33,9 @@ public class RefinedMachinery implements ModInitializer {
 
     public static Config config;
     public static File rmfolder = new File(FabricLoader.getInstance().getConfigDirectory().getPath() + "/refinedmachinery");
+
+    public static final RecipeType PULVERIZER_TYPE = RecipeType.register(MODID + ":pulverizer");
+    public static final PulverizerRecipeSerializer PULVERIZER_SERIALIZER = new PulverizerRecipeSerializer();
 
     @Override
     public void onInitialize() {
@@ -48,7 +51,7 @@ public class RefinedMachinery implements ModInitializer {
         ModBlockEntities.registerServerGUIs();
         ModPackets.registerPackets();
         WorldGenRegistry.addOreFeatures();
-        PulverizerRecipes.INSTANCE.initRecipes();
+        Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MODID, "pulverizer"), PULVERIZER_SERIALIZER);
 
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if(player.getMainHandStack().getItem() == ModItems.WRENCH) {

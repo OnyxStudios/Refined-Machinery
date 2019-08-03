@@ -1,0 +1,10 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "minecraft:wool"
+  },
+  "result": {
+    "item": "minecraft:string",
+    "count": 4
+  }
+}

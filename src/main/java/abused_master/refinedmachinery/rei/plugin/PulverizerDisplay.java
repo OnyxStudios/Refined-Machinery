@@ -1,28 +1,30 @@
 package abused_master.refinedmachinery.rei.plugin;
 
-import abused_master.refinedmachinery.registry.PulverizerRecipes;
+import abused_master.refinedmachinery.registry.recipe.PulverizerRecipe;
 import abused_master.refinedmachinery.rei.RefinedMachineryPlugin;
 import me.shedaniel.rei.api.RecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.recipe.Recipe;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class PulverizerDisplay implements RecipeDisplay {
+public class PulverizerDisplay implements RecipeDisplay<PulverizerRecipe> {
 
-    private PulverizerRecipes.PulverizerRecipe recipe;
-    private List<ItemStack> inputs;
+    private PulverizerRecipe recipe;
+    private List<List<ItemStack>> input;
     private int percentDrop;
     private ItemStack randomDrop;
 
-    public PulverizerDisplay(List<ItemStack> inputs, PulverizerRecipes.PulverizerRecipe recipe) {
+    public PulverizerDisplay(PulverizerRecipe recipe) {
         this.recipe = recipe;
-        this.inputs = inputs;
-        this.percentDrop = recipe.getPercentageDrop();
-        this.randomDrop = recipe.getRandomDrop();
+        this.input = recipe.getPreviewInputs().stream().map(i -> Arrays.asList(i.getStackArray())).collect(Collectors.toList());
+        this.percentDrop = recipe.getRandomOutputChance();
+        this.randomDrop = recipe.getRandomOutput();
     }
 
     @Override
@@ -32,7 +34,7 @@ public class PulverizerDisplay implements RecipeDisplay {
 
     @Override
     public List<List<ItemStack>> getInput() {
-        return Collections.singletonList(inputs);
+        return input;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class PulverizerDisplay implements RecipeDisplay {
 
     @Override
     public List<List<ItemStack>> getRequiredItems() {
-        return Collections.singletonList(inputs);
+        return input;
     }
 
     public int getPercentDrop() {

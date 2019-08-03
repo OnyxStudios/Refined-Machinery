@@ -1,0 +1,14 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "c:copper_ore"
+  },
+  "randomOutput": {
+    "item": "refinedmachinery:gold_dust",
+    "chance": 10
+  },
+  "result": {
+    "item": "refinedmachinery:copper_dust",
+    "count": 2
+  }
+}

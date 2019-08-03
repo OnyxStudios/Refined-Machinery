@@ -1,22 +1,28 @@
 package abused_master.refinedmachinery.tiles.machine;
 
 import abused_master.abusedlib.tiles.BlockEntityBase;
+import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
-import abused_master.refinedmachinery.registry.PulverizerRecipes;
+import abused_master.refinedmachinery.registry.recipe.PulverizerRecipe;
+import abused_master.refinedmachinery.utils.EnergyHelper;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
 import nerdhub.cardinalenergy.impl.EnergyStorage;
+import net.minecraft.container.PropertyDelegate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.Direction;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHandler, SidedInventory, ILinkerHandler {
 
@@ -25,6 +31,34 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
     private int upgradeTier = 1;
     private int pulverizeTime = 0;
     private int baseEnergyUsage = 400;
+    public PropertyDelegate property = new PropertyDelegate() {
+        @Override
+        public int get(int i) {
+            switch (i) {
+                case 0:
+                    return pulverizeTime;
+                case 1:
+                    storage.getEnergyStored();
+                default:
+                    return 0;
+            }
+        }
+
+        @Override
+        public void set(int i, int i1) {
+            switch (i) {
+                case 0:
+                    pulverizeTime = i1;
+                case 1:
+                    storage.setEnergyStored(i1);
+            }
+        }
+
+        @Override
+        public int size() {
+            return 2;
+        }
+    };
 
     public BlockEntityPulverizer() {
         super(ModBlockEntities.PULVERIZER);
@@ -53,29 +87,32 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
 
     @Override
     public void tick() {
-        if(canRun()) {
-            pulverizeTime++;
-            if(pulverizeTime >= getTotalPulverizeTime()) {
+        if(!world.isClient) {
+            if (canRun()) {
+                pulverizeTime++;
+                if (pulverizeTime >= getTotalPulverizeTime()) {
+                    pulverizeTime = 0;
+                    pulverizeItem();
+                    world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+                }
+            } else if (!canRun() && pulverizeTime > 0) {
                 pulverizeTime = 0;
-                pulverizeItem();
-                world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
             }
-        }else if(!canRun() && pulverizeTime > 0) {
-            pulverizeTime = 0;
+            property.set(0, pulverizeTime);
         }
     }
 
     public boolean canRun() {
-        PulverizerRecipes.PulverizerRecipe recipe = PulverizerRecipes.INSTANCE.getOutputRecipe(inventory.get(0));
+        PulverizerRecipe recipe = getRecipe();
 
-        if(inventory.get(0).isEmpty() || recipe == null || recipe.getOutput().isEmpty() || storage.getEnergyStored() < getEnergyUsage()) {
+        if (inventory.get(0).isEmpty() || recipe == null || recipe.getOutput().isEmpty() || storage.getEnergyStored() < getEnergyUsage()) {
             return false;
-        }else if(!inventory.get(1).isEmpty()) {
-            if(recipe.getOutput().getItem() != inventory.get(1).getItem() || (inventory.get(1).getCount() + recipe.getOutputAmount()) > 64) {
+        } else if (!inventory.get(1).isEmpty()) {
+            if (recipe.getOutput().getItem() != inventory.get(1).getItem() || (inventory.get(1).getCount() + recipe.getRandomOutput().getCount()) > 64) {
                 return false;
             }
-        }else if(!inventory.get(2).isEmpty() && !recipe.getOutput().isEmpty()) {
-            if(recipe.getRandomDrop().getItem() != inventory.get(2).getItem() || (inventory.get(2).getCount() + recipe.getRandomDropAmoumt()) > 64) {
+        } else if (!inventory.get(2).isEmpty() && !recipe.getOutput().isEmpty()) {
+            if (recipe.getRandomOutput().getItem() != inventory.get(2).getItem() || (inventory.get(2).getCount() + recipe.getRandomOutput().getCount()) > 64) {
                 return false;
             }
         }
@@ -84,29 +121,36 @@ public class BlockEntityPulverizer extends BlockEntityBase implements IEnergyHan
     }
 
     public void pulverizeItem() {
-        if(!world.isClient) {
-            PulverizerRecipes.PulverizerRecipe recipe = PulverizerRecipes.INSTANCE.getOutputRecipe(inventory.get(0));
-            if (inventory.get(1).isEmpty()) {
-                inventory.set(1, new ItemStack(recipe.getOutput().getItem(), recipe.getOutputAmount()));
-            } else {
-                inventory.get(1).increment(recipe.getOutputAmount());
-            }
-
-            if (!recipe.getRandomDrop().isEmpty()) {
-                float chance = world.getRandom().nextFloat() * 100;
-                if (chance <= recipe.getPercentageDrop()) {
-                    if (inventory.get(2).isEmpty()) {
-                        inventory.set(2, new ItemStack(recipe.getRandomDrop().getItem(), recipe.getRandomDropAmoumt()));
-                    } else {
-                        inventory.get(2).increment(recipe.getRandomDropAmoumt());
-                    }
-                }
-            }
-
-            inventory.get(0).decrement(1);
+        PulverizerRecipe recipe = getRecipe();
+        if (inventory.get(1).isEmpty()) {
+            inventory.set(1, recipe.getOutput().copy());
+        } else {
+            inventory.get(1).increment(recipe.getOutput().getCount());
         }
 
+        if (!recipe.getRandomOutput().isEmpty()) {
+            float chance = world.getRandom().nextFloat() * 100;
+            if (chance <= recipe.getRandomOutputChance()) {
+                if (inventory.get(2).isEmpty()) {
+                    inventory.set(2, recipe.getRandomOutput().copy());
+                } else {
+                    inventory.get(2).increment(recipe.getRandomOutput().getCount());
+                }
+            }
+        }
+
+        inventory.get(0).decrement(1);
         storage.extractEnergy(getEnergyUsage());
+        property.set(1, storage.getEnergyStored());
+    }
+
+    public PulverizerRecipe getRecipe() {
+        Optional<Recipe<Inventory>> recipe = world.getRecipeManager().getFirstMatch(RefinedMachinery.PULVERIZER_TYPE, this, world);
+        if(recipe != null && recipe.isPresent()) {
+            return (PulverizerRecipe) recipe.get();
+        }
+
+        return null;
     }
 
     public int getEnergyUsage() {

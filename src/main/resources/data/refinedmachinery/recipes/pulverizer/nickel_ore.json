@@ -1,0 +1,10 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "c:nickel_ore"
+  },
+  "result": {
+    "item": "refinedmachinery:nickel_dust",
+    "count": 2
+  }
+}

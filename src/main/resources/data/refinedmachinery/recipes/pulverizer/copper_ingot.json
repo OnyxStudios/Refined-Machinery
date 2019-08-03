@@ -1,0 +1,9 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "c:copper_ingot"
+  },
+  "result": {
+    "item": "refinedmachinery:copper_dust"
+  }
+}

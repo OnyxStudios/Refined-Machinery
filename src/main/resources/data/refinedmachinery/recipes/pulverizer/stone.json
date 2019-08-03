@@ -1,0 +1,9 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:stone"
+  },
+  "result": {
+    "item": "minecraft:cobblestone"
+  }
+}

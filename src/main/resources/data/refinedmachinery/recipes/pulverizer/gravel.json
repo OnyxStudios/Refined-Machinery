@@ -1,0 +1,13 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "randomOutput": {
+    "item": "minecraft:flint",
+    "chance": 15
+  },
+  "result": {
+    "item": "minecraft:sand"
+  }
+}

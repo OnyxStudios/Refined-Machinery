@@ -1,0 +1,14 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:diamond_ore"
+  },
+  "randomOutput": {
+    "item": "minecraft:diamond",
+    "chance": 10
+  },
+  "result": {
+    "item": "refinedmachinery:diamond_dust",
+    "count": 2
+  }
+}

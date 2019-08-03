@@ -1,0 +1,9 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "minecraft:coals"
+  },
+  "result": {
+    "item": "refinedmachinery:coal_dust"
+  }
+}

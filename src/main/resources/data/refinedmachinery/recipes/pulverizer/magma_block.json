@@ -1,0 +1,10 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:magma_block"
+  },
+  "result": {
+    "item": "minecraft:magma_cream",
+    "count": 4
+  }
+}

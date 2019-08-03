@@ -1,0 +1,14 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "c:tin_ore"
+  },
+  "randomOutput": {
+    "item": "refinedmachinery:iron_dust",
+    "chance": 10
+  },
+  "result": {
+    "item": "refinedmachinery:tin_dust",
+    "count": 2
+  }
+}

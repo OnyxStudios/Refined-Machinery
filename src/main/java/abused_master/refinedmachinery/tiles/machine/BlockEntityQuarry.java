@@ -5,6 +5,7 @@ import abused_master.abusedlib.utils.InventoryHelper;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
 import abused_master.refinedmachinery.registry.ModItems;
+import abused_master.refinedmachinery.registry.QuarryPersistentState;
 import abused_master.refinedmachinery.utils.ItemHelper;
 import abused_master.refinedmachinery.utils.linker.ILinkerHandler;
 import nerdhub.cardinalenergy.api.IEnergyHandler;
@@ -55,14 +56,8 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
         inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
         Inventories.fromTag(tag, this.inventory);
 
-        if(tag.containsKey("cachedAreaPos")) {
-            this.cachedAreaPos.clear();
-            ListTag listTag = tag.getList("cachedAreaPos", NbtType.COMPOUND);
-
-            for (Iterator<Tag> it = listTag.iterator(); it.hasNext(); ) {
-                CompoundTag compoundTag = (CompoundTag) it.next();
-                cachedAreaPos.add(TagHelper.deserializeBlockPos(compoundTag));
-            }
+        if(!world.isClient) {
+            this.cachedAreaPos = QuarryPersistentState.get((ServerWorld) world).getMiningPositions(pos);
         }
 
         this.running = tag.getBoolean("running");
@@ -84,14 +79,8 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
         this.storage.toTag(tag);
         Inventories.toTag(tag, this.inventory);
 
-        if(!this.cachedAreaPos.isEmpty()) {
-            ListTag listTag = new ListTag();
-
-            for (BlockPos areaPos : cachedAreaPos) {
-                listTag.add(TagHelper.serializeBlockPos(areaPos));
-            }
-
-            tag.put("cachedAreaPos", listTag);
+        if(!world.isClient && !cachedAreaPos.isEmpty() && !QuarryPersistentState.get((ServerWorld) world).hasQuarryData(pos)) {
+            QuarryPersistentState.get((ServerWorld) world).putQuarryData(pos, cachedAreaPos);
         }
 
         tag.putBoolean("running", this.running);
@@ -190,7 +179,12 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     public void cacheMiningArea() {
         if(secondCorner != null && firstCorner != null) {
             Iterable<BlockPos> blocksInQuarry = BlockPos.iterate(secondCorner, firstCorner);
-            cachedAreaPos = listBlocksInIterable(blocksInQuarry);
+            List<BlockPos> miningPosList = listBlocksInIterable(blocksInQuarry);
+            cachedAreaPos = miningPosList;
+
+            if(!world.isClient) {
+                QuarryPersistentState.get((ServerWorld) world).putQuarryData(pos, miningPosList);
+            }
         }
 
         this.updateEntity();
@@ -236,6 +230,10 @@ public class BlockEntityQuarry extends BlockEntityBase implements IEnergyHandler
     }
 
     public boolean canRun() {
+        if(!world.isClient && cachedAreaPos.isEmpty()) {
+            cachedAreaPos = QuarryPersistentState.get((ServerWorld) world).getMiningPositions(pos);
+        }
+
         if (!blockPositionsActive() || cachedAreaPos.isEmpty()) {
             return false;
         }

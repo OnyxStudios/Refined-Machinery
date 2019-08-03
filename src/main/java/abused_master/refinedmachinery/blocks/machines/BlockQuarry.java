@@ -3,6 +3,7 @@ package abused_master.refinedmachinery.blocks.machines;
 import abused_master.abusedlib.blocks.BlockWithEntityBase;
 import abused_master.refinedmachinery.RefinedMachinery;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
+import abused_master.refinedmachinery.registry.QuarryPersistentState;
 import abused_master.refinedmachinery.tiles.machine.BlockEntityQuarry;
 import abused_master.refinedmachinery.utils.wrench.IWrenchable;
 import abused_master.refinedmachinery.utils.wrench.WrenchHelper;
@@ -17,6 +18,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
@@ -76,6 +78,10 @@ public class BlockQuarry extends BlockWithEntityBase implements IWrenchable, Blo
         if(state.getBlock() != state2.getBlock() && blockEntity instanceof BlockEntityQuarry) {
             ItemScatterer.spawn(world, pos, (BlockEntityQuarry) blockEntity);
             world.updateHorizontalAdjacent(pos, this);
+
+            if(!world.isClient) {
+                QuarryPersistentState.get((ServerWorld) world).removeQuarryData(pos);
+            }
         }
 
         super.onBlockRemoved(state, world, pos, state2, boolean_1);

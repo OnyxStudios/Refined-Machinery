@@ -1,0 +1,9 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "tag": "c:lead_ingot"
+  },
+  "result": {
+    "item": "refinedmachinery:lead_dust"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:sandstone"
+  },
+  "result": {
+    "item": "minecraft:sand",
+    "count": 2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:coal_ore"
+  },
+  "randomOutput": {
+    "item": "refinedmachinery:coal_dust",
+    "chance": 25
+  },
+  "result": {
+    "item": "minecraft:coal",
+    "count": 3
+  }
+}

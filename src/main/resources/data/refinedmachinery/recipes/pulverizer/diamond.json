@@ -1,0 +1,9 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+    "item": "refinedmachinery:diamond_dust"
+  }
+}

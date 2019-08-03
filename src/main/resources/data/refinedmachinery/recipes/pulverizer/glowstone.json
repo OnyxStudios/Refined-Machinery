@@ -1,0 +1,10 @@
+{
+  "type": "refinedmachinery:pulverizer",
+  "input": {
+    "item": "minecraft:glowstone"
+  },
+  "result": {
+    "item": "minecraft:glowstone_dust",
+    "count": 4
+  }
+}

@@ -9,6 +9,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -21,11 +22,10 @@ public class WirelessControllerRenderer extends BlockEntityRenderer<BlockEntityW
 
         GlStateManager.pushMatrix();
         GlStateManager.translated(x, y, z);
-        mc.getTextureManager().bindTexture(new Identifier(RefinedMachinery.MODID, "textures/blocks/machine_top.png"));
+        mc.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
 
         long angle = (System.currentTimeMillis() / 10) % 360;
         if(!tile.tilePositions.isEmpty() && tile.storage.getEnergyStored() > 0) {
-            mc.getTextureManager().bindTexture(new Identifier(RefinedMachinery.MODID, "textures/blocks/energy_charger_front.png"));
             GlStateManager.translated(0.5, 0.5, 0.5);
             GlStateManager.rotatef(angle, 0, 1, 0);
             GlStateManager.translated(-0.5, -0.5, -0.5);
