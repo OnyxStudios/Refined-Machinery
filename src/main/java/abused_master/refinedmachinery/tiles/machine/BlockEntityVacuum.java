@@ -3,7 +3,6 @@ package abused_master.refinedmachinery.tiles.machine;
 import abused_master.abusedlib.tiles.BlockEntityBase;
 import abused_master.abusedlib.utils.InventoryHelper;
 import abused_master.refinedmachinery.registry.ModBlockEntities;
-import javafx.geometry.BoundingBox;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
