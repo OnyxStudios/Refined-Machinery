@@ -1,5 +1,6 @@
 package abused_master.refinedmachinery.mixins;
 
+import abused_master.refinedmachinery.client.RenderHelper;
 import abused_master.refinedmachinery.items.ItemBlockExchanger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -25,7 +26,7 @@ public class MixinGameRenderer {
     @Inject(at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = "ldc=entities", shift = At.Shift.BEFORE), method = "renderCenter")
     private void renderCenter(float deltaTime, long long_1, CallbackInfo ci) {
         this.client.getProfiler().push("refinedmachinery:renderExchanger");
-        ItemBlockExchanger.drawBlockOutline(client.player, camera, 0);
+        RenderHelper.drawBlockOutline(client.player, camera, 0);
         this.client.getProfiler().pop();
     }
 }
