@@ -34,24 +34,24 @@ public class ModPackets {
             BlockPos pos = buffer.readBlockPos();
             int action = buffer.readInt();
 
-            if(context.getPlayer() != null && context.getPlayer().world != null) {
+            if (context.getPlayer() != null && context.getPlayer().world != null) {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
 
                 context.getTaskQueue().execute(() -> {
-                    if(!(world.getBlockEntity(pos) instanceof BlockEntityQuarry)) return;
+                    if (!(world.getBlockEntity(pos) instanceof BlockEntityQuarry)) return;
 
                     BlockEntityQuarry quarry = (BlockEntityQuarry) world.getBlockEntity(pos);
 
                     switch (action) {
                         case 0:
-                            if(!quarry.isRunning() && quarry.blockPositionsActive()) {
+                            if (!quarry.isRunning() && quarry.blockPositionsActive()) {
                                 quarry.setRunning(true);
                                 world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
                             }
                             break;
                         case 1:
-                            if(quarry.isRunning()) {
+                            if (quarry.isRunning()) {
                                 quarry.setRunning(false);
                                 world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
                             }
@@ -71,14 +71,14 @@ public class ModPackets {
             BlockPos offsetPos = buffer.readBlockPos();
             int energy = buffer.readInt();
 
-            if(context.getPlayer() != null && context.getPlayer().world != null) {
+            if (context.getPlayer() != null && context.getPlayer().world != null) {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
                 context.getTaskQueue().execute(() -> {
                     BlockComponentProvider sendingComponentProvider = (BlockComponentProvider) world.getBlockState(sendingPos).getBlock();
                     BlockComponentProvider componentProvider = (BlockComponentProvider) world.getBlockState(offsetPos).getBlock();
 
-                    if(componentProvider.hasComponent(world, offsetPos, DefaultTypes.CARDINAL_ENERGY, null)) {
+                    if (componentProvider.hasComponent(world, offsetPos, DefaultTypes.CARDINAL_ENERGY, null)) {
                         sendingComponentProvider.getComponent(world, sendingPos, DefaultTypes.CARDINAL_ENERGY, null).sendEnergy(world, offsetPos, energy);
                         world.updateListeners(offsetPos, world.getBlockState(offsetPos), world.getBlockState(offsetPos), 3);
                     }
@@ -90,7 +90,7 @@ public class ModPackets {
             BlockPos pos = buffer.readBlockPos();
             CompoundTag tag = buffer.readCompoundTag();
 
-            if(context.getPlayer() != null && context.getPlayer().world != null) {
+            if (context.getPlayer() != null && context.getPlayer().world != null) {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
 
@@ -102,11 +102,11 @@ public class ModPackets {
             BlockPos pos = buffer.readBlockPos();
             FluidStack stack = FluidStack.fluidFromTag(buffer.readCompoundTag());
 
-            if(context.getPlayer() != null && context.getPlayer().world != null) {
+            if (context.getPlayer() != null && context.getPlayer().world != null) {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
                 context.getTaskQueue().execute(() -> {
-                    if(world.getBlockEntity(pos) instanceof IFluidHandler) {
+                    if (world.getBlockEntity(pos) instanceof IFluidHandler) {
                         IFluidHandler fluidHandler = (IFluidHandler) world.getBlockEntity(pos);
                         fluidHandler.getFluidTank().fillFluid(stack);
                         world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
@@ -119,7 +119,7 @@ public class ModPackets {
             BlockPos pos = buf.readBlockPos();
             ItemStack stack = buf.readItemStack();
 
-            if(context.getPlayer() != null && context.getPlayer().world != null) {
+            if (context.getPlayer() != null && context.getPlayer().world != null) {
                 PlayerEntity player = context.getPlayer();
                 World world = player.world;
                 context.getTaskQueue().execute(() -> {
