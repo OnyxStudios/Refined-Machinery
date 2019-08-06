@@ -11,7 +11,6 @@ import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -37,10 +36,10 @@ public class EnergyHelper {
                 int energySent = storage.sendEnergy(world, receiver, sendAmount);
 
                 if(energySent > 0) {
-                    sendUpdatePacket(world, sendingPos, receiver, energySent);
+                    sendUpdatePacket(world, sendingPos, receiver, sendAmount);
+                    world.updateListeners(sendingPos, world.getBlockState(sendingPos), world.getBlockState(sendingPos), 3);
+                    world.updateListeners(receiver, world.getBlockState(receiver), world.getBlockState(receiver), 3);
                 }
-                world.updateListeners(sendingPos, world.getBlockState(sendingPos), world.getBlockState(sendingPos), 3);
-                world.updateListeners(receiver, world.getBlockState(receiver), world.getBlockState(receiver), 3);
             }
         }
     }
