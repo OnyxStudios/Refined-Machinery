@@ -21,7 +21,7 @@
     "client": [
       "abused_master.refinedmachinery.RefinedMachineryClient"
     ],
-    "rei_plugins": [
+    "rei_plugins_v0": [
       "abused_master.refinedmachinery.rei.RefinedMachineryPlugin"
     ]
   },

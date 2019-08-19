@@ -6,13 +6,15 @@ import abused_master.refinedmachinery.rei.plugin.EnergyFurnaceCategory;
 import abused_master.refinedmachinery.rei.plugin.EnergyFurnaceDisplay;
 import abused_master.refinedmachinery.rei.plugin.PulverizerCategory;
 import abused_master.refinedmachinery.rei.plugin.PulverizerDisplay;
-import me.shedaniel.rei.api.REIPluginEntry;
 import me.shedaniel.rei.api.RecipeHelper;
+import me.shedaniel.rei.api.plugins.REIPluginV0;
+import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.util.version.VersionParsingException;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.util.Identifier;
 
-public class RefinedMachineryPlugin implements REIPluginEntry {
+public class RefinedMachineryPlugin implements REIPluginV0 {
 
     public static final Identifier DISPLAY_TEXTURE = new Identifier(RefinedMachinery.MODID, "textures/gui/rei/display.png");
 
@@ -24,7 +26,12 @@ public class RefinedMachineryPlugin implements REIPluginEntry {
     public Identifier getPluginIdentifier() {
         return PLUGIN;
     }
-
+    
+    @Override
+    public SemanticVersion getMinimumVersion() throws VersionParsingException {
+        return SemanticVersion.parse("3.0-pre");
+    }
+    
     @Override
     public void registerPluginCategories(RecipeHelper recipeHelper) {
         recipeHelper.registerCategory(new PulverizerCategory());

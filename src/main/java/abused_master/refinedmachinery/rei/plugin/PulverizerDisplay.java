@@ -5,7 +5,6 @@ import abused_master.refinedmachinery.rei.RefinedMachineryPlugin;
 import me.shedaniel.rei.api.RecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.recipe.Recipe;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class PulverizerDisplay implements RecipeDisplay<PulverizerRecipe> {
+public class PulverizerDisplay implements RecipeDisplay {
 
     private PulverizerRecipe recipe;
     private List<List<ItemStack>> input;
@@ -26,12 +25,12 @@ public class PulverizerDisplay implements RecipeDisplay<PulverizerRecipe> {
         this.percentDrop = recipe.getRandomOutputChance();
         this.randomDrop = recipe.getRandomOutput();
     }
-
+    
     @Override
-    public Optional<Recipe<?>> getRecipe() {
-        return Optional.empty();
+    public Optional<Identifier> getRecipeLocation() {
+        return recipe != null ? Optional.ofNullable(recipe.getId()) : Optional.empty();
     }
-
+    
     @Override
     public List<List<ItemStack>> getInput() {
         return input;

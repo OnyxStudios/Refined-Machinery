@@ -3,10 +3,11 @@ package abused_master.refinedmachinery.rei.plugin;
 import abused_master.refinedmachinery.registry.ModBlocks;
 import abused_master.refinedmachinery.rei.RefinedMachineryPlugin;
 import com.mojang.blaze3d.platform.GlStateManager;
+import me.shedaniel.math.api.Point;
+import me.shedaniel.math.api.Rectangle;
 import me.shedaniel.rei.api.RecipeCategory;
-import me.shedaniel.rei.api.Renderable;
 import me.shedaniel.rei.api.Renderer;
-import me.shedaniel.rei.gui.renderables.RecipeRenderer;
+import me.shedaniel.rei.gui.renderers.RecipeRenderer;
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget;
 import me.shedaniel.rei.gui.widget.SlotWidget;
 import me.shedaniel.rei.gui.widget.Widget;
@@ -16,10 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -37,12 +36,12 @@ public class PulverizerCategory implements RecipeCategory<PulverizerDisplay> {
 
     @Override
     public Renderer getIcon() {
-        return Renderable.fromItemStack(new ItemStack(ModBlocks.PULVERIZER));
+        return Renderer.fromItemStack(new ItemStack(ModBlocks.PULVERIZER));
     }
 
     @Override
     public RecipeRenderer getSimpleRenderer(PulverizerDisplay recipe) {
-        return Renderable.fromRecipe(() -> Arrays.asList(recipe.getInput().get(0)), recipe::getOutput);
+        return Renderer.fromRecipe(() -> Arrays.asList(recipe.getInput().get(0)), recipe::getOutput);
     }
 
     @Override
@@ -68,9 +67,9 @@ public class PulverizerCategory implements RecipeCategory<PulverizerDisplay> {
         });
 
         List<List<ItemStack>> input = recipeDisplaySupplier.get().getInput();
-        widgets.add(new SlotWidget(startingPoint.x + 48, startingPoint.y + 19, input.get(0), false, true, true));
-        widgets.add(new SlotWidget(startingPoint.x + 108, startingPoint.y + 19, recipeDisplaySupplier.get().getOutput(), false, true, true));
-        widgets.add(new SlotWidget(startingPoint.x + 133, startingPoint.y + 19, Collections.singletonList(recipeDisplaySupplier.get().getRandomDrop()), false, true, true));
+        widgets.add(new SlotWidget(startingPoint.x + 48, startingPoint.y + 19, Renderer.fromItemStacks(input.get(0)), false, true, true));
+        widgets.add(new SlotWidget(startingPoint.x + 108, startingPoint.y + 19, Renderer.fromItemStacks(recipeDisplaySupplier.get().getOutput()), false, true, true));
+        widgets.add(new SlotWidget(startingPoint.x + 133, startingPoint.y + 19, Renderer.fromItemStack(recipeDisplaySupplier.get().getRandomDrop()), false, true, true));
 
         return widgets;
     }

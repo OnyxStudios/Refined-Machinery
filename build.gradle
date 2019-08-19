@@ -49,9 +49,9 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:${findbugs_version}"
 
 	//Rei Stuffs
-	modCompile "cloth:ClothEvents:${cloth_events_version}"
-	modCompile "cloth-config:ClothConfig2:${cloth_config_version}"
-	modCompile "me.shedaniel:RoughlyEnoughItems:${rei_version}"
+	modCompile ("me.shedaniel:RoughlyEnoughItems:${rei_version}") {
+		exclude module: "ModMenu"
+	}
 }
 
 jar {

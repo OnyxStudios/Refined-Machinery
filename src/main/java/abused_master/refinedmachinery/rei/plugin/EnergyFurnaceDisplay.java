@@ -23,10 +23,10 @@ public class EnergyFurnaceDisplay implements RecipeDisplay {
         this.input = recipe.getPreviewInputs().stream().map((i) -> Arrays.asList(i.getStackArray())).collect(Collectors.toList());
         this.output = Collections.singletonList(recipe.getOutput());
     }
-
+    
     @Override
-    public Optional<SmeltingRecipe> getRecipe() {
-        return Optional.of(recipe);
+    public Optional<Identifier> getRecipeLocation() {
+        return recipe != null ? Optional.ofNullable(recipe.getId()) : Optional.empty();
     }
 
     @Override
