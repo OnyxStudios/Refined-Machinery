@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "refinedmachinery:copper_dust"
-  },
-  "result": "refinedmachinery:copper_ingot",
-  "experience": 1.5,
-  "cookingtime": 200
-}

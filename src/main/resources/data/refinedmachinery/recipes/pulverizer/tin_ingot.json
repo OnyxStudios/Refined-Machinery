@@ -1,9 +1,0 @@
-{
-  "type": "refinedmachinery:pulverizer",
-  "input": {
-    "tag": "c:tin_ingot"
-  },
-  "result": {
-    "item": "refinedmachinery:tin_dust"
-  }
-}

@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "refinedmachinery:block/energy_charger" },
-        "facing=south": { "model": "refinedmachinery:block/energy_charger", "y": 180 },
-        "facing=west":  { "model": "refinedmachinery:block/energy_charger", "y": 270 },
-        "facing=east":  { "model": "refinedmachinery:block/energy_charger", "y": 90 }
-    }
-}

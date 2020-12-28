@@ -1,9 +1,0 @@
-{
-  "type": "refinedmachinery:pulverizer",
-  "input": {
-    "item": "minecraft:netherrack"
-  },
-  "result": {
-    "item": "minecraft:gravel"
-  }
-}

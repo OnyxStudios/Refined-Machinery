@@ -1,9 +1,0 @@
-{
-  "type": "refinedmachinery:pulverizer",
-  "input": {
-    "tag": "c:silver_ingot"
-  },
-  "result": {
-    "item": "refinedmachinery:silver_dust"
-  }
-}

@@ -1,122 +1,102 @@
-plugins {
-	id 'fabric-loom' version '0.2.4-SNAPSHOT'
-	id 'maven-publish'
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
 }
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'maven-publish'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+version = '1.0.0'
+group = 'dev.onyxstudios.refinedmachinery'
+archivesBaseName = 'refinedmachinery'
 
-group = project.mod_group
-archivesBaseName = project.mod_name
-version = project.mod_version
+sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
+    mappings channel: 'snapshot', version: '20201028-1.16.3'    
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                refinedmachinery {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                refinedmachinery {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'refinedmachinery', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                refinedmachinery {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
-compileJava {
-    options.encoding = 'UTF-8'
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-	jcenter()
-	maven { url = "https://maven.fabricmc.net/" }
-	maven { url = "https://maven.abusedmaster.xyz/" }
-	maven { url = "https://oss.sonatype.org/content/repositories/releases/" }
-	maven { url = "https://minecraft.curseforge.com/api/maven" }
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${mc_version}"
-	mappings "net.fabricmc:yarn:${yarn_mappings}"
-	modCompile "net.fabricmc:fabric-loader:${loader_version}"
-	modCompile "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.15'
 
-	modCompile "abused_master.abusedlib:AbusedLib:${abusedlib_version}"
-	include "abused_master.abusedlib:AbusedLib:${abusedlib_version}"
-	modCompile "com.github.NerdHubMC:Cardinal-Energy:${cardinal_version}"
-	include "com.github.NerdHubMC:Cardinal-Energy:${cardinal_version}"
-
-	//Base
-	modCompile "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-base:${cardinal_components}"
-	include "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-base:${cardinal_components}"
-	//Block
-	modCompile "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-item:${cardinal_components}"
-	include "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-item:${cardinal_components}"
-	//Item
-	modCompile "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-block:${cardinal_components}"
-	include "com.github.NerdHubMC.Cardinal-Components-API:cardinal-components-block:${cardinal_components}"
-	
-	compileOnly "com.google.code.findbugs:jsr305:${findbugs_version}"
-
-	//Rei Stuffs
-	modCompile "cloth:ClothEvents:${cloth_events_version}"
-	modCompile "cloth-config:ClothConfig2:${cloth_config_version}"
-	modCompile "me.shedaniel:RoughlyEnoughItems:${rei_version}"
 }
 
 jar {
-	from "LICENSE.md"
-	manifest.mainAttributes(
-			"Implementation-Title": project.name,
-			"Implementation-Version": project.version,
-			"Maven-Artifact": "${project.group}:${project.archivesBaseName}:${project.version}".toLowerCase(Locale.ROOT),
-			"Built-On-Minecraft": "${mc_version}",
-			"Built-On-Java": "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})"
-	)
+    manifest {
+        attributes([
+            "Specification-Title": "Refined Machinery",
+            "Specification-Vendor": "Refined Machinery",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"Refined Machinery",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-	from sourceSets.main.allSource
-	classifier = 'sources'
-}
 
-artifacts {
-	archives sourcesJar
-}
+jar.finalizedBy('reobfJar') 
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			afterEvaluate {
-				artifact remapJar.output
-			}
-			artifact sourcesJar
-			pom {
-				name = "Refined-Machinery"
-				url = "https://github.com/NerdHubMC/Refined-Machinery"
-				licenses {
-					license {
-						name = "MIT License"
-						url = "https://github.com/NerdHubMC/Refined-Machinery/blob/master/LICENSE.md"
-					}
-				}
-				scm {
-					url = "https://github.com/NerdHubMC/Refined-Machinery"
-					connection = "scm:git:git://github.com/NerdHubMC/Refined-Machinery.git"
-					developerConnection = "scm:git:git@github.com:NerdHubMC/Refined-Machinery.git"
-				}
-				issueManagement {
-					system = "github"
-					url = "https://github.com/NerdHubMC/Refined-Machinery/issues"
-				}
-			}
-		}
-	}
-
-	repositories {
-		if (project.hasProperty("maven_user") && project.hasProperty("maven_pass")) {
-			maven {
-				name = "Abused's Maven"
-				url = findProperty("maven_url")
-				credentials {
-					username = findProperty("maven_user")
-					password = findProperty("maven_pass")
-				}
-				authentication {
-					basic(BasicAuthentication)
-				}
-			}
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
 }
-tasks.publish.dependsOn build

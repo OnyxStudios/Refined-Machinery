@@ -1,9 +1,0 @@
-{
-  "type": "refinedmachinery:pulverizer",
-  "input": {
-    "tag": "c:nickel_ingot"
-  },
-  "result": {
-    "item": "refinedmachinery:nickel_dust"
-  }
-}

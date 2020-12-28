@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "refinedmachinery:block/coalgen" },
-        "facing=south": { "model": "refinedmachinery:block/coalgen", "y": 180 },
-        "facing=west":  { "model": "refinedmachinery:block/coalgen", "y": 270 },
-        "facing=east":  { "model": "refinedmachinery:block/coalgen", "y": 90 }
-    }
-}

@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="MIT"
+issueTrackerURL="https://github.com/OnyxStudios/Refined-Machinery/issues/"
+
+[[mods]]
+modId="refinedmachinery"
+version="1.0.0"
+displayName="Refined Machinery"
+authors="abused_master"
+description='''
+A simple yet overly complex tech mod with too many things.
+'''
+
+# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+[[dependencies.refinedmachinery]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35,)"
+    ordering="NONE"
+    side="BOTH"

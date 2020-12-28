@@ -1,9 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {
-    "item": "refinedmachinery:coal_dust"
-  },
-  "result": "minecraft:coal",
-  "experience": 1.5,
-  "cookingtime": 200
-}
