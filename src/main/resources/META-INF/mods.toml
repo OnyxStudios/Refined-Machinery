@@ -12,7 +12,6 @@ description='''
 A simple yet overly complex tech mod with too many things.
 '''
 
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.refinedmachinery]]
     modId="forge"
     mandatory=true

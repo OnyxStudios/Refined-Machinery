@@ -1,9 +1,10 @@
 package dev.onyxstudios.refinedmachinery;
 
-import net.minecraft.block.Blocks;
+import dev.onyxstudios.refinedmachinery.client.shaders.Shaders;
+import dev.onyxstudios.refinedmachinery.network.ModPackets;
+import dev.onyxstudios.refinedmachinery.registry.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -14,25 +15,36 @@ import org.apache.logging.log4j.Logger;
 @Mod("refinedmachinery")
 public class RefinedMachinery {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger(RefinedMachinery.class);
     public static String MODID = "refinedmachinery";
     public static ItemGroup TAB = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(Blocks.REDSTONE_BLOCK);
+            return new ItemStack(ModBlocks.coalGenObject.get());
         }
     };
 
     public RefinedMachinery() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::initClient);
-        MinecraftForge.EVENT_BUS.register(this);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModRenders::onModelBake);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModRenders::onModelRegistry);
+
+        ModBlocks.blockRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModBlocks.itemRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModItems.itemRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModEntities.tileRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModEntities.containersRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModSounds.soundRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     private void init(FMLCommonSetupEvent event) {
+        ModPackets.registerPackets();
     }
 
-
     private void initClient(FMLClientSetupEvent event) {
+        ModRenders.registerScreens();
+        ModRenders.registerRenderLayers();
+        event.getMinecraftSupplier().get().runAsync(() -> Shaders.init());
     }
 }

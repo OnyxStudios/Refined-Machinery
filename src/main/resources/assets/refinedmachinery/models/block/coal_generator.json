@@ -1,0 +1,25 @@
+{
+  "loader": "refinedmachinery:machine",
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down": {"texture": "#bottom", "cullface": "down"},
+        "up": {"texture": "#top", "cullface": "up"},
+        "north": {"texture": "#front", "cullface": "north"},
+        "south": {"texture": "#sides", "cullface": "south"},
+        "west": {"texture": "#sides", "cullface": "west"},
+        "east": {"texture": "#sides", "cullface": "east"}
+      }
+    }
+  ],
+  "textures": {
+    "particle": "refinedmachinery:block/machine_side",
+    "front": "refinedmachinery:block/coal_gen_front",
+    "sides": "refinedmachinery:block/machine_side",
+    "top": "refinedmachinery:block/machine_side",
+    "bottom": "refinedmachinery:block/machine_side"
+  }
+}

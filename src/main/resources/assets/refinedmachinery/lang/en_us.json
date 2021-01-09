@@ -1,3 +1,4 @@
 {
-  "itemGroup.refinedmachinery": "Refined Machinery"
+  "itemGroup.refinedmachinery": "Refined Machinery",
+  "block.refinedmachinery.coal_generator": "Coal Generator"
 }

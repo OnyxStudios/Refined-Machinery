@@ -19,7 +19,7 @@ sourceCompatibility = targetCompatibility = '1.8'
 
 minecraft {
     mappings channel: 'snapshot', version: '20201028-1.16.3'    
-    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -64,22 +64,25 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.1.15'
-
+    compile "com.google.code.findbugs:jsr305:3.0.2"
+    compile "org.joml:joml:1.9.25"
 }
 
 jar {
     manifest {
         attributes([
-            "Specification-Title": "Refined Machinery",
-            "Specification-Vendor": "Refined Machinery",
+            "Specification-Title": "refinedmachinery",
+            "Specification-Vendor": "onyxstudios",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"Refined Machinery",
+            "Implementation-Vendor" :"onyxstudios",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

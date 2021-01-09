@@ -1,0 +1,34 @@
+{
+    "variants": {
+        "facing=east,burning=false": {
+            "model": "refinedmachinery:block/coal_generator",
+            "y": 90
+        },
+        "facing=east,burning=true": {
+            "model": "refinedmachinery:block/coal_generator_on",
+            "y": 90
+        },
+        "facing=north,burning=false": {
+            "model": "refinedmachinery:block/coal_generator"
+        },
+        "facing=north,burning=true": {
+            "model": "refinedmachinery:block/coal_generator_on"
+        },
+        "facing=south,burning=false": {
+            "model": "refinedmachinery:block/coal_generator",
+            "y": 180
+        },
+        "facing=south,burning=true": {
+            "model": "refinedmachinery:block/coal_generator_on",
+            "y": 180
+        },
+        "facing=west,burning=false": {
+            "model": "refinedmachinery:block/coal_generator",
+            "y": 270
+        },
+        "facing=west,burning=true": {
+            "model": "refinedmachinery:block/coal_generator_on",
+            "y": 270
+        }
+    }
+}
