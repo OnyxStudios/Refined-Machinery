@@ -3,6 +3,8 @@ package dev.onyxstudios.refinedmachinery.registry;
 import dev.onyxstudios.refinedmachinery.RefinedMachinery;
 import dev.onyxstudios.refinedmachinery.blocks.generators.CoalGeneratorBlock;
 import dev.onyxstudios.refinedmachinery.blocks.generators.GeneratorBlock;
+import dev.onyxstudios.refinedmachinery.blocks.generators.WindTurbineBlock;
+import dev.onyxstudios.refinedmachinery.items.WindTurbineItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -19,4 +21,8 @@ public class ModBlocks {
 
     public static RegistryObject<GeneratorBlock> coalGenObject = blockRegistry.register("coal_generator", () -> new CoalGeneratorBlock());
     public static RegistryObject<Item> coalGenItemObject = itemRegistry.register("coal_generator", () -> new BlockItem(coalGenObject.get(), new Item.Properties().group(RefinedMachinery.TAB)));
+
+    public static RegistryObject<WindTurbineBlock> windTurbineObject = blockRegistry.register("wind_turbine", () -> new WindTurbineBlock());
+    public static RegistryObject<Item> windTurbineItemObject = itemRegistry.register("wind_turbine", () -> new WindTurbineItem());
+
 }

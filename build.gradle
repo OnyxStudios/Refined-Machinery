@@ -66,12 +66,20 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     mavenCentral()
     jcenter()
+
+    maven { url 'https://modmaven.dev/' }
+    maven { url = "https://dvs1.progwml6.com/files/maven/" }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.1.15'
     compile "com.google.code.findbugs:jsr305:3.0.2"
     compile "org.joml:joml:1.9.25"
+
+    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
+    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")
+    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
+    compile fg.deobf("mezz.jei:jei-${jei_version}")
 }
 
 jar {

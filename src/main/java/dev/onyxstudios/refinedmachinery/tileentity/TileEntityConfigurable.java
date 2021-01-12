@@ -94,6 +94,8 @@ public class TileEntityConfigurable extends TileEntityInventory {
         }
 
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+        //Update neighbors so they update connections (ex: Pipes to reconnect to tile)
+        world.notifyNeighborsOfStateChange(getPos(), getBlockState().getBlock());
         requestModelDataUpdate();
     }
 

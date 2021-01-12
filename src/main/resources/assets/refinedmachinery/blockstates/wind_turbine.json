@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "turbine_type=base": {
+      "model": "refinedmachinery:block/wind_turbine/wind_turbine_bottom"
+    },
+    "turbine_type=middle": {
+      "model": "refinedmachinery:block/wind_turbine/wind_turbine_middle"
+    },
+    "turbine_type=top": {
+      "model": "refinedmachinery:block/wind_turbine/wind_turbine_top"
+    }
+  }
+}

@@ -20,6 +20,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
 
+//TODO This is really hacky, rewrite at some point
 public class MachineSettingsScene {
 
     public static final int DEFAULT_WIDTH = 162;

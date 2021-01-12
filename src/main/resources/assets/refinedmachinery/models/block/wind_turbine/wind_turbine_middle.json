@@ -1,0 +1,31 @@
+{
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "refinedmachinery:block/energy_output",
+		"0": "refinedmachinery:block/white_machine_side"
+	},
+	"elements": [
+		{
+			"name": "Middle Shaft",
+			"from": [5, 0, 5],
+			"to": [11, 16, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13, 8, 13]},
+			"faces": {
+				"north": {"uv": [6, 1, 12, 16], "texture": "#0"},
+				"east": {"uv": [7, 1, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 1, 9, 16], "texture": "#0"},
+				"west": {"uv": [4, 1, 10, 16], "texture": "#0"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#0"},
+				"down": {"uv": [0, 0, 6, 6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {},
+	"groups": [
+		{
+			"name": "Middle Group",
+			"origin": [8, 8, 8],
+			"children": [0]
+		}
+	]
+}

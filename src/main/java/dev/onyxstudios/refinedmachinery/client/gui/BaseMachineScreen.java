@@ -10,7 +10,6 @@ import dev.onyxstudios.refinedmachinery.network.ConfigureMachineMessage;
 import dev.onyxstudios.refinedmachinery.network.ModPackets;
 import dev.onyxstudios.refinedmachinery.network.OpenSettingsMessage;
 import dev.onyxstudios.refinedmachinery.network.UpdateRedstoneMessage;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -18,21 +17,8 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class BaseMachineScreen<T extends BaseMachineContainer> extends ContainerScreen<T> {
-
-    public ResourceLocation MACHINE_GUI;
-    public int powerBarX = 8;
-    public int powerBarY = 67;
-    public int powerBarWidth = 13;
-    public int powerBarHeight = 58;
+public abstract class BaseMachineScreen<T extends BaseMachineContainer> extends BaseScreen<T> {
 
     public int redstoneButtonX = 151;
     public int redstoneButtonY = 8;
@@ -49,16 +35,12 @@ public abstract class BaseMachineScreen<T extends BaseMachineContainer> extends 
     public MachineSettingsScene scene;
 
     public BaseMachineScreen(BaseMachineContainer container, PlayerInventory inv, ITextComponent titleIn, ResourceLocation screenLocation) {
-        super((T) container, inv, titleIn);
-        this.MACHINE_GUI = screenLocation;
+        super(container, inv, titleIn, screenLocation);
     }
 
-    public abstract void renderGui(MatrixStack matrixStack, int x, int y);
-
     @Override
-    protected void init() {
+    public void init() {
         super.init();
-        this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
         this.redstoneButton = this.addButton(new RedstoneButton(
                 guiLeft + redstoneButtonX,
                 guiTop + redstoneButtonY,
@@ -99,19 +81,8 @@ public abstract class BaseMachineScreen<T extends BaseMachineContainer> extends 
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        super.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
-    }
-
-    @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        getMinecraft().getTextureManager().bindTexture(MACHINE_GUI);
-        blit(matrixStack, guiLeft, guiTop, 0, 0, xSize, ySize);
-
-        renderGui(matrixStack, x, y);
-        renderEnergy(matrixStack, x, y);
+    public void renderGuiLast(MatrixStack matrixStack, int x, int y) {
+        renderEnergy(matrixStack, container.getTileEntity(), x, y);
 
         if(container.getTileEntity().isSettingsOpen()) {
             renderSettingsOverlay(matrixStack);
@@ -123,21 +94,6 @@ public abstract class BaseMachineScreen<T extends BaseMachineContainer> extends 
         scene.renderSceneBuffer();
         RenderSystem.bindTexture(scene.framebuffer.getTextureId());
         innerBlit(matrixStack.getLast().getMatrix(), guiLeft + 7, guiLeft + 7 + 162, guiTop + 83, guiTop + 83 + 76, this.getBlitOffset(), 0, 1, 1, 0);
-    }
-
-    public void renderEnergy(MatrixStack stack, int x, int y) {
-        LazyOptional<IEnergyStorage> energyCapability = container.getTileEntity().getCapability(CapabilityEnergy.ENERGY);
-        energyCapability.ifPresent(storage -> {
-            int i = 58;
-            int j = storage.getEnergyStored() * i / storage.getMaxEnergyStored();
-            blit(stack, guiLeft + powerBarX, guiTop + powerBarY - j, 191, powerBarHeight - j, 13, j);
-
-            if(this.isPointInRegion(powerBarX - 1, powerBarY - powerBarHeight, powerBarWidth, powerBarHeight, x, y)) {
-                List<StringTextComponent> energy = new ArrayList<>();
-                energy.add(new StringTextComponent(storage.getEnergyStored() + " / " + storage.getMaxEnergyStored() + "  FE"));
-                GuiUtils.drawHoveringText(stack, energy, x, y, getMinecraft().currentScreen.width, getMinecraft().currentScreen.height, -1, getMinecraft().fontRenderer);
-            }
-        });
     }
 
     @Override

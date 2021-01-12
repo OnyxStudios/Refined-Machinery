@@ -19,7 +19,7 @@ public class CoalGeneratorBlock extends GeneratorBlock {
     public static BooleanProperty IS_BURNING = BooleanProperty.create("burning");
 
     public CoalGeneratorBlock() {
-        super(Properties.create(Material.ROCK).hardnessAndResistance(1.5f), 80, 320);
+        super(Properties.create(Material.ROCK).hardnessAndResistance(1.5f), 40, 320);
         this.setDefaultState(this.stateContainer.getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(IS_BURNING, false));
     }
 
