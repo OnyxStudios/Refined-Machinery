@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 public class RefinedMachinery {
 
     public static final Logger LOGGER = LogManager.getLogger(RefinedMachinery.class);
-    public static String MODID = "refinedmachinery";
+    public static final String MODID = "refinedmachinery";
     public static ItemGroup TAB = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
@@ -43,6 +43,7 @@ public class RefinedMachinery {
     }
 
     private void initClient(FMLClientSetupEvent event) {
+        ModRenders.register(event);
         ModRenders.registerScreens();
         ModRenders.registerRenderLayers();
         event.getMinecraftSupplier().get().runAsync(() -> Shaders.init());

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "refinedmachinery:steel_nugget"
+    }
+  },
+  "result": {
+    "item": "refinedmachinery:steel_ingot"
+  }
+}

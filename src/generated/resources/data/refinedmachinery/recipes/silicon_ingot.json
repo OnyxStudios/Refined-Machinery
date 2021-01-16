@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "refinedmachinery:quartz_dust"
+  },
+  "result": "refinedmachinery:silicon_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

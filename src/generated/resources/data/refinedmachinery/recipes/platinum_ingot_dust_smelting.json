@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "refinedmachinery:platinum_dust"
+  },
+  "result": "refinedmachinery:platinum_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

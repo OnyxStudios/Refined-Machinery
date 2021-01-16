@@ -14,6 +14,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -137,5 +138,10 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
     @Override
     public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new WindTurbineContainer(id, playerInventory, this);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(pos, pos.add(1, 3, 1));
     }
 }

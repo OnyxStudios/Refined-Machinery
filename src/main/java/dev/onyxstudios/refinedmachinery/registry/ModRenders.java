@@ -5,6 +5,9 @@ import dev.onyxstudios.refinedmachinery.client.gui.CoalGenScreen;
 import dev.onyxstudios.refinedmachinery.client.gui.WindTurbineScreen;
 import dev.onyxstudios.refinedmachinery.client.models.MachineModelLoader;
 import dev.onyxstudios.refinedmachinery.client.render.WindTurbineRenderer;
+import dev.onyxstudios.refinedmachinery.registry.resource.Resource;
+import dev.onyxstudios.refinedmachinery.registry.resource.ResourceBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -15,6 +18,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ModRenders {
 
@@ -28,6 +32,30 @@ public class ModRenders {
     public static IBakedModel INPUT_OUTPUT_MODEL;
     public static IBakedModel TURBINE_ROTORS_MODEL;
 
+    public static void register(FMLClientSetupEvent event) {
+        Minecraft minecraft = event.getMinecraftSupplier().get();
+        for (Resource resource : ResourceBuilder.resourceList) {
+            if(resource.isIngotValid() && resource.getItemTexture().equals(ResourceBuilder.BASE_INGOT_TEXTURE))
+                minecraft.getItemColors().register((itemStack, tintIndex) -> resource.getColor(), resource.getIngotObject().get());
+
+            if(resource.isDustValid())
+                minecraft.getItemColors().register((itemStack, tintIndex) -> resource.getColor(), resource.getDustObject().get());
+
+            if(resource.isNuggetValid())
+                minecraft.getItemColors().register((itemStack, tintIndex) -> resource.getColor(), resource.getNuggetObject().get());
+
+            if(resource.isOreValid()) {
+                minecraft.getBlockColors().register((state, displayReader, pos, tintIndex) -> tintIndex == 1 ? resource.getColor() : 0xFFFFFF, resource.getOreObject().get());
+                minecraft.getItemColors().register((itemStack, tintIndex) -> tintIndex == 1 ? resource.getColor() : 0xFFFFFF, resource.getOreItemObject().get());
+            }
+
+            if(resource.isBlockValid()) {
+                minecraft.getBlockColors().register((state, displayReader, pos, tintIndex) -> resource.getColor(), resource.getBlockObject().get());
+                minecraft.getItemColors().register((itemStack, tintIndex) -> resource.getColor(), resource.getBlockItemObject().get());
+            }
+        }
+    }
+
     public static void registerScreens() {
         ScreenManager.registerFactory(ModEntities.coalGenContainerType.get(), CoalGenScreen::new);
         ScreenManager.registerFactory(ModEntities.turbineContainerType.get(), WindTurbineScreen::new);
@@ -36,6 +64,13 @@ public class ModRenders {
     public static void registerRenderLayers() {
         RenderTypeLookup.setRenderLayer(ModBlocks.coalGenObject.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.windTurbineObject.get(), RenderType.getCutout());
+        for (Resource resource : ResourceBuilder.resourceList) {
+            if(resource.isOreValid())
+                RenderTypeLookup.setRenderLayer(resource.getOreObject().get(), RenderType.getCutout());
+
+            if(resource.isBlockValid())
+                RenderTypeLookup.setRenderLayer(resource.getBlockObject().get(), RenderType.getCutout());
+        }
 
         ClientRegistry.bindTileEntityRenderer(ModEntities.windTurbineTileType.get(), WindTurbineRenderer::new);
     }

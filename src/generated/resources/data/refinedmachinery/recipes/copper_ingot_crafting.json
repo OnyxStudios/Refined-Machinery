@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "refinedmachinery:copper_block"
+    }
+  ],
+  "result": {
+    "item": "refinedmachinery:copper_ingot",
+    "count": 9
+  }
+}

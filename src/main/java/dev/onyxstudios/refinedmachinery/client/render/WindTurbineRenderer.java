@@ -34,12 +34,7 @@ public class WindTurbineRenderer extends TileEntityRenderer<TileEntityWindTurbin
         matrixStack.translate(-0.5, 0, -0.5);
         BlockModelRenderer modelRenderer = Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer();
         Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-        modelRenderer.renderModel(matrixStack.getLast(), buffer.getBuffer(RenderType.getCutout()), null, ModRenders.TURBINE_ROTORS_MODEL, 1, 1, 1, combinedLight, combinedLight, EmptyModelData.INSTANCE);
+        modelRenderer.renderModel(matrixStack.getLast(), buffer.getBuffer(RenderType.getCutout()), null, ModRenders.TURBINE_ROTORS_MODEL, 1, 1, 1, combinedLight, combinedOverlay, EmptyModelData.INSTANCE);
         matrixStack.pop();
-    }
-
-    @Override
-    public boolean isGlobalRenderer(TileEntityWindTurbine te) {
-        return true;
     }
 }

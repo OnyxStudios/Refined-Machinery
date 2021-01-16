@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "refinedmachinery:uranium_ore"
+  },
+  "result": "refinedmachinery:uranium_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}
