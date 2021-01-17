@@ -64,6 +64,7 @@ public class ModRenders {
     public static void registerRenderLayers() {
         RenderTypeLookup.setRenderLayer(ModBlocks.coalGenObject.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.windTurbineObject.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.geothermalGenObject.get(), RenderType.getCutout());
         for (Resource resource : ResourceBuilder.resourceList) {
             if(resource.isOreValid())
                 RenderTypeLookup.setRenderLayer(resource.getOreObject().get(), RenderType.getCutout());

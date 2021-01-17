@@ -17,7 +17,7 @@ public class WindTurbineScreen extends BaseScreen<WindTurbineContainer> {
     public static int TEXT_COLOR = 0x039dfc;
 
     public WindTurbineScreen(Container container, PlayerInventory inv, ITextComponent titleIn) {
-        super(container, inv, titleIn, new ResourceLocation(RefinedMachinery.MODID, "textures/gui/gui_windturbine.png"));
+        super(container, inv, titleIn, new ResourceLocation(RefinedMachinery.MODID, "textures/gui/gui_information.png"));
     }
 
     @Override

@@ -4,6 +4,7 @@ import dev.onyxstudios.refinedmachinery.RefinedMachinery;
 import dev.onyxstudios.refinedmachinery.client.container.CoalGenContainer;
 import dev.onyxstudios.refinedmachinery.client.container.WindTurbineContainer;
 import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityCoalGen;
+import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityGeothermal;
 import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityWindTurbine;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
@@ -31,4 +32,6 @@ public class ModEntities {
         TileEntityWindTurbine tileEntityWindTurbine = (TileEntityWindTurbine) inv.player.world.getTileEntity(pos);
         return new WindTurbineContainer(windowId, inv, tileEntityWindTurbine);
     }));
+
+    public static RegistryObject<TileEntityType<TileEntityGeothermal>> geothermalTileType = tileRegistry.register("geothermal_generator_tile", () -> TileEntityType.Builder.create(TileEntityGeothermal::new, ModBlocks.geothermalGenObject.get()).build(null));
 }
