@@ -1,9 +1,11 @@
 package dev.onyxstudios.refinedmachinery.registry;
 
 import dev.onyxstudios.refinedmachinery.RefinedMachinery;
-import dev.onyxstudios.refinedmachinery.client.container.*;
-import dev.onyxstudios.refinedmachinery.tileentity.generators.*;
-import dev.onyxstudios.refinedmachinery.tileentity.generators.reactor.*;
+import dev.onyxstudios.refinedmachinery.client.container.CoalGenContainer;
+import dev.onyxstudios.refinedmachinery.client.container.WindTurbineContainer;
+import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityCoalGen;
+import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityGeothermal;
+import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityWindTurbine;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
