@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModTags {
 
+    public static final ITag.INamedTag<Item> COOLANT = createModTag("coolant_item");
     //Item Tags
     public static final ITag.INamedTag<Item> COPPER_DUST = createForgeTag("dusts/copper");
     public static final ITag.INamedTag<Item> SILVER_DUST = createForgeTag("dusts/silver");
@@ -65,15 +66,15 @@ public class ModTags {
     public static final ITag.INamedTag<Block> URANIUM_ORE = createBlockWrapper(URANIUM_ORE_ITEM);
     public static final ITag.INamedTag<Block> PLATINUM_ORE = createBlockWrapper(PLATINUM_ORE_ITEM);
 
-    public static ITag.INamedTag createModTag(String name) {
+    public static ITag.INamedTag<Item> createModTag(String name) {
         return ItemTags.makeWrapperTag(new ResourceLocation(RefinedMachinery.MODID, name).toString());
     }
 
-    public static ITag.INamedTag createForgeTag(String name) {
+    public static ITag.INamedTag<Item> createForgeTag(String name) {
         return ItemTags.makeWrapperTag(new ResourceLocation("forge", name).toString());
     }
 
-    public static ITag.INamedTag createBlockWrapper(ITag.INamedTag<?> tag) {
+    public static ITag.INamedTag<Block> createBlockWrapper(ITag.INamedTag<?> tag) {
         return BlockTags.makeWrapperTag(tag.getName().toString());
     }
 }

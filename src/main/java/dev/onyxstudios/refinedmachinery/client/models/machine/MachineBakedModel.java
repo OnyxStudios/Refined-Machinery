@@ -1,4 +1,4 @@
-package dev.onyxstudios.refinedmachinery.client.models;
+package dev.onyxstudios.refinedmachinery.client.models.machine;
 
 import dev.onyxstudios.refinedmachinery.registry.ModRenders;
 import dev.onyxstudios.refinedmachinery.utils.MachineConfigType;
@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class MachineBakedModel implements IDynamicBakedModel {
 
-    private IBakedModel previousModel;
+    private final IBakedModel previousModel;
 
     public MachineBakedModel(IBakedModel bakedModel) {
         this.previousModel = bakedModel;
@@ -32,8 +32,9 @@ public class MachineBakedModel implements IDynamicBakedModel {
         if(side == null)
             return quads;
 
-        if(modelData.getData(ModelDataTypes.CONFIG_PROPERTY) != null) {
-            MachineConfigType type = modelData.getData(ModelDataTypes.CONFIG_PROPERTY)[side.ordinal()];
+        MachineConfigType[] types = modelData.getData(ModelDataTypes.CONFIG_PROPERTY);
+        if(types != null) {
+            MachineConfigType type = types[side.ordinal()];
 
             if(type != MachineConfigType.NONE) {
                 quads.addAll(createConfigQuads(side, type, rand));

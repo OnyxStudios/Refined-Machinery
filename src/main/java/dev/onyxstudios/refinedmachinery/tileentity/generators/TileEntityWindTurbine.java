@@ -30,8 +30,8 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
     //10% Degrade per turbine
     public static float DEGRADE_AMOUNT = 0.1f;
 
-    //1% Energy Increase Per Block after level 64
-    public static float HEIGHT_UPGRADE = 0.01f;
+    //2% Energy Increase Per Block after level 64
+    public static float HEIGHT_UPGRADE = 0.02f;
     public static int Y_LEVEL = 64;
 
     public RMEnergyStorage storage;
@@ -63,7 +63,7 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
 
     @Override
     public void tick() {
-        if(world.isRemote)
+        if (world.isRemote)
             return;
 
         int genAmount = getGenAmount();
@@ -74,7 +74,7 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
 
     public int getGenAmount() {
         float genAmount = ModBlocks.windTurbineObject.get().productionAmount;
-        if(getPos().getY() > Y_LEVEL)
+        if (getPos().getY() > Y_LEVEL)
             genAmount += (genAmount * HEIGHT_UPGRADE) * (getPos().getY() - Y_LEVEL);
 
         genAmount -= (genAmount * DEGRADE_AMOUNT) * nearbyTurbines;
@@ -87,11 +87,12 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
         Iterable<BlockPos> blocks = BlockPos.getAllInBoxMutable(this.getPos().add(-DEGRADE_RADIUS, 0, -DEGRADE_RADIUS), this.getPos().add(DEGRADE_RADIUS, 3, DEGRADE_RADIUS));
 
         for (BlockPos radiusPos : blocks) {
-            if(!radiusPos.equals(pos) && world.getTileEntity(radiusPos) instanceof TileEntityWindTurbine) {
+            if (!radiusPos.equals(pos) && world.getTileEntity(radiusPos) instanceof TileEntityWindTurbine) {
                 addTurbine();
                 ((TileEntityWindTurbine) world.getTileEntity(radiusPos)).addTurbine();
             }
         }
+
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
     }
 
@@ -99,11 +100,12 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
         Iterable<BlockPos> blocks = BlockPos.getAllInBoxMutable(this.getPos().add(-DEGRADE_RADIUS, 0, -DEGRADE_RADIUS), this.getPos().add(DEGRADE_RADIUS, 3, DEGRADE_RADIUS));
 
         for (BlockPos radiusPos : blocks) {
-            if(!radiusPos.equals(pos) && world.getTileEntity(radiusPos) instanceof TileEntityWindTurbine) {
+            if (!radiusPos.equals(pos) && world.getTileEntity(radiusPos) instanceof TileEntityWindTurbine) {
                 removeTurbine();
                 ((TileEntityWindTurbine) world.getTileEntity(radiusPos)).removeTurbine();
             }
         }
+
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
     }
 
@@ -112,7 +114,7 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
     }
 
     public void removeTurbine() {
-        if(nearbyTurbines > 0)
+        if (nearbyTurbines > 0)
             nearbyTurbines--;
     }
 

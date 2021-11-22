@@ -23,13 +23,13 @@ public class ModBlocks {
     public static final DeferredRegister<Block> blockRegistry = DeferredRegister.create(ForgeRegistries.BLOCKS, RefinedMachinery.MODID);
     public static final DeferredRegister<Item> itemRegistry = DeferredRegister.create(ForgeRegistries.ITEMS, RefinedMachinery.MODID);
 
-    public static RegistryObject<GeneratorBlock> coalGenObject = blockRegistry.register("coal_generator", () -> new CoalGeneratorBlock());
+    public static RegistryObject<GeneratorBlock> coalGenObject = blockRegistry.register("coal_generator", CoalGeneratorBlock::new);
     public static RegistryObject<Item> coalGenItemObject = itemRegistry.register("coal_generator", () -> new BlockItem(coalGenObject.get(), new Item.Properties().group(RefinedMachinery.TAB)));
 
-    public static RegistryObject<WindTurbineBlock> windTurbineObject = blockRegistry.register("wind_turbine", () -> new WindTurbineBlock());
-    public static RegistryObject<Item> windTurbineItemObject = itemRegistry.register("wind_turbine", () -> new WindTurbineItem());
+    public static RegistryObject<WindTurbineBlock> windTurbineObject = blockRegistry.register("wind_turbine", WindTurbineBlock::new);
+    public static RegistryObject<Item> windTurbineItemObject = itemRegistry.register("wind_turbine", WindTurbineItem::new);
 
-    public static RegistryObject<GeothermalGenBlock> geothermalGenObject = blockRegistry.register("geothermal_generator", () -> new GeothermalGenBlock());
+    public static RegistryObject<GeothermalGenBlock> geothermalGenObject = blockRegistry.register("geothermal_generator", GeothermalGenBlock::new);
     public static RegistryObject<Item> geothermalGenItemObject = itemRegistry.register("geothermal_generator", () -> new BlockItem(geothermalGenObject.get(), new Item.Properties().group(RefinedMachinery.TAB)));
 
     public static Resource COPPER = new ResourceBuilder("copper").setColor(0xFFB32A).setHardness(3).setHarvestLevel(1).addIngot().addDust().addNugget().addOre().addResourceBlock().build(blockRegistry, itemRegistry);

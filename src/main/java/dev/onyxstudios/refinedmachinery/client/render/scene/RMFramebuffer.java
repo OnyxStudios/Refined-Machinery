@@ -6,8 +6,8 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class RMFramebuffer {
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     private int fbo;
     private int rbo;

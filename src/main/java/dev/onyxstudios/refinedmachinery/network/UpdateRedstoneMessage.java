@@ -32,7 +32,7 @@ public class UpdateRedstoneMessage {
         ctx.get().enqueueWork(() -> {
             World world = ctx.get().getSender().world;
 
-            if(world.isBlockLoaded(message.machinePos) && world.getTileEntity(message.machinePos) instanceof TileEntityConfigurable) {
+            if (world.isBlockLoaded(message.machinePos) && world.getTileEntity(message.machinePos) instanceof TileEntityConfigurable) {
                 TileEntityConfigurable tile = (TileEntityConfigurable) world.getTileEntity(message.machinePos);
                 tile.setRequiresRedstone(message.requiresRedstone);
             }

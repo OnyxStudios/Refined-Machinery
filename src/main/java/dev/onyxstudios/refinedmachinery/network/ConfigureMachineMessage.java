@@ -11,8 +11,8 @@ import java.util.function.Supplier;
 
 public class ConfigureMachineMessage {
 
-    private BlockPos machinePos;
-    private Direction direction;
+    private final BlockPos machinePos;
+    private final Direction direction;
 
     public ConfigureMachineMessage(BlockPos pos, Direction direction) {
         this.machinePos = pos;
@@ -42,6 +42,7 @@ public class ConfigureMachineMessage {
                 tile.updateConfiguration(message.direction);
             }
         });
+
         ctx.get().setPacketHandled(true);
     }
 }

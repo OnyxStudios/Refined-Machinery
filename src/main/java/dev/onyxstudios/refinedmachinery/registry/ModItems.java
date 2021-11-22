@@ -10,4 +10,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItems {
 
     public static final DeferredRegister<Item> itemRegistry = DeferredRegister.create(ForgeRegistries.ITEMS, RefinedMachinery.MODID);
+
+    //public static RegistryObject<Item> fissile = itemRegistry.register("", () -> null);
 }

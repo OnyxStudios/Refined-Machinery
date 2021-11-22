@@ -23,6 +23,7 @@ public abstract class BaseScreen<T extends Container> extends ContainerScreen<T>
     public int powerBarY = 67;
     public int powerBarWidth = 13;
     public int powerBarHeight = 58;
+    public int powerBarU = 191;
 
     public BaseScreen(Container container, PlayerInventory inv, ITextComponent titleIn, ResourceLocation screenLocation) {
         super((T) container, inv, titleIn);
@@ -54,12 +55,25 @@ public abstract class BaseScreen<T extends Container> extends ContainerScreen<T>
     public abstract void renderGuiLast(MatrixStack matrixStack, int x, int y);
 
     public void renderEnergy(MatrixStack stack, TileEntity tile, int x, int y) {
+        renderEnergyBar(stack, tile);
+        renderEnergyText(stack, tile, x, y);
+    }
+
+    public void renderEnergyBar(MatrixStack stack, TileEntity tile) {
         LazyOptional<IEnergyStorage> energyCapability = tile.getCapability(CapabilityEnergy.ENERGY);
         energyCapability.ifPresent(storage -> {
-            int i = 58;
-            int j = storage.getEnergyStored() * i / storage.getMaxEnergyStored();
-            blit(stack, guiLeft + powerBarX, guiTop + powerBarY - j, 191, powerBarHeight - j, 13, j);
+            int i = powerBarHeight;
+            int j = 0;
+            if(storage.getEnergyStored() > 0)
+                j = storage.getEnergyStored() * i / storage.getMaxEnergyStored();
 
+            blit(stack, guiLeft + powerBarX, guiTop + powerBarY - j, powerBarU, powerBarHeight - j, powerBarWidth, j);
+        });
+    }
+
+    public void renderEnergyText(MatrixStack stack, TileEntity tile, int x, int y) {
+        LazyOptional<IEnergyStorage> energyCapability = tile.getCapability(CapabilityEnergy.ENERGY);
+        energyCapability.ifPresent(storage -> {
             if(this.isPointInRegion(powerBarX - 1, powerBarY - powerBarHeight, powerBarWidth, powerBarHeight, x, y)) {
                 List<StringTextComponent> energy = new ArrayList<>();
                 energy.add(new StringTextComponent(storage.getEnergyStored() + " / " + storage.getMaxEnergyStored() + "  FE"));

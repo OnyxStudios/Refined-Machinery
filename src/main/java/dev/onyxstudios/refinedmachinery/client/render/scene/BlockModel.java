@@ -4,10 +4,10 @@ import net.minecraft.util.math.BlockPos;
 
 public class BlockModel {
 
-    private int vaoId;
-    private int vertexCount;
-    private BlockPos pos;
-    private float alpha;
+    private final int vaoId;
+    private final int vertexCount;
+    private final BlockPos pos;
+    private final float alpha;
 
     public BlockModel(int vaoId, int vertexCount, BlockPos pos, float alpha) {
         this.vaoId = vaoId;

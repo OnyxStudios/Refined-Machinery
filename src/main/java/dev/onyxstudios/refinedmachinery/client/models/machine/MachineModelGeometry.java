@@ -1,4 +1,4 @@
-package dev.onyxstudios.refinedmachinery.client.models;
+package dev.onyxstudios.refinedmachinery.client.models.machine;
 
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

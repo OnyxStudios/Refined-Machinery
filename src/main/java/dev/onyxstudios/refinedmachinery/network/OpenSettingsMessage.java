@@ -12,8 +12,8 @@ import java.util.function.Supplier;
 
 public class OpenSettingsMessage {
 
-    private BlockPos machinePos;
-    private boolean openSettings;
+    private final BlockPos machinePos;
+    private final boolean openSettings;
 
     public OpenSettingsMessage(BlockPos machinePos, boolean openSettings) {
         this.machinePos = machinePos;
@@ -34,13 +34,12 @@ public class OpenSettingsMessage {
         ctx.get().enqueueWork(() -> {
             World world = ctx.get().getSender().world;
 
-            if(world.isBlockLoaded(message.machinePos) && world.getTileEntity(message.machinePos) instanceof TileEntityConfigurable) {
+            if (world.isBlockLoaded(message.machinePos) && world.getTileEntity(message.machinePos) instanceof TileEntityConfigurable) {
                 TileEntityConfigurable tile = (TileEntityConfigurable) world.getTileEntity(message.machinePos);
                 tile.setSettingsOpen(message.openSettings);
 
                 Container container = ctx.get().getSender().openContainer;
-
-                if(container instanceof BaseMachineContainer) {
+                if (container instanceof BaseMachineContainer) {
                     ((BaseMachineContainer) container).isSettingsOpen = message.openSettings;
                 }
             }

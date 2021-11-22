@@ -25,15 +25,15 @@ public class MachineSettingsScene {
 
     public static final int DEFAULT_WIDTH = 162;
     public static final int DEFAULT_HEIGHT = 76;
-    private static float[] quadPositions = new float[] {
+    private static final float[] quadPositions = new float[]{
             -0.5f, 0.5f, 0,
             0.5f, 0.5f, 0,
             0.5f, -0.5f, 0,
             -0.5f, -0.5f, 0
     };
 
-    private static List<BlockBox> mappedBounds = new ArrayList<>();
-    {
+    private static final List<BlockBox> mappedBounds = new ArrayList<>();
+    static {
         mappedBounds.add(new BlockBox(Direction.NORTH, new Vector3f(0, 0, -0.5f), new Vector3f(), new Vector3f(0, 1, 0)));
         mappedBounds.add(new BlockBox(Direction.SOUTH, new Vector3f(0, 0, 0.5f), new Vector3f(0, 180, 0), new Vector3f(1, 0, 0)));
         mappedBounds.add(new BlockBox(Direction.EAST, new Vector3f(0.5f, 0, 0), new Vector3f(0, -90, 0), new Vector3f(0, 0, 1)));
@@ -42,9 +42,9 @@ public class MachineSettingsScene {
         mappedBounds.add(new BlockBox(Direction.DOWN, new Vector3f(0, -0.5f, 0), new Vector3f(-90, 0, 0), new Vector3f(0, 1, 1)));
     }
 
-    private List<BlockModel> models = new ArrayList<>();
+    private final List<BlockModel> models = new ArrayList<>();
     private BlockModel machineModel;
-    private Camera camera = new Camera();
+    private final Camera camera = new Camera();
 
     public RMFramebuffer framebuffer;
     public RMFramebuffer pickerBuffer;
@@ -155,7 +155,7 @@ public class MachineSettingsScene {
         float g = pixels[1];
         float b = pixels[2];
         for (BlockBox box : mappedBounds) {
-            if(box.getColor().equals(r, g, b)) {
+            if (box.getColor().equals(r, g, b)) {
                 return box.getDirection();
             }
         }

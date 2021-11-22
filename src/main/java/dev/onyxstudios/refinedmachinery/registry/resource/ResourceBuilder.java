@@ -19,11 +19,11 @@ public class ResourceBuilder {
     public static ResourceLocation BASE_DUST_TEXTURE = new ResourceLocation(RefinedMachinery.MODID, "item/base_resource_dust");
     public static ResourceLocation BASE_NUGGET_TEXTURE = new ResourceLocation(RefinedMachinery.MODID, "item/base_resource_nugget");
 
-    private String name;
+    private final String name;
     private float hardness = 1;
     private int harvestLevel = 1;
 
-    private Resource result;
+    private final Resource result;
     private Block oreBlock;
     private Block resourceBlock;
     private Item ingotItem;
@@ -125,6 +125,7 @@ public class ResourceBuilder {
     public Resource build(DeferredRegister<Block> blockRegistry, DeferredRegister<Item> itemRegistry) {
         Objects.requireNonNull(itemRegistry);
         Objects.requireNonNull(blockRegistry);
+
         if(oreBlock != null)
             result.buildOre(blockRegistry, itemRegistry, name + oreSuffix, oreBlock);
 

@@ -3,7 +3,7 @@ package dev.onyxstudios.refinedmachinery.registry;
 import dev.onyxstudios.refinedmachinery.RefinedMachinery;
 import dev.onyxstudios.refinedmachinery.client.gui.CoalGenScreen;
 import dev.onyxstudios.refinedmachinery.client.gui.WindTurbineScreen;
-import dev.onyxstudios.refinedmachinery.client.models.MachineModelLoader;
+import dev.onyxstudios.refinedmachinery.client.models.machine.MachineModelLoader;
 import dev.onyxstudios.refinedmachinery.client.render.WindTurbineRenderer;
 import dev.onyxstudios.refinedmachinery.registry.resource.Resource;
 import dev.onyxstudios.refinedmachinery.registry.resource.ResourceBuilder;
@@ -22,10 +22,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ModRenders {
 
-    private static ResourceLocation INPUT_OVERLAY = new ResourceLocation(RefinedMachinery.MODID, "block/input_config");
-    private static ResourceLocation OUTPUT_OVERLAY = new ResourceLocation(RefinedMachinery.MODID, "block/output_overlay");
-    private static ResourceLocation INPUT_OUTPUT_OVERLAY = new ResourceLocation(RefinedMachinery.MODID, "block/input_output_overlay");
-    private static ResourceLocation WIND_TURBINE_ROTORS = new ResourceLocation(RefinedMachinery.MODID, "block/wind_turbine/wind_turbine_rotors");
+    private static final ResourceLocation INPUT_OVERLAY = new ResourceLocation(RefinedMachinery.MODID, "block/input_config");
+    private static final ResourceLocation OUTPUT_OVERLAY = new ResourceLocation(RefinedMachinery.MODID, "block/output_overlay");
+    private static final ResourceLocation INPUT_OUTPUT_OVERLAY = new ResourceLocation(RefinedMachinery.MODID, "block/input_output_overlay");
+    private static final ResourceLocation WIND_TURBINE_ROTORS = new ResourceLocation(RefinedMachinery.MODID, "block/wind_turbine/wind_turbine_rotors");
 
     public static IBakedModel INPUT_MODEL;
     public static IBakedModel OUTPUT_MODEL;

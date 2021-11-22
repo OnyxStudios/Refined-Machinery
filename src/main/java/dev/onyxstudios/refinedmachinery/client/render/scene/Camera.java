@@ -34,11 +34,9 @@ public class Camera {
         return projectionMatrix;
     }
 
-    public Matrix4f createProjectionMatrix(int width, int height) {
+    public void createProjectionMatrix(int width, int height) {
         float aspectRatio = (float) width / (float) height;
         projectionMatrix = new Matrix4f().perspective(Math.toRadians(70), aspectRatio, 0.01f, 1000.0f);
-
-        return projectionMatrix;
     }
 
     public Matrix4f createViewMatrix() {

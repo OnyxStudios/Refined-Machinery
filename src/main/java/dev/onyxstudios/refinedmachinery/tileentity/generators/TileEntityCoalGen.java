@@ -90,11 +90,7 @@ public class TileEntityCoalGen extends TileEntityConfigurable implements ITickab
 
     public boolean canBurn() {
         ItemStack stack = inventory.getStackInSlot(0);
-        if (!stack.isEmpty() && ForgeHooks.getBurnTime(stack) > 0 && storage.getEnergyStored() < storage.getMaxEnergyStored()) {
-            return true;
-        }
-
-        return false;
+        return !stack.isEmpty() && ForgeHooks.getBurnTime(stack) > 0 && storage.getEnergyStored() < storage.getMaxEnergyStored();
     }
 
     @Override

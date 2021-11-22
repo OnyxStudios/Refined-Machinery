@@ -1,4 +1,4 @@
-package dev.onyxstudios.refinedmachinery.client.models;
+package dev.onyxstudios.refinedmachinery.client.models.machine;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
