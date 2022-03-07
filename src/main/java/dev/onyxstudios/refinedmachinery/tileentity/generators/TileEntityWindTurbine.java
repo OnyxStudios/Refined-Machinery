@@ -35,14 +35,12 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
     public static int Y_LEVEL = 64;
 
     public RMEnergyStorage storage;
-    public final LazyOptional<?> capabilityEnergy;
 
     private int nearbyTurbines = 0;
 
     public TileEntityWindTurbine() {
         super(ModEntities.windTurbineTileType.get());
         storage = new RMEnergyStorage(100000, ModBlocks.windTurbineObject.get().maxExtract);
-        capabilityEnergy = LazyOptional.of(() -> storage);
     }
 
     @Override
@@ -125,12 +123,11 @@ public class TileEntityWindTurbine extends TileEntityBase implements ITickableTi
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityEnergy.ENERGY) {
-            return (LazyOptional<T>) capabilityEnergy;
+            return LazyOptional.of(() -> storage).cast();
         }
 
         return super.getCapability(cap, side);
     }
-
 
     @Override
     public ITextComponent getDisplayName() {

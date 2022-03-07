@@ -10,6 +10,8 @@ import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -119,9 +121,23 @@ public class TileEntityConfigurable extends TileEntityInventory {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if(isSideInput(side) || isSideOutput(side)) {
+            if(cap == CapabilityEnergy.ENERGY)
+                return getEnergyCapability().cast();
+
+            if(cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+                return getFluidCapability().cast();
+
             return super.getCapability(cap, side);
         }
 
+        return LazyOptional.empty();
+    }
+
+    public LazyOptional<?> getFluidCapability() {
+        return LazyOptional.empty();
+    }
+
+    public LazyOptional<?> getEnergyCapability() {
         return LazyOptional.empty();
     }
 

@@ -20,13 +20,11 @@ import javax.annotation.Nullable;
 public class TileEntityGeothermal extends TileEntityBase implements ITickableTileEntity {
 
     public RMEnergyStorage storage;
-    public final LazyOptional<?> capabilityEnergy;
     public int cooldown = 0;
 
     public TileEntityGeothermal() {
         super(ModEntities.geothermalTileType.get());
         storage = new RMEnergyStorage(100000, ModBlocks.geothermalGenObject.get().maxExtract);
-        capabilityEnergy = LazyOptional.of(() -> storage);
     }
 
     @Override
@@ -74,7 +72,7 @@ public class TileEntityGeothermal extends TileEntityBase implements ITickableTil
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityEnergy.ENERGY) {
-            return (LazyOptional<T>) capabilityEnergy;
+            return LazyOptional.of(() -> storage).cast();
         }
 
         return super.getCapability(cap, side);

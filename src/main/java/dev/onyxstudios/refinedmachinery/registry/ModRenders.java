@@ -2,6 +2,7 @@ package dev.onyxstudios.refinedmachinery.registry;
 
 import dev.onyxstudios.refinedmachinery.RefinedMachinery;
 import dev.onyxstudios.refinedmachinery.client.gui.CoalGenScreen;
+import dev.onyxstudios.refinedmachinery.client.gui.LavaGenScreen;
 import dev.onyxstudios.refinedmachinery.client.gui.WindTurbineScreen;
 import dev.onyxstudios.refinedmachinery.client.models.machine.MachineModelLoader;
 import dev.onyxstudios.refinedmachinery.client.render.WindTurbineRenderer;
@@ -59,12 +60,14 @@ public class ModRenders {
     public static void registerScreens() {
         ScreenManager.registerFactory(ModEntities.coalGenContainerType.get(), CoalGenScreen::new);
         ScreenManager.registerFactory(ModEntities.turbineContainerType.get(), WindTurbineScreen::new);
+        ScreenManager.registerFactory(ModEntities.lavaGenContainerType.get(), LavaGenScreen::new);
     }
 
     public static void registerRenderLayers() {
         RenderTypeLookup.setRenderLayer(ModBlocks.coalGenObject.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.windTurbineObject.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(ModBlocks.geothermalGenObject.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(ModBlocks.lavaGenObject.get(), RenderType.getCutout());
         for (Resource resource : ResourceBuilder.resourceList) {
             if(resource.isOreValid())
                 RenderTypeLookup.setRenderLayer(resource.getOreObject().get(), RenderType.getCutout());

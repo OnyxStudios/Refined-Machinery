@@ -1,10 +1,7 @@
 package dev.onyxstudios.refinedmachinery.registry;
 
 import dev.onyxstudios.refinedmachinery.RefinedMachinery;
-import dev.onyxstudios.refinedmachinery.blocks.generators.CoalGeneratorBlock;
-import dev.onyxstudios.refinedmachinery.blocks.generators.GeneratorBlock;
-import dev.onyxstudios.refinedmachinery.blocks.generators.GeothermalGenBlock;
-import dev.onyxstudios.refinedmachinery.blocks.generators.WindTurbineBlock;
+import dev.onyxstudios.refinedmachinery.blocks.generators.*;
 import dev.onyxstudios.refinedmachinery.items.WindTurbineItem;
 import dev.onyxstudios.refinedmachinery.registry.resource.Resource;
 import dev.onyxstudios.refinedmachinery.registry.resource.ResourceBuilder;
@@ -24,13 +21,16 @@ public class ModBlocks {
     public static final DeferredRegister<Item> itemRegistry = DeferredRegister.create(ForgeRegistries.ITEMS, RefinedMachinery.MODID);
 
     public static RegistryObject<GeneratorBlock> coalGenObject = blockRegistry.register("coal_generator", CoalGeneratorBlock::new);
-    public static RegistryObject<Item> coalGenItemObject = itemRegistry.register("coal_generator", () -> new BlockItem(coalGenObject.get(), new Item.Properties().group(RefinedMachinery.TAB)));
+    public static RegistryObject<Item> coalGenItemObject = itemRegistry.register("coal_generator", () -> createBasicBlockItem(coalGenObject));
 
     public static RegistryObject<WindTurbineBlock> windTurbineObject = blockRegistry.register("wind_turbine", WindTurbineBlock::new);
     public static RegistryObject<Item> windTurbineItemObject = itemRegistry.register("wind_turbine", WindTurbineItem::new);
 
     public static RegistryObject<GeothermalGenBlock> geothermalGenObject = blockRegistry.register("geothermal_generator", GeothermalGenBlock::new);
-    public static RegistryObject<Item> geothermalGenItemObject = itemRegistry.register("geothermal_generator", () -> new BlockItem(geothermalGenObject.get(), new Item.Properties().group(RefinedMachinery.TAB)));
+    public static RegistryObject<Item> geothermalGenItemObject = itemRegistry.register("geothermal_generator", () -> createBasicBlockItem(geothermalGenObject));
+
+    public static RegistryObject<LavaGeneratorBlock> lavaGenObject = blockRegistry.register("lava_generator", LavaGeneratorBlock::new);
+    public static RegistryObject<Item> lavaGenItemObject = itemRegistry.register("lava_generator", () -> createBasicBlockItem(lavaGenObject));
 
     public static Resource COPPER = new ResourceBuilder("copper").setColor(0xFFB32A).setHardness(3).setHarvestLevel(1).addIngot().addDust().addNugget().addOre().addResourceBlock().build(blockRegistry, itemRegistry);
     public static Resource SILVER = new ResourceBuilder("silver").setColor(0xDEEFEE).setHardness(3).setHarvestLevel(2).addIngot().addDust().addNugget().addOre().addResourceBlock().build(blockRegistry, itemRegistry);
@@ -45,4 +45,9 @@ public class ModBlocks {
     public static Resource IRON = new ResourceBuilder("iron").setColor(0xFFE0BC).addDust().build(blockRegistry, itemRegistry);
     public static Resource GOLD = new ResourceBuilder("gold").setColor(0xFFDD54).addDust().build(blockRegistry, itemRegistry);
     public static Resource QUARTZ = new ResourceBuilder("quartz").setColor(0xE5DFD6).addDust().build(blockRegistry, itemRegistry);
+
+
+    public static BlockItem createBasicBlockItem(RegistryObject<? extends Block> blockRegistryObject) {
+        return new BlockItem(blockRegistryObject.get(), new Item.Properties().group(RefinedMachinery.TAB));
+    }
 }

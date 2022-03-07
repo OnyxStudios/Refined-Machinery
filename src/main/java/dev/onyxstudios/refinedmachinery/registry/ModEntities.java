@@ -2,9 +2,11 @@ package dev.onyxstudios.refinedmachinery.registry;
 
 import dev.onyxstudios.refinedmachinery.RefinedMachinery;
 import dev.onyxstudios.refinedmachinery.client.container.CoalGenContainer;
+import dev.onyxstudios.refinedmachinery.client.container.LavaGenContainer;
 import dev.onyxstudios.refinedmachinery.client.container.WindTurbineContainer;
 import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityCoalGen;
 import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityGeothermal;
+import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityLavaGen;
 import dev.onyxstudios.refinedmachinery.tileentity.generators.TileEntityWindTurbine;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
@@ -34,4 +36,11 @@ public class ModEntities {
     }));
 
     public static RegistryObject<TileEntityType<TileEntityGeothermal>> geothermalTileType = tileRegistry.register("geothermal_generator_tile", () -> TileEntityType.Builder.create(TileEntityGeothermal::new, ModBlocks.geothermalGenObject.get()).build(null));
+
+    public static RegistryObject<TileEntityType<TileEntityLavaGen>> lavaGenTileType = tileRegistry.register("lava_gen_tile", () -> TileEntityType.Builder.create(TileEntityLavaGen::new, ModBlocks.lavaGenObject.get()).build(null));
+    public static RegistryObject<ContainerType<LavaGenContainer>> lavaGenContainerType = containersRegistry.register("lava_gen_container", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        TileEntityLavaGen tileEntityLavaGen = (TileEntityLavaGen) inv.player.world.getTileEntity(pos);
+        return new LavaGenContainer(windowId, inv, tileEntityLavaGen);
+    }));
 }

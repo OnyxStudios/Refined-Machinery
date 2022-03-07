@@ -15,19 +15,15 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
 public class TileEntityCoalGen extends TileEntityConfigurable implements ITickableTileEntity, INamedContainerProvider {
 
     public RMEnergyStorage storage;
-    public final LazyOptional<?> capabilityEnergy;
 
     public boolean isBurning = false;
     public int maxBurnTime = 0;
@@ -36,7 +32,6 @@ public class TileEntityCoalGen extends TileEntityConfigurable implements ITickab
     public TileEntityCoalGen() {
         super(ModEntities.coalGenTileType.get(), 1, true);
         storage = new RMEnergyStorage(100000, ModBlocks.coalGenObject.get().maxExtract);
-        capabilityEnergy = LazyOptional.of(() -> storage);
     }
 
     @Override
@@ -94,12 +89,8 @@ public class TileEntityCoalGen extends TileEntityConfigurable implements ITickab
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityEnergy.ENERGY) {
-            return (LazyOptional<T>) capabilityEnergy;
-        }
-
-        return super.getCapability(cap, side);
+    public LazyOptional<?> getEnergyCapability() {
+        return LazyOptional.of(() -> storage);
     }
 
     @Override
@@ -107,6 +98,7 @@ public class TileEntityCoalGen extends TileEntityConfigurable implements ITickab
         return this.getBlockState().getBlock().getTranslatedName();
     }
 
+    @Nullable
     @Override
     public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new CoalGenContainer(id, playerInventory, this);
